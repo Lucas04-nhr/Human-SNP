@@ -16,8 +16,9 @@ then
     conda activate bwa
 else
     echo "Creating the environment..."
-    conda env create -f requirements.txt
-    echo "The environment has been created."
+    conda env create -n bwa -f requirements.txt
+    echo "The environment has been created, activating it..."
+    conda activate bwa
 fi
 
 echo "Initialization is complete."
