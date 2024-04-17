@@ -30,7 +30,7 @@ export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
 # Set the path to the indexing data
-echo "Please enter the path to the indexing data:"
+echo "Please enter where the the indexing data located:"
 read indexing_path
 
 export INDEXING_PATH=$indexing_path
@@ -38,11 +38,11 @@ echo "The path to the indexing data has been set to $INDEXING_PATH."
 
 
 # Indexing
-bwa index -a bwtsw 
+bwa index -a bwtsw $INDEXING_PATH
 
 
-# 
-echo "Indexing the genome data..."
+# Analyse the genome data
+echo "Analysing the genome data..."
 for file_fq1 in $(ls *_1.fastq.gz)
 do
     file_name=$(basename "$file_fq1")
