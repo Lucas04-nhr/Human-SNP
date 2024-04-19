@@ -8,6 +8,7 @@ then
 fi
 
 # Check whether the environment exists
+conda activate base
 if conda env list | grep -q "wescall"
 then
     echo "Great! The environment already exists."
