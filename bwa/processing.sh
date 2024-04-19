@@ -36,6 +36,7 @@ echo "Please enter where the the indexing data located:"
 read indexing_path
 
 export INDEXING_PATH=$indexing_path
+# The path to the indexing data is '/mnt/raid6/bacphagenetwork/data/bwa_index'
 echo "The path to the indexing data has been set to $INDEXING_PATH."
 
 # Set the path to store analysis results
