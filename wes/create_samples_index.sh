@@ -15,7 +15,7 @@ then
 else
     echo "The index already exists, do you want to overwrite it? (y/n)"
     read answer
-    if [ $answer == "y" ]
+    if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Overwriting the index ..."
     else
