@@ -50,7 +50,7 @@ bwa index -a bwtsw $INDEXING_PATH
 
 # Analyse the genome data
 echo "Analysing the genome data..."
-for file_fq1 in $(ls *_1.fastq.gz)
+for file_fq1 in $(ls ${GENOME_PATH}/*_1.fastq.gz)
 do
     file_name=$(basename "$file_fq1")
     sample_name="${file_name%%_1*}"
