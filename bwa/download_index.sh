@@ -8,6 +8,8 @@ read download_dir
 # Currently, the download directory is '/mnt/raid6/bacphagenetwork/data/bwa_index'
 cd $download_dir
 
-wget -c https://processing.open-genomes.org/reference/CP086569.1-CHM13/CHM13_v1.1.fa
+# wget -c https://processing.open-genomes.org/reference/CP086569.1-CHM13/CHM13_v1.1.fa
+
+wget -c https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/analysis_set/chm13v2.0_noY.fa.gz
 
 echo "The genome data has been downloaded."
