@@ -7,6 +7,7 @@ then
     exit
 fi
 
+conda init bash
 conda activate base
 # Check whether the environment exists
 if conda env list | grep -q "bwa"

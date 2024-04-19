@@ -4,7 +4,7 @@ then
     echo "Conda could not be found, please install it first."
     exit
 fi
-
+conda init bash
 conda activate base
 # Check whether the environment exists
 if conda env list | grep -q "bwa"
