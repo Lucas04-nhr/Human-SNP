@@ -44,3 +44,5 @@ read analysis_path
 # The path to store the analysis results is '/mnt/raid6/bacphagenetwork/data/bwa_analysis'
 export ANALYSIS_PATH=$analysis_path
 echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
+
+echo "Initialization is complete."
