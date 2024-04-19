@@ -13,3 +13,11 @@ cd $download_dir
 wget -c https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/analysis_set/chm13v2.0_noY.fa.gz
 
 echo "The genome data has been downloaded."
+
+# Unzip the genome data
+echo "Unzipping the genome data..."
+gunzip chm13v2.0_noY.fa.gz
+echo "The genome data has been unzipped."
+
+# Print the path to the genome data
+echo "The path to the genome data is $download_dir/chm13v2.0_noY.fa"
