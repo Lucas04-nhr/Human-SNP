@@ -14,4 +14,4 @@ source ~/.bashrc
 
 conda activate base
 
-srun bash processing.sh
+srun bash ../processing.sh
