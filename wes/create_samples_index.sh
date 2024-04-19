@@ -35,3 +35,11 @@ do
     echo "$sample_name  $file_fq1   0" >> samples.index
     echo "The genome data of $sample_name has been added to the config file."
 done
+
+# Check if any error occurred during the process
+if [ $? -eq 0 ]; then
+    echo "Success!"
+else
+    echo "Warning: An error occurred during the process."
+    exit 1
+fi
