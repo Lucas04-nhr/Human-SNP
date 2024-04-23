@@ -9,6 +9,31 @@
 conda init bash
 source ~/.bashrc
 
-conda activate base
+# Check whether the environment exists
+if conda env list | grep -q "bwa"
+then
+    echo "Great! The environment already exists."
+    # Activate the environment
+    echo "Activating the environment..."
+    conda activate bwa
+else
+    echo "Creating the environment..."
+    conda env create -n bwa -f ../requirements.txt
+    echo "The environment has been created, activating it..."
+    conda activate bwa
+fi
 
-srun ../processing.sh
+echo "Initialization is complete."
+
+# # The path of the genome data is '/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host'
+echo "The path to the genome data has been set to $GENOME_PATH."
+
+# # The path to the indexing data is '/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa'
+echo "The path to the indexing data has been set to $INDEXING_PATH."
+
+# # The path to store the analysis results is '/mnt/raid6/bacphagenetwork/data/bwa_analysis'
+echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
+
+# Indexing
+bwa index -a bwtsw $INDEXING_PATH
+
