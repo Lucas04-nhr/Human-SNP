@@ -24,6 +24,10 @@ else
     conda activate bwa
 fi
 
+export GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host'
+export INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa'
+export ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis'
+
 echo "Initialization is complete."
 
 # # Set the path to the genome data
@@ -55,12 +59,21 @@ bwa index -a bwtsw $INDEXING_PATH
 
 # Analyse the genome data
 echo "Analysing the genome data..."
-for file_fq1 in $(ls ${GENOME_PATH}/*_1.fastq.gz)
+
+ls ${GENOME_PATH}/*_1.fastq.gz | while read -r file_fq1
 do
+    # file_fq1 is the path to the first read of the pair
     file_name=$(basename "$file_fq1")
+
+    # sample_name is the name of the sample
     sample_name="${file_name%%_1*}"
+
     echo "Processing $sample_name..."
+
+    # The path to the second read of the pair
     file_fq2="${sample_name}_2.fastq.gz"
-    bwa mem -t 4 -R "\@RG\tID:{library}\tLB:{library}\tPL:Illumina\tPU:{sample}\tSM:{sample}\" -p $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/${sample_name}.sam > $ANALYSIS_PATH/log/${sample_name}.log || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
+    
+    # Analyse the genome data
+    bwa mem -t 4 -p $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/${sample_name}.sam > $ANALYSIS_PATH/log/${sample_name}.log || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
     echo "The analysis of $sample_name has been completed."
 done

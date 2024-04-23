@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=bwa_analysis
-#SBATCH --output=bwa_analysis.out
-#SBATCH --error=bwa_analysis.err
+#SBATCH --output=bwa_analysis.%x.%j.out
+#SBATCH --error=bwa_analysis.%x.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis'
@@ -37,3 +37,21 @@ echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 # Indexing
 bwa index -a bwtsw $INDEXING_PATH
 
+# Analyse the genome data
+echo "Analysing the genome data..."
+find ${GENOME_PATH} -name "*_1.fastq.gz" -exec bash -c '
+    # file_fq1 is the path to the first read of the pair
+    file_name=$(basename "$file_fq1")
+
+    # sample_name is the name of the sample
+    sample_name="${file_name%%_1*}"
+
+    echo "Processing $sample_name..."
+
+    # The path to the second read of the pair
+    file_fq2="${sample_name}_2.fastq.gz"
+    
+    # Analyse the genome data
+    bwa mem -t 4 -p $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/${sample_name}.sam > $ANALYSIS_PATH/log/${sample_name}.log || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
+    echo "The analysis of $sample_name has been completed."
+' bash {} \;
