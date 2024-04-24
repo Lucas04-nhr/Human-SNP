@@ -24,7 +24,7 @@ else
     conda activate bwa
 fi
 export INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index'
-export INDEXING_FILE='chm13v2.0_noY.fa'
+export INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa'
 
 cd $INDEXING_PATH
 
