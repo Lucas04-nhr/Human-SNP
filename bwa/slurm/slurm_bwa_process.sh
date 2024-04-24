@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=bwa_analysis
-#SBATCH --output=./log/bwa_analysis.%x.%j.out
-#SBATCH --error=./log/bwa_analysis.%x.%j.err
+#SBATCH --output=./log/bwa_analysis.%j.out
+#SBATCH --error=./log/bwa_analysis.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis'
@@ -36,7 +36,7 @@ echo "The path to the indexing data has been set to $INDEXING_PATH."
 echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 
 # Indexing
-# bwa index -a bwtsw $INDEXING_PATH
+bwa index -a bwtsw $INDEXING_PATH
 
 # Analyse the genome data
 echo "Analysing the genome data..."
