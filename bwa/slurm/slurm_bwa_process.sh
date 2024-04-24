@@ -36,7 +36,7 @@ echo "The path to the indexing data has been set to $INDEXING_PATH."
 echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 
 # Indexing
-bwa index -a bwtsw $INDEXING_PATH
+# bwa index -a bwtsw $INDEXING_PATH
 
 # Analyse the genome data
 echo "Analysing the genome data..."
