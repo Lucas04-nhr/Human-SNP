@@ -41,7 +41,10 @@ echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 # Analyse the genome data
 echo "Analysing the genome data..."
 infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(echo "$infile" | grep -oP 'BJ\d{3}')
+sample_name=$(echo "$infile" | grep -oE 'BJ[0-9]{3}')
+
+## TO DO
+## Fix the file_fq1 and file_fq2 paths
 
 echo "Processing $sample_name..."
 file_fq1="$GENOME_PATH/${sample_name}_1.fastq.gz"
