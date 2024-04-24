@@ -8,7 +8,7 @@ export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
 # Check whether the index exists
-if [ ! -f "./samples.index" ]
+if [ ! -f "./slurm/bj_sbatch.list" ]
 then
     echo "The index does not exist, creating it ..."
 
@@ -32,7 +32,7 @@ do
     sample_name="${file_name%%_1*}"
     echo "Processing $sample_name..."
     file_fq2="${sample_name}_2.fastq.gz"
-    echo "$file_fq1" >> ./slurm/sbatch.list
+    echo "$file_fq1" >> ./slurm/bj_sbatch.list
     echo "The genome data of $sample_name has been added to the config file."
 done
 

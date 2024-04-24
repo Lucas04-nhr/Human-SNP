@@ -40,11 +40,12 @@ echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 
 # Analyse the genome data
 echo "Analysing the genome data..."
-infile=($( cat sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name="${infile%%_1*}"
+infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+sample_name=$(echo "$infile" | grep -oP 'BJ\d{3}')
 
 echo "Processing $sample_name..."
-file_fq2="${sample_name}_2.fastq.gz"
+file_fq1="$GENOME_PATH/${sample_name}_1.fastq.gz"
+file_fq2="$GENOME_PATH/${sample_name}_2.fastq.gz"
+touch $ANALYSIS_PATH/${sample_name}.sam
 bwa mem -t 4 -p $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/${sample_name}.sam > $ANALYSIS_PATH/log/${sample_name}.log || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
 echo "The analysis of $sample_name has been completed."
-
