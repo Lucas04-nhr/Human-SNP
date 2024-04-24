@@ -40,8 +40,9 @@ echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 
 # Analyse the genome data
 echo "Analysing the genome data..."
-infile=($( cat sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(echo "$infile" | grep -oP 'BJ\d{3}')
+infile=($( cat gz_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+sample_name_temp=$(echo "$infile" | grep -oP '/\K\d+(?=_)' | awk '{printf "%03d", $0}')
+sample_name="GZ$sample_name_temp"
 
 echo "Processing $sample_name..."
 file_fq1="$GENOME_PATH/${sample_name}_1.fastq.gz"
