@@ -54,5 +54,5 @@ echo "Processing $sample_name..."
 file_fq1="${file_name}_1.fastq.gz"
 file_fq2="${file_name}_2.fastq.gz"
 touch $ANALYSIS_PATH/${sample_name}.sam
-bwa mem -t 4 $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/${sample_name}.sam > $ANALYSIS_PATH/log/${sample_name}.log || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
+bwa mem -t 4 $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/log/${sample_name}.log > $ANALYSIS_PATH/${sample_name}.sam || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
 echo "The analysis of $sample_name has been completed."
