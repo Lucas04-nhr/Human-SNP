@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=bwa_analysis
-#SBATCH --output=./log/bwa_analysis.%j.out
-#SBATCH --error=./log/bwa_analysis.%j.err
+#SBATCH --output=./log/Guangzhou/bwa_analysis.%j.out
+#SBATCH --error=./log/Guangzhou/bwa_analysis.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Guangzhou/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis'
