@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=bwa_analysis
+#SBATCH --job-name=samtools_index_bj
 #SBATCH --output=./log/samtools.%j.out
 #SBATCH --error=./log/samtools.%j.err
 #SBATCH --cpus-per-task=4
