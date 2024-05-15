@@ -18,6 +18,8 @@ else
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Overwriting the index ..."
+        rm ./gz_sbatch.list
+        touch ./gz_sbatch.list
     else
         echo "The index will not be overwritten."
         exit
@@ -28,7 +30,7 @@ fi
 echo "Adding the genome data to the config file..."
 for file_fq1 in $(ls ${GENOME_PATH})
 do
-    echo "$file_fq1" >> ./gz_sbatch.list
+    echo "$GENOME_PATH$file_fq1" >> ./gz_sbatch.list
     echo "The genome data of $sample_name has been added to the config file."
 done
 
