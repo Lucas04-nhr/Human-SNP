@@ -7,3 +7,4 @@
 #SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis'
 
 
+echo "The working directory has been changed to $ANALYSIS_PATH."
