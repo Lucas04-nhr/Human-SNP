@@ -30,7 +30,7 @@ fi
 echo "Adding the genome data to the config file..."
 for file_fq1 in $(ls ${GENOME_PATH})
 do
-    echo "$GENOME_PATH$file_fq1" >> ./bj_sbatch.list
+    echo "$GENOME_PATH/$file_fq1" >> ./bj_sbatch.list
     echo "The genome data of $sample_name has been added to the config file."
 done
 
