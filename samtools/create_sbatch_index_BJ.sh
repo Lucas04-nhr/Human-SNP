@@ -11,7 +11,7 @@ echo "The path to the genome data has been set to $GENOME_PATH."
 if [ ! -f "./bj_sbatch.list" ]
 then
     echo "The index does not exist, creating it ..."
-
+    touch ./bj_sbatch.list
 else
     echo "The index already exists, do you want to overwrite it? (y/n)"
     read answer
@@ -28,7 +28,7 @@ fi
 echo "Adding the genome data to the config file..."
 for file_fq1 in $(ls ${GENOME_PATH})
 do
-    echo "$file_fq1" >> ./slurm/bj_sbatch.list
+    echo "$file_fq1" >> ./bj_sbatch.list
     echo "The genome data of $sample_name has been added to the config file."
 done
 
