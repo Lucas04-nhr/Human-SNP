@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis',INDEX_PATH='/mnt/raid6/bacphagenetwork/data/samtools_analysis',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/samtools_result'
-
+#SBATCH --array=1-201%4
 
 echo "The working directory has been changed to $ANALYSIS_PATH."
 
