@@ -25,7 +25,7 @@ echo "Initialization is complete."
 
 echo "The working directory has been changed to $ANALYSIS_PATH."
 
-infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat gz_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
 
 # Convert the SAM file to BAM file
