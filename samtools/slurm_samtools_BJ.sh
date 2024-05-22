@@ -37,10 +37,10 @@ samtools view -bS $ANALYSIS_PATH/${sample_name}.sam > $INDEX_PATH/${sample_name}
 
 echo "The SAM file $sample_name has been successfully converted to BAM file."
 
-# Indexing the BAM file
-echo "Indexing the BAM file..."
-echo "The path to the BAM file is $INDEX_PATH/${sample_name}.bam."
-echo "The path to the BAM index file is $INDEX_PATH/${sample_name}.bam.bai."
-samtools index $INDEX_PATH/${sample_name}.bam $INDEX_PATH/${sample_name}.bam.bai || { echo "Error: samtools index failed in processing $sample_name."; exit 1; }
+# # Indexing the BAM file
+# echo "Indexing the BAM file..."
+# echo "The path to the BAM file is $INDEX_PATH/${sample_name}.bam."
+# echo "The path to the BAM index file is $INDEX_PATH/${sample_name}.bam.bai."
+# samtools index $INDEX_PATH/${sample_name}.bam $INDEX_PATH/${sample_name}.bam.bai || { echo "Error: samtools index failed in processing $sample_name."; exit 1; }
 
-echo "The $sample_name BAM file has been successfully indexed."
+# echo "The $sample_name BAM file has been successfully indexed."
