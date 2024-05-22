@@ -7,6 +7,22 @@
 #SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis/Beijing',INDEX_PATH='/mnt/raid6/bacphagenetwork/data/samtools_analysis/Beijing'
 #SBATCH --array=1-201%4
 
+# Check whether the environment exists
+if conda env list | grep -q "wescall"
+then
+    echo "Great! The environment already exists."
+    # Activate the environment
+    echo "Activating the environment..."
+    conda activate wescall
+else
+    echo "Creating the environment..."
+    conda env create -n wescall -f ../requirements.txt
+    echo "The environment has been created, activating it..."
+    conda activate wescall
+fi
+
+echo "Initialization is complete."
+
 echo "The working directory has been changed to $ANALYSIS_PATH."
 
 infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
