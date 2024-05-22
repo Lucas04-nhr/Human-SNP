@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=samtools_index_bj
-#SBATCH --output=./log/Guangzhou/samtools_GZ.%j.out
-#SBATCH --error=./log/Guangzhou/samtools_GZ.%j.err
+#SBATCH --output=./log/Guangzhou/samtools_GZ_%j.out
+#SBATCH --error=./log/Guangzhou/samtools_GZ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis/Guangzhou',INDEX_PATH='/mnt/raid6/bacphagenetwork/data/samtools_analysis/Guangzhou'
