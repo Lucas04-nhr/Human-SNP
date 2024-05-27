@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # Set the path to the genome data
-echo "Please enter the path to the processed *.sam data:"
+echo "Please enter the path to the pre-processed *.bam data:"
 read genome_path
-# The path of the processed *.sam data is '/mnt/raid6/bacphagenetwork/data/bwa_analysis/Guangzhou'
+# The path of the pre-processed *.bam data is '/mnt/raid6/bacphagenetwork/data/samtools_analysis/Guangzhou'
 export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
