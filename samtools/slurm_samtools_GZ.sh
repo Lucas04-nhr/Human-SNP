@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=samtools_index_bj
+#SBATCH --job-name=samtools_index_gz
 #SBATCH --output=./log/Guangzhou/samtools_GZ_%j.out
 #SBATCH --error=./log/Guangzhou/samtools_GZ_%j.err
 #SBATCH --cpus-per-task=4
