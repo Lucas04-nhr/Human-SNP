@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=samtools_sort_BJ
-#SBATCH --output=./log/Beijing/samtools_sort_BJ_%j.out
-#SBATCH --error=./log/Beijing/samtools_sort_BJ_%j.err
+#SBATCH --output=./log/02/Beijing/samtools_sort_BJ_%j.out
+#SBATCH --error=./log/02/Beijing/samtools_sort_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/samtools_analysis/Beijing',INDEX_PATH='/mnt/raid6/bacphagenetwork/data/samtools_index/Beijing',RESULTS_PATH='/mnt/raid6/bacphagenetwork/data/samtools_results/Beijing'
@@ -42,6 +42,6 @@ samtools sort -@ 4 -o $RESULTS_PATH/${sample_name}.sorted.bam $ANALYSIS_PATH/${s
 echo "Indexing the BAM file..."
 echo "The path to the sorted BAM file is $RESULTS_PATH/${sample_name}.bam."
 echo "The path to the BAM index file is $INDEX_PATH/${sample_name}.bam.bai."
-samtools index $RESULTS_PATH/${sample_name}.bam $INDEX_PATH/${sample_name}.bam.bai || { echo "Error: samtools index failed in processing $sample_name."; exit 1; }
+samtools index $RESULTS_PATH/${sample_name}.sorted.bam $INDEX_PATH/${sample_name}.bam.bai || { echo "Error: samtools index failed in processing $sample_name."; exit 1; }
 
 echo "The $sample_name BAM file has been successfully indexed."
