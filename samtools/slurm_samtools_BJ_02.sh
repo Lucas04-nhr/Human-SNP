@@ -27,7 +27,7 @@ echo "The original *.bam files are located in $ANALYSIS_PATH."
 echo "The sorted *.bam files will be saved in $RESULTS_PATH."
 echo "The indexed *.bai files will be saved in $INDEX_PATH."
 
-infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat bj_02_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(echo "$infile" | grep -oE 'BJ[0-9]{3}')
 
 # Sort the BAM file
