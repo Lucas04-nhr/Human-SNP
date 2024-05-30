@@ -46,7 +46,7 @@ for file in $GENOME_PATH/*.bam
 do
     file_name=$(basename $file)
     sample_name=$(echo "$file_name" | grep -oE 'BJ[0-9]{3}')
-    echo "$file_name    $file   0" >> ./Beijing/samples.index
+    echo "$sample_name    $file   0" >> ./Beijing/samples.index
 done
 
 
