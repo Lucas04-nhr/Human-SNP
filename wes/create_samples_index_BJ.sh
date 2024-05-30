@@ -44,7 +44,8 @@ fi
 echo "Adding the genome data to the config file..."
 for file in $GENOME_PATH/*.bam
 do
-    echo $file >> ./Beijingsamples.index
+    file_name=$(basename $file)
+    echo "$file_name    $file   0" >> ./Beijingsamples.index
 done
 
 
