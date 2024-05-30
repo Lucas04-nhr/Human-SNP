@@ -3,7 +3,7 @@
 # Set the path to the genome data
 echo "Please enter the path to the genome data of Beijing:"
 read genome_path
-# The path of the genome data is '/mnt/raid6/bacphagenetwork/data/samtools_reults/Beijing'
+# The path of the genome data is '/mnt/raid6/bacphagenetwork/data/samtools_results/Beijing'
 # First check whether the directory exists.
 if [ ! -d $genome_path ]
 then
@@ -28,7 +28,7 @@ then
     fi
 
 else
-    echo "The index of Beijing already exists, do you want to overwrite it? (y/n)"
+    echo -c "The index of Beijing already exists, do you want to overwrite it? (y/n) "
     read answer
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
