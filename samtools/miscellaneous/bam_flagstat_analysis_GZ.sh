@@ -13,7 +13,7 @@ fi
 
 # Check if the output directory exists
 if [ ! -d $(dirname $OUTPUT_FILE) ]; then
-    echo "Output directory $(dirname $OUTPUT_FILE) does not exist. Please create it first."
+    echo "Output directory $(dirname $OUTPUT_FILE) does not exist. Creating..."
     mkdir -p $(dirname $OUTPUT_FILE)
 fi
 
