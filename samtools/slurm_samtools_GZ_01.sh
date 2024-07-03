@@ -4,24 +4,8 @@
 #SBATCH --error=./log/01/Guangzhou/samtools_GZ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis/Guangzhou',INDEX_PATH='/mnt/raid6/bacphagenetwork/data/samtools_analysis/Guangzhou'
+#SBATCH --export=ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis/Guangzhou',INDEX_PATH='git Guangzhou'
 #SBATCH --array=1-160%4
-
-# Check whether the environment exists
-if conda env list | grep -q "wescall"
-then
-    echo "Great! The environment already exists."
-    # Activate the environment
-    echo "Activating the environment..."
-    conda activate wescall
-else
-    echo "Creating the environment..."
-    conda env create -n wescall -f ../requirements.txt
-    echo "The environment has been created, activating it..."
-    conda activate wescall
-fi
-
-echo "Initialization is complete."
 
 echo "The working directory has been changed to $ANALYSIS_PATH."
 
