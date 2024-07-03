@@ -35,10 +35,13 @@ for bamfile in $BAM_PATH/*.bam
 do
     # 获取文件名作为样本名
     sample_name=$(basename $bamfile .bam)
+
+    # Print the sample name
+    echo "Processing $sample_name..."
     
     # 运行samtools flagstat并提取信息
     stats=$(samtools flagstat $bamfile)
-    
+
     # 解析flagstat输出并格式化
     total=$(echo "$stats" | grep "in total" | cut -d ' ' -f 1)
     secondary=$(echo "$stats" | grep "secondary" | cut -d ' ' -f 1)
