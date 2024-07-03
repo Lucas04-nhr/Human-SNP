@@ -1,35 +1,30 @@
-#!/bin/bash
-#SBATCH --job-name=extract_flagstat_GZ
-#SBATCH --output=./log/02/Guangzhou/extract_flagstat_GZ.out 
-#SBATCH --error=./log/02/Guangzhou/extract_flagstat_GZ.err 
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=1G
-#SBATCH --export=BAM_PATH='/mnt/raid6/bacphagenetwork/data/samtools_results/Guangzhou',OUTPUT_FILE='/mnt/raid6/bacphagenetwork/data/flagstat_summary/Guangzhou.txt' 
-#SBATCH --array=1-160%4
-
-
-conda init bash
-
-# Check whether the environment exists
-if conda env list | grep -q "wescall"
-then
-    echo "Great! The environment already exists."
-    # Activate the environment
-    echo "Activating the environment..."
-    conda activate wescall
-else
-    echo "Creating the environment..."
-    conda env create -n wescall -f ../requirements.txt
-    echo "The environment has been created, activating it..."
-    conda activate wescall
-fi
-echo "All the needed directories exist."
+#! /bin/bash
+# Description: This script performs flagstat analysis on all BAM files in a specified directory and saves the results in a tab-separated text file.
+# Set environment variables
+export BAM_PATH='/mnt/raid6/bacphagenetwork/data/samtools_results/Guangzhou'
+export OUTPUT_FILE='/mnt/raid6/bacphagenetwork/data/flagstat_summary/Guangzhou.txt'
 
 # 检查samtools是否安装
 if ! command -v samtools &> /dev/null
 then
     echo "samtools could not be found, please install it first."
-    exit
+    exit 1
+fi
+
+# Check if the output directory exists
+if [ ! -d $(dirname $OUTPUT_FILE) ]; then
+    echo "Output directory $(dirname $OUTPUT_FILE) does not exist. Please create it first."
+    mkdir -p $(dirname $OUTPUT_FILE)
+fi
+
+# Check if the output file already exists
+if [ -f $OUTPUT_FILE ]; then
+    echo "Error: Output file $OUTPUT_FILE already exists. Would you like to overwrite it? (y/n)"
+    read response
+    if [ "$response" != "y" ]; then
+        echo "Exiting script."
+        exit 1
+    fi
 fi
 
 # 初始化输出文件标题行
