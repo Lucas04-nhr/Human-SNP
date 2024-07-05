@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="Black">
+    <option name="sdkName" value="DrawingPlot" />
+  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -52,14 +55,8 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="$USER_HOME$/miniconda3" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="DrawingPlot" project-jdk-type="Python SDK" />
   <component name="PyPackaging">
     <option name="earlyReleasesAsUpgrades" value="true" />
-  </component>
-  <component name="RSettings">
-    <option name="disableRprofile" value="true" />
-    <option name="interpreterPath" value="/usr/local/bin/R" />
-    <option name="loadWorkspace" value="true" />
-    <option name="saveWorkspace" value="true" />
   </component>
 </project>
