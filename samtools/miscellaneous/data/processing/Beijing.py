@@ -49,10 +49,10 @@ plt.show()
 data_bj_converted['Ratio1'] = data_bj_converted['Mapped'] / data_bj_converted['Paired in sequencing']
 
 # Calculate the ratio of "Paired in sequencing" to "Total" reads
-data_bj_converted['Ratio2'] = data_bj_converted['Paired in sequencing'] / 100
+data_bj_converted['Ratio2'] = data_bj_converted['Paired in sequencing']
 
 # Calculate the ratio of "Mapped" to "Total" reads
-data_bj_converted['Ratio3'] = data_bj_converted['Mapped'] / 100
+data_bj_converted['Ratio3'] = data_bj_converted['Mapped']
 
 # Plot the ratio
 plt.figure(figsize=(10, 6), dpi=300)
