@@ -19,6 +19,7 @@ data_bj.iloc[:, 0] = data_bj.iloc[:, 0].str.replace(".sorted", "", regex=False)
 # Display the modified DataFrame to verify changes
 print(data_bj.head())
 
+
 # Select only the "Sample", "Mapped", and "Paired in sequencing" columns
 data_bj_filtered = data_bj[['Sample', 'Total', 'Mapped', 'Paired in sequencing']]
 
