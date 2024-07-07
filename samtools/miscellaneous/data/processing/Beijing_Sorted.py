@@ -1,5 +1,4 @@
 import pandas as pd
-
 import matplotlib.pyplot as plt
 # Read the data
 data_bj = pd.read_csv('D:/pythonCODE/envTest/BeijingSorted.txt', sep='\t')
