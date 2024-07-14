@@ -4,7 +4,7 @@
 #SBATCH --error=./log/bwa_index.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis',INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa'
+#SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis',INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/bwa_index/Homo_sapiens.GRCh38.dna.toplevel.fa'
 
 conda init bash
 source ~/.bashrc
