@@ -10,7 +10,9 @@ cd $download_dir
 
 # wget -c https://processing.open-genomes.org/reference/CP086569.1-CHM13/CHM13_v1.1.fa
 
-wget -c https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/analysis_set/chm13v2.0_noY.fa.gz
+# wget -c https://s3-us-west-2.amazonaws.com/human-pangenomics/T2T/CHM13/assemblies/analysis_set/chm13v2.0_noY.fa.gz
+
+wget -c http://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz
 
 echo "The genome data has been downloaded."
 
