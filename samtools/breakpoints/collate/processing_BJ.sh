@@ -7,6 +7,8 @@
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_analysis/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_collate/Beijing'
 #SBATCH --array=1-201%4
 
+echo "Initializing..."
+
 echo "The original *.bam files are located in $INPUT_PATH."
 echo "The collated *.bed files will be saved in $OUTPUT_PATH."
 
@@ -22,6 +24,8 @@ then
 else
     echo "The file $INPUT_PATH/${sample_name}.bam exists."
 fi
+
+echo "Initializing complete."
 
 # Perform the collation
 echo "Performing the collation..."
