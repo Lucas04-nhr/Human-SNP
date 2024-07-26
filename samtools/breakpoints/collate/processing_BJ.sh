@@ -7,26 +7,6 @@
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_analysis/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_collate/Beijing'
 #SBATCH --array=1-201%4
 
-echo "Initializing the environment..."
-
-# Check all the needed directories exist
-echo "Checking all the needed directories exist..."
-if [ ! -d "$ANALYSIS_PATH" ]
-then
-    mkdir -p $ANALYSIS_PATH
-fi
-if [ ! -d "$INDEX_PATH" ]
-then
-    mkdir -p $INDEX_PATH
-fi
-if [ ! -d "$RESULTS_PATH" ]
-then
-    mkdir -p $RESULTS_PATH
-fi
-echo "All the needed directories exist."
-
-echo "Initialization is complete."
-
 echo "The original *.bam files are located in $INPUT_PATH."
 echo "The collated *.bed files will be saved in $OUTPUT_PATH."
 
