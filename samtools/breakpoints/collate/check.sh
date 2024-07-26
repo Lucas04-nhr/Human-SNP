@@ -39,7 +39,7 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [-d "/mnt/raid6/bacphagenetwork/data/03_samtools_collate" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_collate" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
