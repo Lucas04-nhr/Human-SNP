@@ -59,6 +59,30 @@ mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked/Guangzhou
 
 echo "The output folder has been created."
 
+# Create the stats folder
+
+echo "Creating the stats folder..."
+
+if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats" ]
+then
+    echo "The stats folder already exists, do you want to back up the stats folder? (y/n)"
+    read answer
+    if [ $answer == "y" ] || [ $answer == "Y" ]
+    then
+        echo "Backing up the stats folder ..."
+        mv /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats_bak_$(date +%Y%m%d%H%M%S)
+    else
+        echo "The original stats folder will be removed."
+        rm -rf /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats
+    fi
+fi
+
+mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats
+mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats/Guangzhou
+echo "The stats folder has been created."
+
+
 # Check if the requirements satisfied
 
 echo "Checking the requirements ..."
