@@ -39,7 +39,7 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_index" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_marked" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
@@ -49,13 +49,13 @@ then
         mv /mnt/raid6/bacphagenetwork/data/03_samtools_collate /mnt/raid6/bacphagenetwork/data/03_samtools_collate_bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original output folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/03_samtools_collate
+        rm -rf /mnt/raid6/bacphagenetwork/data/03_samtools_marked
     fi
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_index
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_index/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_index/Guangzhou
+mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked
+mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked/Guangzhou
 
 echo "The output folder has been created."
 
