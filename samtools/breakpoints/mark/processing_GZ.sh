@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=mark_dulplicates_BJ
-#SBATCH --output=./log/Beijing/mark_dulplicates_BJ_%j.out
-#SBATCH --error=./log/Beijing/mark_dulplicates_BJ_%j.err
+#SBATCH --job-name=mark_dulplicates_GZ
+#SBATCH --output=./log/Guangzhou/mark_dulplicates_GZ_%j.out
+#SBATCH --error=./log/Guangzhou/mark_dulplicates_GZ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_samtools_marked/Beijing',STATS_PATH='/mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats',INDEX_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/chm13v2/chm13v2.0_noY.fa'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Guangzhou',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_samtools_marked/Guangzhou',STATS_PATH='/mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats',INDEX_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/chm13v2/chm13v2.0_noY.fa'
 #SBATCH --array=1-201%4
 
 # Initialize the environment
@@ -13,8 +13,8 @@ echo "Initializing..."
 echo "The original *.bam files are located in $INPUT_PATH."
 echo "The marked *.bam files will be saved in $OUTPUT_PATH."
 
-infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(echo "$infile" | grep -oE 'BJ[0-9]{3}')
+infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
 
 # Check all the needed files exist
 
