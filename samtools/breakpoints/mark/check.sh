@@ -4,7 +4,7 @@
 
 echo "Checking the input folder..."
 
-if [ ! -d "/mnt/raid6/bacphagenetwork/data/02_samtools_analysis" ]
+if [ ! -d "/mnt/raid6/bacphagenetwork/data/03_samtools_sorted" ]
 then
     echo "The input folder does not exist, please check manually ..."
     return 1
@@ -39,7 +39,7 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_marked" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/04_samtools_marked" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
@@ -49,13 +49,13 @@ then
         mv /mnt/raid6/bacphagenetwork/data/03_samtools_collate /mnt/raid6/bacphagenetwork/data/03_samtools_collate_bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original output folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/03_samtools_marked
+        rm -rf /mnt/raid6/bacphagenetwork/data/04_samtools_marked
     fi
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked/Guangzhou
+mkdir /mnt/raid6/bacphagenetwork/data/04_samtools_marked
+mkdir /mnt/raid6/bacphagenetwork/data/04_samtools_marked/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/04_samtools_marked/Guangzhou
 
 echo "The output folder has been created."
 
@@ -63,23 +63,23 @@ echo "The output folder has been created."
 
 echo "Creating the stats folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats" ]
 then
     echo "The stats folder already exists, do you want to back up the stats folder? (y/n)"
     read answer
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Backing up the stats folder ..."
-        mv /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats_bak_$(date +%Y%m%d%H%M%S)
+        mv /mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats /mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats_bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original stats folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats
+        rm -rf /mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats
     fi
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_marked_stats/Guangzhou
+mkdir /mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats
+mkdir /mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/04_samtools_marked_stats/Guangzhou
 echo "The stats folder has been created."
 
 
