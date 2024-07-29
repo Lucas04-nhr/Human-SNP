@@ -32,7 +32,7 @@ echo "Initializing complete."
 # Mark the duplicates
 echo "Marking the duplicates of ${sample_name}..."
 
-samtools markdup -r -s $INPUT_PATH/${sample_name}.bam $OUTPUT_PATH/${sample_name}_marked.bam -f $STATS_PATH/${sample_name}.txt -O --reference $INDEX_FILE --write-index|| { echo "Error: Failed to mark the duplicates of $INPUT_PATH/${sample_name}.bam"; exit 1; }
+samtools markdup -r -s $INPUT_PATH/${sample_name}_sorted.bam $OUTPUT_PATH/${sample_name}_marked.bam -f $STATS_PATH/${sample_name}.txt -O --reference $INDEX_FILE --write-index|| { echo "Error: Failed to mark the duplicates of $INPUT_PATH/${sample_name}.bam"; exit 1; }
 
 echo "The duplicates of ${sample_name} have been marked."
 echo "The marked file is saved in $OUTPUT_PATH/${sample_name}_marked.bam."
