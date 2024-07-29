@@ -18,13 +18,13 @@ sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
 
 # Check all the needed files exist
 
-echo "Checking $INPUT_PATH/${sample_name}.bam..."
-if [ ! -f "$INPUT_PATH/${sample_name}.bam" ]
+echo "Checking $INPUT_PATH/${sample_name}_sorted.bam..."
+if [ ! -f "$INPUT_PATH/${sample_name}_sorted.bam" ]
 then
-    echo "Error: $INPUT_PATH/${sample_name}.bam does not exist."
+    echo "Error: $INPUT_PATH/${sample_name}_sorted.bam does not exist."
     exit 1
 else
-    echo "The file $INPUT_PATH/${sample_name}.bam exists."
+    echo "The file $INPUT_PATH/${sample_name}_sorted.bam exists."
 fi
 
 echo "Initializing complete."
