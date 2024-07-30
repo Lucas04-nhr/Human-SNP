@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_analysis/Guangzhou',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Guangzhou'
-#SBATCH --array=1-201%4
+#SBATCH --array=1-160%4
 
 # Initialize the environment
 echo "Initializing..."
