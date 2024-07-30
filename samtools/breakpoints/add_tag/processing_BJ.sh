@@ -33,4 +33,5 @@ echo "Initializing complete."
 
 samtools fixmate -@ 4 -m $INPUT_PATH/${sample_name}_sorted.bam $OUTPUT_PATH/${sample_name}.bam || { echo "Error: Failed to add the tag of $INPUT_PATH/${sample_name}_sorted.bam"; exit 1; }
 
-
+echo "The tag of $INPUT_PATH/${sample_name}_sorted.bam has been added successfully."
+echo "The new file is saved as $OUTPUT_PATH/${sample_name}.bam."
