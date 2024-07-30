@@ -3,7 +3,7 @@
 # Set the path to the genome data
 echo "Please enter the path to the pre-processed *.bam data of Guangzhou:"
 read genome_path
-# The path of the pre-processed *.bam data is '/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Guangzhou'
+# The path of the pre-processed *.bam data is '/mnt/raid6/bacphagenetwork/data/04_samtools_tag_added/Guangzhou'
 export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
