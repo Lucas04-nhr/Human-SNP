@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/view_and_index_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=IMPUT_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/samtools_analysis/Beijing'
+#SBATCH --export=IMPUT_PATH='/mnt/raid6/bacphagenetwork/data/01_bwa_analysis/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing'
 #SBATCH --array=1-201%4
 
 echo "Initialization is complete."
