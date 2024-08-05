@@ -20,9 +20,14 @@ echo "Converting the SAM file to BAM file..."
 echo "The path to the SAM file is $IMPUT_PATH/${sample_name}.sam."
 echo "The path to the BAM file is $OUTPUT_PATH/${sample_name}.bam."
 samtools view -bS $IMPUT_PATH/${sample_name}.sam > $OUTPUT_PATH/${sample_name}.bam || { echo "Error: samtools view failed in processing $sample_name."; exit 1; }
+echo "The SAM file $sample_name has been successfully converted to BAM file."
+
+# Create the header file
+echo "Creating the header file..."
 samtools view -H $OUTPUT_PATH/${sample_name}.bam > $OUTPUT_PATH/${sample_name}.header
+echo "The header file has been created."
 
 # Combine the header and the BAM file
+echo "Reheadering the BAM file..."
 samtools reheader $OUTPUT_PATH/${sample_name}.header $OUTPUT_PATH/${sample_name}.bam > $OUTPUT_PATH/${sample_name}.reheader.bam
-
-echo "The SAM file $sample_name has been successfully converted to BAM file."
+echo "The BAM file has been reheadered."
