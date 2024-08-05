@@ -32,7 +32,7 @@ echo "Initializing complete."
 # Sort the bam file
 echo "Sorting the bam file of ${sample_name}..."
 
-samtools sort -n -@ 4 -o $OUTPUT_PATH/${sample_name}_sorted.bam $INPUT_PATH/${sample_name}.bam || { echo "Error: Failed to sort the bam file of $INPUT_PATH/${sample_name}.bam"; exit 1; }
+samtools sort -@ 4 -o $OUTPUT_PATH/${sample_name}_sorted.bam $INPUT_PATH/${sample_name}.bam || { echo "Error: Failed to sort the bam file of $INPUT_PATH/${sample_name}.bam"; exit 1; }
 
 echo "The bam file of ${sample_name} has been sorted."
 echo "The sorted file is saved in $OUTPUT_PATH/${sample_name}_sorted.bam."
