@@ -4,7 +4,7 @@
 
 echo "Checking the input folder..."
 
-if [ ! -d "/mnt/raid6/bacphagenetwork/data/02_samtools_analysis" ]
+if [ ! -d "/mnt/raid6/bacphagenetwork/data/01_bwa_analysis" ]
 then
     echo "The input folder does not exist, please check manually ..."
     return 1
@@ -39,23 +39,23 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/03_samtools_sorted" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/02_samtools_viewed" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Backing up the output folder ..."
-        mv /mnt/raid6/bacphagenetwork/data/03_samtools_collate /mnt/raid6/bacphagenetwork/data/03_samtools_collate_bak_$(date +%Y%m%d%H%M%S)
+        mv /mnt/raid6/bacphagenetwork/data/02_samtools_viewed /mnt/raid6/bacphagenetwork/data/02_samtools_viewed_bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original output folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/03_samtools_sorted
+        rm -rf /mnt/raid6/bacphagenetwork/data/02_samtools_viewed
     fi
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_sorted
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Guangzhou
+mkdir /mnt/raid6/bacphagenetwork/data/02_samtools_viewed
+mkdir /mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Guangzhou
 
 echo "The output folder has been created."
 
