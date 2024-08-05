@@ -39,3 +39,5 @@ echo "Some lines have been added to the header file."
 echo "Reheadering the BAM file..."
 samtools reheader $OUTPUT_PATH/${sample_name}.header $OUTPUT_PATH/${sample_name}.bam > $OUTPUT_PATH/${sample_name}.reheader.bam || { echo "Error: samtools reheader failed in reheadering the BAM file for $sample_name."; exit 1; }
 echo "The BAM file has been reheadered."
+echo "The processing of $sample_name has been completed."
+echo "The output file is $OUTPUT_PATH/${sample_name}.reheader.bam."
