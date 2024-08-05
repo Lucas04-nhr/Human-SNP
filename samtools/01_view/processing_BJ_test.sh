@@ -29,6 +29,12 @@ echo "Creating the header file..."
 samtools view -H $OUTPUT_PATH/${sample_name}.bam > $OUTPUT_PATH/${sample_name}.header || { echo "Error: samtools view failed in creating the header file for $sample_name."; exit 1; }
 echo "The header file has been created."
 
+# Adding some lines to the header file
+echo "Adding some lines to the header file..."
+echo "@RG\tID:${sample_name}\tSM:${sample_name}\tPL:ILLUMINA" >> $OUTPUT_PATH/${sample_name}.header || { echo "Error: Failed to add lines to the header file for $sample_name."; exit 1; }
+echo "@HD\tVN:1.0\tSO:coordinate" >> $OUTPUT_PATH/${sample_name}.header || { echo "Error: Failed to add lines to the header file for $sample_name."; exit 1; }
+echo "Some lines have been added to the header file."
+
 # Combine the header and the BAM file
 echo "Reheadering the BAM file..."
 samtools reheader $OUTPUT_PATH/${sample_name}.header $OUTPUT_PATH/${sample_name}.bam > $OUTPUT_PATH/${sample_name}.reheader.bam || { echo "Error: samtools reheader failed in reheadering the BAM file for $sample_name."; exit 1; }
