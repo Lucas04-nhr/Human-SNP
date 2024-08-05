@@ -3,7 +3,7 @@
 # Set the path to the genome data
 echo "Please enter the path to the processed *.sam data:"
 read genome_path
-# The path of the processed *.sam data is '/mnt/raid6/bacphagenetwork/data/bwa_analysis/Guangzhou'
+# The path of the processed *.sam data is '/mnt/raid6/bacphagenetwork/data/01_bwa_analysis/Guangzhou'
 export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
@@ -18,8 +18,8 @@ else
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Overwriting the index ..."
-        rm ./gz_01_sbatch.list
-        touch ./gz_01_sbatch.list
+        rm ./GZ_sbatch.list
+        touch ./GZ_sbatch.list
     else
         echo "The index will not be overwritten."
         exit
