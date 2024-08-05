@@ -15,7 +15,6 @@ infile=($( cat BJ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==lin
 sample_name=$(echo "$infile" | grep -oE 'BJ[0-9]{3}')
 
 echo "Processing $sample_name..."
-echo "Converting the SAM file to BAM file..."
 echo "The path to the SAM file is $IMPUT_PATH/${sample_name}.sam."
 echo "The path to the BAM file is $OUTPUT_PATH/${sample_name}.bam."
 

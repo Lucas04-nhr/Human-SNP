@@ -1,18 +1,18 @@
 #!/bin/bash
-#SBATCH --job-name=view_and_index_BJ
-#SBATCH --output=./log/Beijing/view_and_index_BJ_%j.out
-#SBATCH --error=./log/Beijing/view_and_index_BJ_%j.err
+#SBATCH --job-name=view_and_index_GZ
+#SBATCH --output=./log/Guangzhou/view_and_index_GZ_%j.out
+#SBATCH --error=./log/Guangzhou/view_and_index_GZ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=IMPUT_PATH='/mnt/raid6/bacphagenetwork/data/01_bwa_analysis/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing'
-#SBATCH --array=2-201%4
+#SBATCH --export=IMPUT_PATH='/mnt/raid6/bacphagenetwork/data/01_bwa_analysis/Guangzhou',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Guangzhou'
+#SBATCH --array=1-160%4
 
 echo "Initialization is complete."
 
 echo "The working directory has been changed to $IMPUT_PATH."
 
-infile=($( cat BJ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(echo "$infile" | grep -oE 'BJ[0-9]{3}')
+infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
 
 echo "Processing $sample_name..."
 echo "The path to the SAM file is $IMPUT_PATH/${sample_name}.sam."
