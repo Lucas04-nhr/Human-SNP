@@ -31,7 +31,7 @@ echo "The header file has been created."
 
 # Adding some lines to the header file
 echo "Adding some lines to the header file..."
-echo -e "@RG $\t ID:${sample_name}\tSM:${sample_name}\tPL:ILLUMINA" >> $OUTPUT_PATH/${sample_name}.header || { echo "Error: Failed to add lines to the header file for $sample_name."; exit 1; }
+echo -e "@RG\tID:${sample_name}\tSM:${sample_name}\tPL:ILLUMINA" >> $OUTPUT_PATH/${sample_name}.header || { echo "Error: Failed to add lines to the header file for $sample_name."; exit 1; }
 echo -e "@HD\tVN:1.0\tSO:coordinate" >> $OUTPUT_PATH/${sample_name}.header || { echo "Error: Failed to add lines to the header file for $sample_name."; exit 1; }
 echo "Some lines have been added to the header file."
 
