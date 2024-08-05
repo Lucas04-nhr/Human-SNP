@@ -28,7 +28,7 @@ fi
 
 # Add the genome data to the config file "samples.index"
 echo "Adding the genome data to the config file..."
-for file_fq1 in $(ls ${GENOME_PATH} | grep -E '_header.bam')
+for file_fq1 in $(ls ${GENOME_PATH} | grep -E '.reheader.bam')
 do
     echo "$GENOME_PATH/$file_fq1" >> ./bj_sbatch.list
     sample_name=$(echo "$file_fq1" | grep -oE 'BJ[0-9]{3}')
