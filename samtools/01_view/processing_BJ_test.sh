@@ -14,11 +14,13 @@ echo "The working directory has been changed to $IMPUT_PATH."
 infile=($( cat BJ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(echo "$infile" | grep -oE 'BJ[0-9]{3}')
 
-# Convert the SAM file to BAM file
 echo "Processing $sample_name..."
 echo "Converting the SAM file to BAM file..."
 echo "The path to the SAM file is $IMPUT_PATH/${sample_name}.sam."
 echo "The path to the BAM file is $OUTPUT_PATH/${sample_name}.bam."
+
+# Convert the SAM file to BAM file
+echo "Converting the SAM file to BAM file..."
 samtools view -bS $IMPUT_PATH/${sample_name}.sam > $OUTPUT_PATH/${sample_name}.bam || { echo "Error: samtools view failed in processing $sample_name."; exit 1; }
 echo "The SAM file $sample_name has been successfully converted to BAM file."
 
