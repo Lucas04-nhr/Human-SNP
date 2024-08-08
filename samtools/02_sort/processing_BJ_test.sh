@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=sort_BJ
-#SBATCH --output=./log/Beijing/sort_BJ_%j.out
-#SBATCH --error=./log/Beijing/sort_BJ_%j.err
+#SBATCH --output=./log/Beijing/sort_and_index_BJ_%j.out
+#SBATCH --error=./log/Beijing/sort__and_index_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/02_samtools_analysis/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing'
