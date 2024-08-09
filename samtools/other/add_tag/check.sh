@@ -7,7 +7,7 @@ echo "Checking the input folder..."
 if [ ! -d "/mnt/raid6/bacphagenetwork/data/03_samtools_sorted" ]
 then
     echo "The input folder does not exist, please check manually ..."
-    return 1
+    exit 1
 else
     echo "The input folder already exists."
 fi
@@ -66,7 +66,7 @@ echo "Checking the requirements ..."
 if ! command -v samtools &> /dev/null
 then
     echo "samtools is not installed. Please install samtools and try again."
-    return 1
+    exit 1
 else
     echo "samtools is installed."
 fi
@@ -74,7 +74,7 @@ fi
 if ! command -v bedtools &> /dev/null
 then
     echo "bedtools is not installed. Please install bedtools and try again."
-    return 1
+    exit 1
 else
     echo "bedtools is installed."
 fi
