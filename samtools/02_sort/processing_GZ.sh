@@ -13,7 +13,7 @@ echo "Initializing..."
 echo "The original *.reheader.bam files are located in $INPUT_PATH."
 echo "The marked *.bam files will be saved in $OUTPUT_PATH."
 
-infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat gz_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
 
 # Check all the needed files exist
