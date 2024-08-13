@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/mark_dulplicate_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',PICARD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',PICARD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar',PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar'
 #SBATCH --array=1
 
 # Initialize the environment
@@ -41,7 +41,7 @@ echo "Initializing complete."
 # Mark the duplicates
 echo "Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam..."
 
-$JAVA_BIN -jar $PICARD_BIN MarkDuplicates \
+java -jar $PICARD_OLD_BIN MarkDuplicates \
     INPUT=$INPUT_PATH/${sample_name}.sorted.bam \
     OUTPUT=$OUTPUT_PATH/${sample_name}.marked.bam \
     METRICS_FILE=$OUTPUT_PATH/${sample_name}.marked.metrics.txt \
