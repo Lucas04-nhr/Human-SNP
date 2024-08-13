@@ -47,7 +47,6 @@ $JAVA_BIN -jar $PICARD_BIN MarkDuplicates \
     METRICS_FILE=$OUTPUT_PATH/${sample_name}.marked.metrics.txt \
     ASSUME_SORTED=true \
     REMOVE_DUPLICATES=false \
-    SEQUENCE_DICTIONARY=$INPUT_PATH/${sample_name}.sorted.bai \
     VALIDATION_STRINGENCY=SILENT \
 || { echo "Error: Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam failed."; exit 1; }
 
