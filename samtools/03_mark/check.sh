@@ -65,6 +65,7 @@ echo "Checking the requirements ..."
 
 export JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java'
 export PICARD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar'
+export PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar'
 
 if [ ! -f "$JAVA_BIN" ]
 then
@@ -80,6 +81,14 @@ then
     exit 1
 else
     echo "The file $PICARD_BIN exists."
+fi
+
+if [ ! -f "$PICARD_OLD_BIN" ]
+then
+    echo "Error: $PICARD_OLD_BIN does not exist."
+    exit 1
+else
+    echo "The file $PICARD_OLD_BIN exists."
 fi
 
 echo "All requirements are satisfied."
