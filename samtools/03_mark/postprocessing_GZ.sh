@@ -8,10 +8,14 @@ export OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Guangzh
 echo "Copying the metrics file..."
 
 # Check the directory
+if [ ! -d "./metrics" ]
+then
+    mkdir ./metrics
+fi
+
 if [ ! -d "./metrics/Guangzhou" ]
 then
     echo "Creating the directory..."
-    mkdir ./metrics
     mkdir ./metrics/Guangzhou
 fi
 
