@@ -45,7 +45,7 @@ echo "Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam..."
 
 $JAVA_BIN -jar $PICARD_NEW_BIN CollectInsertSizeMetrics \
     INPUT=$INPUT_PATH/${sample_name}.marked.bam \
-    METRICS_FILE=$OUTPUT_PATH/${sample_name}.metrics.txt \
+    OUTPUT=$OUTPUT_PATH/${sample_name}.metrics.txt \
     HISTOGRAM_FILE=$OUTPUT_PATH/${sample_name}.hist.pdf \
     MINIMUM_PCT=0.5 \
 || { echo "Error: Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam failed."; exit 1; }
