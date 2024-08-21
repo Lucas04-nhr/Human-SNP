@@ -92,14 +92,14 @@ then
 fi
 
 # Picard 2.26
-if [ ! -f "/mnt/raid6/bacphagenetwork/tools/picard-2.26.0/picard.jar" ]
+if [ ! -f "/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar" ]
 then
     echo "The Picard v2.26 is not found, please check manually ..."
     exit 1
 fi
 
 # Picard 3.0
-if [ ! -f "/mnt/raid6/bacphagenetwork/tools/picard-3.0/picard.jar" ]
+if [ ! -f "/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar" ]
 then
     echo "The Picard v3.0 is not found, please check manually ..."
     exit 1
