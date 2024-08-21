@@ -105,6 +105,13 @@ then
     exit 1
 fi
 
+# Breakdancer
+if [ ! -f "/mnt/raid6/bacphagenetwork/tools/breakdancer/build/bin/breakdancer-max" ]
+then
+    echo "The Breakdancer is not found, please check manually ..."
+    exit 1
+fi
+
 echo "All requirements are satisfied."
 
 # Ask for creating sbatch files
