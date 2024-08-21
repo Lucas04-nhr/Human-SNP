@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/mark_breakpoints_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_breakpoint_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',PATH='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java:$PATH',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/:-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',GATK_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar',GATK_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk-package-4.5.0.0-local.jar'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_breakpoint_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',PATH='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java:$PATH',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/:-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',GATK_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar',GATK_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk-package-4.5.0.0-local.jar',PICARD_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar',PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar'
 #SBATCH --array=1
 
 # Initialize the environment
@@ -37,6 +37,23 @@ else
 fi
 
 echo "Initializing complete."
+
+# Collect insert size metrics
+
+# Mark the duplicates
+echo "Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam..."
+
+$JAVA_BIN -jar $PICARD_NEW_BIN CollectInsertSizeMetrics \
+    INPUT=$INPUT_PATH/${sample_name}.marked.bam \
+    METRICS_FILE=$OUTPUT_PATH/${sample_name}.metrics.txt \
+    HISTOGRAM_FILE=$OUTPUT_PATH/${sample_name}.hist.pdf \
+    MINIMUM_PCT=0.5 \
+|| { echo "Error: Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam failed."; exit 1; }
+
+echo "Marking duplicates for $INPUT_PATH/${sample_name}.marked.bam complete."
+echo "The marked file is saved in $OUTPUT_PATH/${sample_name}.marked.bam."
+
+
 
 
 
