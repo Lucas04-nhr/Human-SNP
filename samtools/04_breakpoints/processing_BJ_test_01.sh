@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_breakpoint_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/:-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',GATK_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar',GATK_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk-package-4.5.0.0-local.jar',PICARD_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar',PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar'
-#SBATCH --array=2-201%5
+#SBATCH --array=1
 
 # Initialize the environment
 echo "Initializing..."
@@ -40,8 +40,7 @@ echo "Initializing complete."
 
 # Collect insert size metrics
 
-# Mark the duplicates
-echo "Marking duplicates for $INPUT_PATH/${sample_name}.sorted.bam..."
+echo "Collecting insert size metrics for $INPUT_PATH/${sample_name}.marked.bam..."
 
 $JAVA_BIN -jar $PICARD_NEW_BIN CollectInsertSizeMetrics \
     INPUT=$INPUT_PATH/${sample_name}.marked.bam \
