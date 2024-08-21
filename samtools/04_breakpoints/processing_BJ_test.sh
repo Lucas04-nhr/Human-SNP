@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/mark_breakpoints_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_breakpoint_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',PATH='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java:$PATH',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/:-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',GATK_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar',GATK_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk-package-4.5.0.0-local.jar',PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard-2.26.0/picard.jar',PICARD_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/picard-3.0/picard.jar'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_breakpoint_marked/Beijing',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',PATH='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java:$PATH',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/:-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',GATK_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk-package-4.3.0.0-local.jar',GATK_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk-package-4.5.0.0-local.jar'
 #SBATCH --array=1
 
 # Initialize the environment

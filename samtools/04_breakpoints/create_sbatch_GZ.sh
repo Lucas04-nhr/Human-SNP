@@ -31,7 +31,7 @@ echo "Adding the genome data to the config file..."
 for file_fq1 in $(ls ${GENOME_PATH} | grep -E '.marked.bam')
 do
     echo "$GENOME_PATH/$file_fq1" >> ./gz_sbatch.list
-    sample_name=$(echo "$file_fq1" | grep -oE 'gz[0-9]{3}')
+    sample_name=$(echo "$file_fq1" | grep -oE 'GZ[0-9]{3}')
     echo "The genome data of $sample_name has been added to the config file."
 done
 
