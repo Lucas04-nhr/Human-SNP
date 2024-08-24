@@ -4,7 +4,7 @@
 
 echo "Checking the input folder..."
 
-if [ ! -d "/mnt/raid6/bacphagenetwork/data/05_format_converted" ]
+if [ ! -d "/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked" ]
 then
     echo "The input folder does not exist, please check manually ..."
     exit 1
