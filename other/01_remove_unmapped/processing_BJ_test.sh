@@ -40,15 +40,24 @@ echo "Initializing complete."
 # Remove unmapped
 echo "Removing unmapped from $INPUT_PATH/${sample_name}.marked.sam to $OUTPUT_PATH/${sample_name}.removed.sam..."
 
-i = 0
+# Calculate the number of lines
+export total_lines=$(wc -l < $INPUT_PATH/${sample_name}.marked.sam | grep -oE '[0-9]+')
+echo "The total number of lines is $total_lines."
+echo "========================================================================"
+echo "Processing..."
+
+export i = 0
 
 while read -r line; do
-    i = $((i+1))
+    export i = $((i+1))
     echo "Processing line $i..."
     if [[ ! $line =~ \*[\ ]*0[\ ]*0[\ ]*\*[\ ]*\*[\ ]*0[\ ]*0 ]]; then
         echo "$line" >> $OUTPUT_PATH/${sample_name}.removed.sam
+        echo "Line $i will be saved."
+    else
+        echo "Line $i will be removed."
     fi
-    echo "Line $i processed."
 done < $INPUT_PATH/${sample_name}.marked.sam
 
+echo "========================================================================"
 echo "Removing unmapped complete."
