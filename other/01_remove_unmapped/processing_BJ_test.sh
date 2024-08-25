@@ -35,6 +35,14 @@ else
     echo "The file $INPUT_PATH/${sample_name}.marked.sam exists."
 fi
 
+# Check the output file
+echo "Checking $OUTPUT_PATH/${sample_name}.removed.sam..."
+if [ -f "$OUTPUT_PATH/${sample_name}.removed.sam" ]
+then
+    echo "Warning: $OUTPUT_PATH/${sample_name}.removed.sam exists and will be overwritten."
+    rm $OUTPUT_PATH/${sample_name}.removed.sam
+fi
+
 echo "Initializing complete."
 
 # Remove unmapped
