@@ -56,12 +56,12 @@ echo "Processing..."
 
 # Split the file into smaller chunks with line numbers
 # Create a temporary folder to store the chunks
-if [ ! -d "$OUTPUT_PATH/tmp" ]
-then
-    mkdir $OUTPUT_PATH/tmp
+if [ ! -d "$OUTPUT_PATH/tmp" ]; then
+    mkdir -p $OUTPUT_PATH/tmp
 fi
 
-split -l $((total_lines / $(nproc))) --additional-suffix=.sam $INPUT_PATH/${sample_name}.marked.sam ${OUTPUT_PATH}/tmp/${sample_name}_chunk_
+# Increase the number of chunks to improve parallelism
+split -l $((total_lines / ($(nproc) * 5))) --additional-suffix=.sam $INPUT_PATH/${sample_name}.marked.sam ${OUTPUT_PATH}/tmp/${sample_name}_chunk_
 
 # Function to process each chunk
 process_chunk() {
@@ -76,15 +76,14 @@ process_chunk() {
 
 export -f process_chunk
 
-# Use GNU Parallel to process chunks in parallel
-ls ${OUTPUT_PATH}/tmp/${sample_name}_chunk_*.sam | pv -l -s $(ls ${OUTPUT_PATH}/tmp/${sample_name}_chunk_*.sam | wc -l) | parallel process_chunk {} ${OUTPUT_PATH}/${sample_name}.removed.sam
+# Use GNU Parallel to process chunks in parallel with progress and increased threads
+ls ${OUTPUT_PATH}/tmp/${sample_name}_chunk_*.sam | pv -l -s $(ls ${OUTPUT_PATH}/tmp/${sample_name}_chunk_*.sam | wc -l) | parallel -j $(nproc) process_chunk {} ${OUTPUT_PATH}/${sample_name}.removed.sam
 
 # Sort the output file by line number
-sort -n -k1,1 ${OUTPUT_PATH}/tmp/${sample_name}.removed.sam -o ${OUTPUT_PATH}/${sample_name}.removed.sam
+sort -n -k1,1 ${OUTPUT_PATH}/${sample_name}.removed.sam -o ${OUTPUT_PATH}/${sample_name}.removed.sam
 
 echo "========================================================================"
 echo "Removing unmapped complete."
-
 # Clean up
 echo "Cleaning up..."
 rm -rf $OUTPUT_PATH/tmp
