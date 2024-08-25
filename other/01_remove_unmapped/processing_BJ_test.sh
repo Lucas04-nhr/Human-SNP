@@ -48,24 +48,31 @@ echo "Initializing complete."
 # Remove unmapped
 echo "Removing unmapped from $INPUT_PATH/${sample_name}.marked.sam to $OUTPUT_PATH/${sample_name}.removed.sam..."
 
-# Calculate the number of lines
-export total_lines=$(wc -l < $INPUT_PATH/${sample_name}.marked.sam | grep -oE '[0-9]+')
-echo "The total number of lines is $total_lines."
-echo "========================================================================"
-echo "Processing..."
+# Using samtools
+echo "Processing ${sample_name}..."
+samtools view -F 4 -h $INPUT_PATH/${sample_name}.marked.sam > $OUTPUT_PATH/${sample_name}.removed.sam \
+|| { echo "Error: Processing failed for ${sample_name}."; exit 1; }
+echo "Processing complete for ${sample_name}."
 
-export i=0
 
-while read -r line; do
-    export i=$((i+1))
-    echo "Processing line $i of $total_lines..."
-    if [[ ! $line =~ \*[\ ]*0[\ ]*0[\ ]*\*[\ ]*\*[\ ]*0[\ ]*0 ]]; then
-        echo "$line" >> $OUTPUT_PATH/${sample_name}.removed.sam
-        echo "Line $i will be saved."
-    else
-        echo "Line $i will be removed."
-    fi
-done < $INPUT_PATH/${sample_name}.marked.sam
+# # Calculate the number of lines
+# export total_lines=$(wc -l < $INPUT_PATH/${sample_name}.marked.sam | grep -oE '[0-9]+')
+# echo "The total number of lines is $total_lines."
+# echo "========================================================================"
+# echo "Processing..."
 
-echo "========================================================================"
-echo "Removing unmapped complete."
+# export i=0
+
+# while read -r line; do
+#     export i=$((i+1))
+#     echo "Processing line $i of $total_lines..."
+#     if [[ ! $line =~ \*[\ ]*0[\ ]*0[\ ]*\*[\ ]*\*[\ ]*0[\ ]*0 ]]; then
+#         echo "$line" >> $OUTPUT_PATH/${sample_name}.removed.sam
+#         echo "Line $i will be saved."
+#     else
+#         echo "Line $i will be removed."
+#     fi
+# done < $INPUT_PATH/${sample_name}.marked.sam
+
+# echo "========================================================================"
+# echo "Removing unmapped complete."
