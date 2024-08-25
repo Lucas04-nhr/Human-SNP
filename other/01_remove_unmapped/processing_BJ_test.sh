@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=remove_dulplicates_BJ
-#SBATCH --output=./log/Beijing/remove_dulplicates_BJ_%j.out
-#SBATCH --error=./log/Beijing/remove_dulplicates_BJ_%j.err
+#SBATCH --job-name=remove_unmapped_BJ
+#SBATCH --output=./log/Beijing/remove_unmapped_BJ_%j.out
+#SBATCH --error=./log/Beijing/remove_unmapped_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_format_converted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/06_dulplicates_removed/Beijing'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/05_format_converted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing'
 #SBATCH --array=1
 
 
@@ -37,12 +37,18 @@ fi
 
 echo "Initializing complete."
 
-# Remove duplicates
-echo "Removing duplicates from $INPUT_PATH/${sample_name}.marked.sam to $OUTPUT_PATH/${sample_name}.removed.sam..."
+# Remove unmapped
+echo "Removing unmapped from $INPUT_PATH/${sample_name}.marked.sam to $OUTPUT_PATH/${sample_name}.removed.sam..."
+
+i = 0
 
 while read -r line; do
-
+    i = $((i+1))
+    echo "Processing line $i..."
     if [[ ! $line =~ \*[\ ]*0[\ ]*0[\ ]*\*[\ ]*\*[\ ]*0[\ ]*0 ]]; then
         echo "$line" >> $OUTPUT_PATH/${sample_name}.removed.sam
     fi
+    echo "Line $i processed."
 done < $INPUT_PATH/${sample_name}.marked.sam
+
+echo "Removing unmapped complete."

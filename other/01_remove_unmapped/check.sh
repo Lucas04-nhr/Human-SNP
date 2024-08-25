@@ -39,23 +39,23 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/06_dulplicates_removed" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/06_unmapped_removed" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Backing up the output folder ..."
-        mv /mnt/raid6/bacphagenetwork/data/06_dulplicates_removed /mnt/raid6/bacphagenetwork/data/06_dulplicates_removed_bak_$(date +%Y%m%d%H%M%S)
+        mv /mnt/raid6/bacphagenetwork/data/06_unmapped_removed /mnt/raid6/bacphagenetwork/data/06_unmapped_removed_bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original output folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/06_dulplicates_removed
+        rm -rf /mnt/raid6/bacphagenetwork/data/06_unmapped_removed
     fi
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/06_dulplicates_removed
-mkdir /mnt/raid6/bacphagenetwork/data/06_dulplicates_removed/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/06_dulplicates_removed/Guangzhou
+mkdir /mnt/raid6/bacphagenetwork/data/06_unmapped_removed
+mkdir /mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Guangzhou
 
 echo "The output folder has been created."
 
