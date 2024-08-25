@@ -1,6 +1,13 @@
 #!/bin/bash
-# Remove unmapped
 
+# Check if the output file exists
+if [ -f "./BJ001.head50.removed.sam" ]
+then
+    echo "Warning: ./BJ001.head50.removed.sam exists and will be overwritten."
+    rm ./BJ001.head50.removed.sam
+fi
+
+# Remove unmapped
 # Calculate the number of lines
 export total_lines=$(wc -l < ./BJ001.head50.sam | grep -oE '[0-9]+')
 echo "The total number of lines is $total_lines."
