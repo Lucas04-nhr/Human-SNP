@@ -54,10 +54,10 @@ echo "The total number of lines is $total_lines."
 echo "========================================================================"
 echo "Processing..."
 
-export i = 0
+export i=0
 
 while read -r line; do
-    export i = $((i+1))
+    export i=$((i+1))
     echo "Processing line $i..."
     if [[ ! $line =~ \*[\ ]*0[\ ]*0[\ ]*\*[\ ]*\*[\ ]*0[\ ]*0 ]]; then
         echo "$line" >> $OUTPUT_PATH/${sample_name}.removed.sam
