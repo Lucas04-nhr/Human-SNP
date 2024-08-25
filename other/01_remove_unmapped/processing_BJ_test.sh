@@ -58,7 +58,7 @@ export i=0
 
 while read -r line; do
     export i=$((i+1))
-    echo "Processing line $i..."
+    echo "Processing line $i of $total_lines..."
     if [[ ! $line =~ \*[\ ]*0[\ ]*0[\ ]*\*[\ ]*\*[\ ]*0[\ ]*0 ]]; then
         echo "$line" >> $OUTPUT_PATH/${sample_name}.removed.sam
         echo "Line $i will be saved."
