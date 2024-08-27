@@ -20,15 +20,15 @@ else
 fi
 
 # Set the path to the genome data
-echo "Please enter the path to the marked *.bam data of Beijing:"
+echo "Please enter the path to the original *.sam data of Beijing:"
 read genome_path
-# The path of the marked *.bam data is '/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing'
+# The path of the original *.bam data is '/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing'
 export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
 # Add the genome data to the config file "samples.index"
 echo "Adding the genome data to the config file..."
-for file_fq1 in $(ls ${GENOME_PATH} | grep -E '.marked.sam')
+for file_fq1 in $(ls ${GENOME_PATH} | grep -E '.removed.sam')
 do
     echo "$GENOME_PATH/$file_fq1" >> ./BJ_sbatch.list
     sample_name=$(echo "$file_fq1" | grep -oE 'BJ[0-9]{3}')
