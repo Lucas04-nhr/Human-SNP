@@ -20,7 +20,7 @@ fi
 
 for file in $(ls $OUTPUT_PATH/*.histogram.txt)
 do
-    export $sample_name=$(echo "$file" | grep -oE 'BJ[0-9]{3}')
+    export sample_name=$(echo "$file" | grep -oE 'BJ[0-9]{3}')
     echo "Copying metrics file of $sample_name..."
     cp $file ./metrics/Beijing \
     || { echo "Error: Failed to copy $file"; exit 1; }
@@ -28,7 +28,7 @@ done
 
 for file in $(ls $OUTPUT_PATH/*.histogram.pdf)
 do
-    export $sample_name=$(echo "$file" | grep -oE 'BJ[0-9]{3}')
+    export sample_name=$(echo "$file" | grep -oE 'BJ[0-9]{3}')
     echo "Copying histogram of $sample_name..."
     cp $file ./metrics/Beijing/pdf \
     || { echo "Error: Failed to copy $file"; exit 1; }
