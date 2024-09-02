@@ -32,7 +32,7 @@ def count_elements_in_tmp_file(tmp_file):
 def save_counts_to_static_file(counts_list, static_file):
     print("Saving counts to the static file...")
     element_counts = {}
-    
+
     for i, count in enumerate(counts_list):
         element_counts[i] = count
 
@@ -68,9 +68,9 @@ tmp_file = os.path.join(tmp_dir, os.path.basename(input_file) + ".tmp")
 
 # Print the input and output file names
 print("Processing SAM file...")
-print("Input file: \t" + input_file)
+print("Input file: \t\t" + input_file)
 print("Output directory: \t" + output_dir)
-print("Sample name: \t" + sample_name)
+print("Sample name: \t\t" + sample_name)
 
 
 # Check if sample name was extracted
@@ -87,7 +87,7 @@ if not os.path.exists(static_dir):
     os.makedirs(static_dir)
 
 # Open the SAM file
-print("Processing file: " + input_file)
+print("Processing file: " + os.path.basename(input_file))
 samfile = pysam.AlignmentFile(input_file, "r")
 
 # Open the temporary file and write the header
