@@ -6,6 +6,7 @@ import re
 import matplotlib.pyplot as plt
 
 def extract_sample_name(input_file):
+    print("Extracting sample name...")
     match = re.search(r'BJ[0-9]{3}', input_file)
     if match:
         sample_name = match.group(0)
@@ -14,10 +15,8 @@ def extract_sample_name(input_file):
     return sample_name
 
 def count_elements_in_tmp_file(tmp_file):
+    print("Counting elements in the temporary file...")
     element_counts = {}
-
-    if os.path.exists(tmp_file):
-      os.remove(tmp_file)
 
     with open(tmp_file, "r") as infile:
         for line in infile:
@@ -31,15 +30,14 @@ def count_elements_in_tmp_file(tmp_file):
     return counts_list
 
 def save_counts_to_static_file(counts_list, static_file):
-    if os.path.exists(static_file):
-      os.remove(static_file)
-      
+
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
         for element, count in element_counts.items():
             outfile.write(f"{element},{count}\n")
 
 def draw_pie_chart(counts_list, output_file):
+    print("Drawing pie chart...")    
     plt.figure(figsize=(10, 10), dpi=300)
     plt.pie(counts_list, autopct='%1.1f%%')
     plt.savefig(output_file)
@@ -54,6 +52,7 @@ parser.add_argument('-o', '--output', required=True, help="Output directory")
 args = parser.parse_args()
 
 # Get the input and output file names
+print("Initializing...")
 input_file = args.input
 sample_name = extract_sample_name(input_file)
 output_dir = args.output
@@ -61,6 +60,13 @@ tmp_dir = os.path.join(output_dir, "tmp")
 static_dir = args.static
 output_file = os.path.join(output_dir, os.path.basename(input_file) + ".piechart.pdf")
 tmp_file = os.path.join(tmp_dir, os.path.basename(input_file) + ".tmp")
+
+# Print the input and output file names
+print("Processing SAM file...")
+print("Input file: \t" + input_file)
+print("Output directory: \t" + output_dir)
+print("Sample name: \t" + sample_name)
+
 
 # Check if sample name was extracted
 if sample_name == "NoMatchFound":
