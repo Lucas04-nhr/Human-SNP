@@ -30,11 +30,16 @@ def count_elements_in_tmp_file(tmp_file):
     return counts_list
 
 def save_counts_to_static_file(counts_list, static_file):
+    print("Saving counts to the static file...")
+    element_counts = {}
+    
+    for i, count in enumerate(counts_list):
+        element_counts[i] = count
 
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
-        for element, count in counts_list.items():
-            outfile.write(f"{element},{count}\n")
+        for key, value in element_counts.items():
+            outfile.write(f"{key},{value}\n")
 
 def draw_pie_chart(counts_list, output_file):
     print("Drawing pie chart...")    
