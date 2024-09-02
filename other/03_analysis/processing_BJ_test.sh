@@ -38,10 +38,12 @@ fi
 
 # Analysis
 echo "Analysis for $INPUT_PATH/${sample_name}.removed.sam..."
+log_file=./log/Beijing/analysis_BJ_${SLURM_JOB_ID}.out
 python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/other/03_analysis/processing_BJ.py \
     -i $INPUT_PATH/${sample_name}.removed.sam \
     -o $OUTPUT_PATH/ \
     -s $OUTPUT_PATH/static/ \
+>> $log_file 2>&1 \
 || { echo "Error: processing of ${sample_name} failed"; exit 4; }
 
 echo "The analysis for $INPUT_PATH/${sample_name}.removed.sam is done."
