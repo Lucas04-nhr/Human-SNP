@@ -16,6 +16,9 @@ def extract_sample_name(input_file):
 def count_elements_in_tmp_file(tmp_file):
     element_counts = {}
 
+    if os.path.exists(tmp_file):
+      os.remove(tmp_file)
+
     with open(tmp_file, "r") as infile:
         for line in infile:
             element = line.strip()
@@ -28,6 +31,9 @@ def count_elements_in_tmp_file(tmp_file):
     return counts_list
 
 def save_counts_to_static_file(counts_list, static_file):
+    if os.path.exists(static_file):
+      os.remove(static_file)
+      
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
         for element, count in element_counts.items():
