@@ -31,7 +31,7 @@ echo "Checking $INPUT_PATH/${sample_name}.removed.sam..."
 if [ ! -f "$INPUT_PATH/${sample_name}.removed.sam" ]
 then
     echo "Error: $INPUT_PATH/${sample_name}.removed.sam does not exist."
-    exit 1
+    exit 2
 else
     echo "The file $INPUT_PATH/${sample_name}.removed.sam exists."
 fi
@@ -40,4 +40,8 @@ fi
 echo "Analysis for $INPUT_PATH/${sample_name}.removed.sam..."
 python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/other/03_analysis/processing_BJ.py \
     -i $INPUT_PATH/${sample_name}.removed.sam \
-    -o $OUTPUT_PATH/${sample_name}.analysis.txt \
+    -o $OUTPUT_PATH/ \
+    -s $OUTPUT_PATH/static/ \
+|| { echo "Error: processing of ${sample_name} failed"; exit 4; }
+
+echo "The analysis for $INPUT_PATH/${sample_name}.removed.sam is done."
