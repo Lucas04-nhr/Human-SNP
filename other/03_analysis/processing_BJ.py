@@ -50,11 +50,6 @@ def draw_histogram(static_file, output_file, sample_name):
     data_sorted = data.sort_values(by='Count', ascending=False)
     data_sorted['Flag'] = data_sorted['Flag'].astype(str)
 
-    # List the top 5 flags
-    flag_head = data_sorted['Flag'].head()
-    print("Top 5 flags:" + "\n" + str(flag_head))
-
-
     # Define the figure
     plt.figure(figsize=(10, 10), dpi=300)
 
