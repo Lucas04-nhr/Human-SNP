@@ -33,7 +33,7 @@ def save_counts_to_static_file(counts_list, static_file):
 
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
-        for element, count in element_counts.items():
+        for element, count in counts_list.items():
             outfile.write(f"{element},{count}\n")
 
 def draw_pie_chart(counts_list, output_file):
@@ -103,6 +103,3 @@ if args.static:
     
 # Draw the pie chart
 draw_pie_chart(counts_list, output_file)
-
-# Remove the temporary file
-os.remove(tmp_file)
