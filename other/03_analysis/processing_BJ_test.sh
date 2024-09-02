@@ -7,3 +7,8 @@
 #SBATCH --export=
 #SBATCH --array=1
 
+# Initialate conda
+source ~/.bashrc
+
+conda activate snp_analysis
+
