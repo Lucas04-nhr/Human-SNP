@@ -1,0 +1,50 @@
+@HD     VN:1.6  SO:coordinate
+@SQ     SN:chr1 LN:248387328
+@SQ     SN:chr2 LN:242696752
+@SQ     SN:chr3 LN:201105948
+@SQ     SN:chr4 LN:193574945
+@SQ     SN:chr5 LN:182045439
+@SQ     SN:chr6 LN:172126628
+@SQ     SN:chr7 LN:160567428
+@SQ     SN:chr8 LN:146259331
+@SQ     SN:chr9 LN:150617247
+@SQ     SN:chr10        LN:134758134
+@SQ     SN:chr11        LN:135127769
+@SQ     SN:chr12        LN:133324548
+@SQ     SN:chr13        LN:113566686
+@SQ     SN:chr14        LN:101161492
+@SQ     SN:chr15        LN:99753195
+@SQ     SN:chr16        LN:96330374
+@SQ     SN:chr17        LN:84276897
+@SQ     SN:chr18        LN:80542538
+@SQ     SN:chr19        LN:61707364
+@SQ     SN:chr20        LN:66210255
+@SQ     SN:chr21        LN:45090682
+@SQ     SN:chr22        LN:51324926
+@SQ     SN:chrX LN:154259566
+@SQ     SN:chrM LN:16569
+@RG     ID:BJ001        SM:BJ001        PL:ILLUMINA
+@PG     ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem -t 4 /mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa /mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host/BJ001_1.fastq.gz /mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host/BJ001_2.fastq.gz -a
+@PG     ID:samtools     PN:samtools     PP:bwa  VN:1.10 CL:samtools view -bS /mnt/raid6/bacphagenetwork/data/01_bwa_analysis/Beijing/BJ001.sam
+@PG     ID:samtools.1   PN:samtools     PP:samtools     VN:1.10 CL:samtools view -H /mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing/BJ001.bam
+@PG     ID:samtools.2   PN:samtools     PP:samtools.1   VN:1.10 CL:samtools reheader /mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing/BJ001.header /mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing/BJ001.bam
+@PG     ID:samtools.3   PN:samtools     PP:samtools.2   VN:1.10 CL:samtools sort -@ 4 -o /mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing/BJ001.sorted.bam /mnt/raid6/bacphagenetwork/data/02_samtools_viewed/Beijing/BJ001.reheader.bam
+@PG     ID:MarkDuplicates       VN:2.26.0       CL:MarkDuplicates INPUT=[/mnt/raid6/bacphagenetwork/data/03_samtools_sorted/Beijing/BJ001.sorted.bam] OUTPUT=/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing/BJ001.marked.bam METRICS_FILE=/mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing/BJ001.marked.metrics.txt REMOVE_DUPLICATES=false ASSUME_SORTED=true VALIDATION_STRINGENCY=SILENT    MAX_SEQUENCES_FOR_DISK_READ_ENDS_MAP=50000 MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=8000 SORTING_COLLECTION_SIZE_RATIO=0.25 TAG_DUPLICATE_SET_MEMBERS=false REMOVE_SEQUENCING_DUPLICATES=false TAGGING_POLICY=DontTag CLEAR_DT=true DUPLEX_UMI=false ADD_PG_TAG_TO_READS=true DUPLICATE_SCORING_STRATEGY=SUM_OF_BASE_QUALITIES PROGRAM_RECORD_ID=MarkDuplicates PROGRAM_GROUP_NAME=MarkDuplicates READ_NAME_REGEX=<optimized capture of last three ':' separated fields as numeric values> OPTICAL_DUPLICATE_PIXEL_DISTANCE=100 MAX_OPTICAL_DUPLICATE_SET_SIZE=300000 VERBOSITY=INFO QUIET=false COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_INDEX=false CREATE_MD5_FILE=false GA4GH_CLIENT_SECRETS=client_secrets.json USE_JDK_DEFLATER=false USE_JDK_INFLATER=false  PN:MarkDuplicates
+@PG     ID:samtools.4   PN:samtools     PP:samtools.3   VN:1.10 CL:samtools view -@ 4 -h /mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing/BJ001.marked.bam
+@PG     ID:samtools.5   PN:samtools     PP:MarkDuplicates       VN:1.10 CL:samtools view -@ 4 -h /mnt/raid6/bacphagenetwork/data/04_dulplicate_marked/Beijing/BJ001.marked.bam
+E100057444L1C036R0270348310     353     chr1    8       0       8H8M1D116M4D18M chrX    4602    0       *       *       MC:Z:150M       MD:Z:8^C39C0T75^CCCT8C9      PG:Z:MarkDuplicates     NM:i:8  AS:i:110
+E100057444L1C014R0240962459     377     chr1    59      0       44H106M =       59      0       *       *       MD:Z:28C77      PG:Z:MarkDuplicates NM:i:1   AS:i:101
+E100057444L1C001R0064082846     393     chr1    127     0       70M1I67M12H     =       127     0       *       *       MD:Z:102A28A5   PG:Z:MarkDuplicates  NM:i:3  AS:i:120
+E100057444L1C034R0222023152     321     chr1    157     0       18M1D113M19H    chr18   49932717        0       *       *       MC:Z:5H145M     MD:Z:18^C1C23C87     PG:Z:MarkDuplicates     NM:i:3  AS:i:114
+E100057444L1C026R0151028051     377     chr1    181     0       129M1D21M       =       181     0       *       *       MD:Z:50C9A6C0C5C4C27A0C1C18^T7A6C4A1 PG:Z:MarkDuplicates     NM:i:13 AS:i:86
+E100057444L1C028R0343098376     417     chr1    195     0       26M1I6M1I6M1I65M44H     chr17   1892    0       *       *       MC:Z:23M5I20M1I18M4D83M      MD:Z:103        PG:Z:MarkDuplicates     NM:i:3  AS:i:82
+E100057444L1C026R0142439002     433     chr1    197     0       110H40M chr5    18609285        0       *       *       MC:Z:150M       MD:Z:40 PG:Z:MarkDuplicates  NM:i:0  AS:i:40
+E100057444L1C026R0142439002     433     chr1    203     0       110H40M chr5    18609285        0       *       *       MC:Z:150M       MD:Z:40 PG:Z:MarkDuplicates  NM:i:0  AS:i:40
+E100057444L1C004R0140332820     353     chr1    221     0       13M1D81M56H     chr4    3079    0       *       *       MC:Z:36M5I7M5I10M1D60M2D27M MD:Z:13^A69T5T5  PG:Z:MarkDuplicates     NM:i:3  AS:i:77
+E100057444L1C026R0142439002     433     chr1    233     0       110H40M chr5    18609285        0       *       *       MC:Z:150M       MD:Z:40 PG:Z:MarkDuplicates  NM:i:0  AS:i:40
+E100057444L1C010R0060906691     321     chr1    241     0       37H97M16H       chr11   135124988       0       *       *       MC:Z:150M       MD:Z:5A5A43C41       PG:Z:MarkDuplicates     NM:i:3  AS:i:82
+E100057444L1C014R0240962459     377     chr1    304     0       37H113M =       304     0       *       *       MD:Z:35C77      PG:Z:MarkDuplicates NM:i:1   AS:i:108
+E100057444L1C026R0142439002     433     chr1    340     0       110H40M chr5    18609285        0       *       *       MC:Z:150M       MD:Z:40 PG:Z:MarkDuplicates  NM:i:0  AS:i:40
+E100057444L1C014R0240962459     377     chr1    364     0       37H113M =       364     0       *       *       MD:Z:35C77      PG:Z:MarkDuplicates NM:i:1   AS:i:108
+E100057444L1C026R0142439002     433     chr1    406     0       110H40M chr5    18609285        0       *       *       MC:Z:150M       MD:Z:40 PG:Z:MarkDuplicates  NM:i:0  AS:i:40
+E100057444L1C004R0140332820     401     chr1    429     0       37H67M1D18M1D28M        chr12   1062    0       *       *       MC:Z:13M1D52M1D36M49HMD:Z:12C12T5T5T5T5T5T5T5^T5T3C1T6^A28   PG:Z:MarkDuplicates     NM:i:13 AS:i:44
