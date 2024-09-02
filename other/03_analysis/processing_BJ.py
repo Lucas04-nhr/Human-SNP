@@ -3,6 +3,7 @@ import argparse
 from collections import Counter
 import os
 import re
+import matplotlib.pyplot as plt
 
 def extract_sample_name(input_file):
     match = re.search(r'BJ[0-9]{3}', input_file)
@@ -25,6 +26,12 @@ def count_elements_in_tmp_file(tmp_file):
 
     counts_list = list(element_counts.values())
     return counts_list
+
+def save_counts_to_static_file(counts_list, static_file):
+    with open(static_file, "w") as outfile:
+        outfile.write("Flag,Count\n")
+        for count in counts_list:
+            outfile.write(f"{count}\n")
 
 
 # Set up the argument parser
@@ -69,5 +76,9 @@ samfile.close()
 # Open the temporary file and count the flags
 counts_list = count_elements_in_tmp_file(tmp_file)
 
-# If -s is provided, save the counts to the static file
+# If -s is provided, save the counts to the static file using *.csv format
+if args.static:
+    save_counts_to_static_file(counts_list, args.static)
+    
+# Draw the pie chart
 
