@@ -3,6 +3,7 @@ import argparse
 from collections import Counter
 import os
 import re
+import pandas as pd
 import matplotlib.pyplot as plt
 
 def extract_sample_name(input_file):
@@ -41,6 +42,31 @@ def save_counts_to_static_file(counts_list, static_file):
         for key, value in element_counts.items():
             outfile.write(f"{key},{value}\n")
 
+def draw_histogram(static_file, output_file, sample_name):
+    # Load the data
+    data = pd.read_csv(static_file)
+
+    # Sort the data by count disc
+    data_sorted = data.sort_values(by='Count', ascending=False)
+    data_sorted['Flag'] = data_sorted['Flag'].astype(str)
+
+    # List the top 5 flags
+    flag_head = data_sorted['Flag'].head()
+    print("Top 5 flags:" + "\n" + str(flag_head))
+
+
+    # Define the figure
+    plt.figure(figsize=(10, 10), dpi=300)
+
+    # Draw the histogram
+    plt.bar(data_sorted['Flag'], data_sorted['Count'])
+    plt.xticks(rotation=90)
+    plt.xlabel("Flag")
+    plt.ylabel("Count")
+    plt.title("Flag counts in " + sample_name)
+    plt.tight_layout()
+    plt.savefig(output_file)
+
 def draw_pie_chart(counts_list, output_file):
     print("Drawing pie chart...")    
     plt.figure(figsize=(10, 10), dpi=300)
@@ -63,8 +89,8 @@ sample_name = extract_sample_name(input_file)
 output_dir = args.output
 tmp_dir = os.path.join(output_dir, "tmp")
 static_dir = args.static
-output_file = os.path.join(output_dir, os.path.basename(input_file) + ".piechart.pdf")
-tmp_file = os.path.join(tmp_dir, os.path.basename(input_file) + ".tmp")
+output_file = os.path.join(output_dir, sample_name + ".piechart.pdf")
+tmp_file = os.path.join(tmp_dir, sample_name + ".tmp")
 
 # Print the input and output file names
 print("Processing SAM file...")
@@ -105,6 +131,10 @@ counts_list = count_elements_in_tmp_file(tmp_file)
 if args.static:
     static_file = os.path.join(static_dir, sample_name + ".static.csv")
     save_counts_to_static_file(counts_list, static_file)
+    # Draw the pie chart
+    draw_histogram(static_file, output_file, sample_name)
     
-# Draw the pie chart
-draw_pie_chart(counts_list, output_file)
+# Draw the pie chart if -s is not provided
+else:
+    # Draw the pie chart
+    draw_pie_chart(counts_list, output_file)
