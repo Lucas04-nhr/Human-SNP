@@ -30,8 +30,8 @@ def count_elements_in_tmp_file(tmp_file):
 def save_counts_to_static_file(counts_list, static_file):
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
-        for count in counts_list:
-            outfile.write(f"{count}\n")
+        for element, count in element_counts.items():
+            outfile.write(f"{element},{count}\n")
 
 def draw_pie_chart(counts_list, output_file):
     plt.figure(figsize=(10, 10), dpi=300)
@@ -90,4 +90,7 @@ if args.static:
     save_counts_to_static_file(counts_list, static_file)
     
 # Draw the pie chart
+draw_pie_chart(counts_list, output_file)
 
+# Remove the temporary file
+os.remove(tmp_file)
