@@ -66,6 +66,8 @@ if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 if not os.path.exists(tmp_dir):
     os.makedirs(tmp_dir)
+if not os.path.exists(static_dir):
+    os.makedirs(static_dir)
 
 # Open the SAM file
 print("Processing file: " + input_file)
