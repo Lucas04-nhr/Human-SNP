@@ -45,3 +45,9 @@ python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/other/03_analysis/processi
 || { echo "Error: processing of ${sample_name} failed"; exit 4; }
 
 echo "The analysis for $INPUT_PATH/${sample_name}.removed.sam is done."
+
+# If SLURM reaches the last sample, delete the tmp folder
+if [ ${SLURM_ARRAY_TASK_ID} -eq 1 ]
+then
+    rm -rf $OUTPUT_PATH/tmp
+fi
