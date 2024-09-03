@@ -41,7 +41,7 @@ echo "Analysis for $INPUT_PATH/${sample_name}.removed.sam..."
 echo "========================================================================"
 
 log_file=/mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/other/03_analysis/log/Guangzhou/analysis_GZ_${SLURM_JOB_ID}.out
-python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/other/03_analysis/processing_GZ.py \
+python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/other/03_analysis/processing.py \
     -i $INPUT_PATH/${sample_name}.removed.sam \
     -o $OUTPUT_PATH/ \
     -s $OUTPUT_PATH/static/ \
