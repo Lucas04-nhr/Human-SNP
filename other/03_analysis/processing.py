@@ -37,14 +37,10 @@ def count_elements_in_tmp_file(tmp_file):
 
 def save_counts_to_static_file(counts_list, static_file):
     print("Saving counts to the static file...")
-    element_counts = {}
-
-    for i, in counts_list:
-        element_counts[i] = counts_list[i]
 
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
-        for key, value in element_counts.items():
+        for key, value in counts_list.items():
             outfile.write(f"{key},{value}\n")
 
 def draw_histogram(static_file, output_file, sample_name):
