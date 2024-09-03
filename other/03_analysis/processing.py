@@ -136,4 +136,7 @@ else:
     draw_pie_chart(counts_list, output_file)
 
 # Remove the temporary file
+print("Removing temporary file...")
 os.remove(tmp_file)
+
+print("Processing complete.")
