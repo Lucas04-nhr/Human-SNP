@@ -84,7 +84,7 @@ sample_name = extract_sample_name(input_file)
 output_dir = args.output
 tmp_dir = os.path.join(output_dir, "tmp")
 static_dir = args.static
-output_file = os.path.join(output_dir, sample_name + ".piechart.pdf")
+output_file = os.path.join(output_dir, sample_name + ".histogram.pdf")
 tmp_file = os.path.join(tmp_dir, sample_name + ".tmp")
 
 # Print the input and output file names
