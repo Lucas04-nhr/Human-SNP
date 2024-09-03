@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Guangzhou',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/08_analysis/Guangzhou'
-#SBATCH --array=2-201%5
+#SBATCH --array=1-160%5
 
 # Initialate conda
 source ~/.bashrc
