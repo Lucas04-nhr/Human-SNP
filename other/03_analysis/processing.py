@@ -39,8 +39,8 @@ def save_counts_to_static_file(counts_list, static_file):
     print("Saving counts to the static file...")
     element_counts = {}
 
-    for i, count in enumerate(counts_list):
-        element_counts[i] = count
+    for i, in counts_list:
+        element_counts[i] = counts_list[i]
 
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
