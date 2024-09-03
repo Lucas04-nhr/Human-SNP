@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Guangzhou/bwa_analysis.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Guangzhou/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index/chm13v2.0_noY.fa',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis'
+#SBATCH --export=GENOME_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Guangzhou/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/bwa_index/Homo_sapiens.GRCh38.dna.toplevel.fa',ANALYSIS_PATH='/mnt/raid6/bacphagenetwork/data/bwa_analysis/Guangzhou'
 #SBATCH --array=1-160%4
 
 conda init bash
@@ -41,7 +41,7 @@ echo "The path to store the analysis results has been set to $ANALYSIS_PATH."
 # Analyse the genome data
 echo "Analysing the genome data..."
 infile=($( cat gz_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name_temp=$(echo "$infile" | grep -oE '/[0-9]+' | awk -F'/' '{print $NF}' | awk -F'_' '{print $NF}' | tail -n1)
+sample_name_temp=$(echo "$infile" | awk -F'/' '{n=split($NF,a,"_"); printf "%03d", a[n-1]}')
 sample_name="GZ$sample_name_temp"
 
 ## TO DO
