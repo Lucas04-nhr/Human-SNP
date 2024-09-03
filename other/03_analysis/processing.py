@@ -33,11 +33,12 @@ def count_elements_in_tmp_file(tmp_file):
                 element_counts[element] = 1
 
     counts_list = list(element_counts.values())
+    print("First few lines of counts_list:", counts_list[:5])
     return counts_list
 
 def save_counts_to_static_file(counts_list, static_file):
     print("Saving counts to the static file...")
-
+    
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
         for key, value in Counter(counts_list).items():
@@ -64,7 +65,7 @@ def draw_histogram(static_file, output_file, sample_name):
     plt.savefig(output_file)
 
 def draw_pie_chart(counts_list, output_file):
-    print("Drawing pie chart...")    
+    print("Drawing histogram...")    
     plt.figure(figsize=(10, 10), dpi=300)
     plt.pie(counts_list, autopct='%1.1f%%')
     plt.savefig(output_file)
