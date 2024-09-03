@@ -40,7 +40,7 @@ def save_counts_to_static_file(counts_list, static_file):
 
     with open(static_file, "w") as outfile:
         outfile.write("Flag,Count\n")
-        for key, value in counts_list.items():
+        for key, value in Counter(counts_list).items():
             outfile.write(f"{key},{value}\n")
 
 def draw_histogram(static_file, output_file, sample_name):
