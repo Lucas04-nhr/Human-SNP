@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def extract_sample_name(input_file):
     print("Extracting sample name...")
-    match = re.search(r'BJ[0-9]{3}', input_file)
+    match = re.search(r'GZ[0-9]{3}', input_file)
     if match:
         sample_name = match.group(0)
     else:
