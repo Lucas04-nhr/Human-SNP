@@ -33,7 +33,8 @@ def count_elements_in_tmp_file(tmp_file):
                 element_counts[element] = 1
 
     counts_list = list(element_counts.values())
-    print("First few lines of counts_list:", counts_list[:5])
+    print("First few lines of element_counts:")
+    print(list(element_counts.items())[:5])
     return counts_list
 
 def save_counts_to_static_file(counts_list, static_file):
