@@ -50,7 +50,9 @@ $BREAKDANCER_BIN -q 10 -r 0.1 -h 200 $INPUT_PATH/${sample_name}.removed.bam > $O
 || { echo "Error: breakdancer-max failed"; exit 4; }
 
 # Remove the intermediate files
+echo "Removing the intermediate files..."
 rm $OUTPUT_PATH/${sample_name}.removed.bam
+echo "The intermediate files have been removed."
 
 echo "The file $OUTPUT_PATH/${sample_name}.bdout.txt has been created."
 echo "The analysis of ${sample_name} has been completed."
