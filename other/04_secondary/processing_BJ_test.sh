@@ -41,12 +41,22 @@ echo "Processing ${sample_name}..."
 
 # Convert the sam file to bam file
 echo "Converting the sam file to bam file..."
-samtools view -bS $INPUT_PATH/${sample_name}.removed.sam > $OUTPUT_PATH/${sample_name}.removed.bam \
-|| { echo "Error: samtools view failed"; exit 3; }
+if [ -f "$OUTPUT_PATH/${sample_name}.removed.bam" ]
+then
+    echo "The file $OUTPUT_PATH/${sample_name}.removed.bam already exists."
+else
+    samtools view -bS $INPUT_PATH/${sample_name}.removed.sam > $OUTPUT_PATH/${sample_name}.removed.bam \
+    || { echo "Error: samtools view failed"; exit 3; }
+    echo "The file $OUTPUT_PATH/${sample_name}.removed.bam has been created."
+fi
+
+# Export the config file
+echo "Exporting the config file..."
+echo "$OUTPUT_PATH/${sample_name}.removed.bam" > $OUTPUT_PATH/config.txt
 
 # Run breakdancer-max
 echo "Running breakdancer-max..."
-$BREAKDANCER_BIN -q 10 -r 0.1 -h 200 $INPUT_PATH/${sample_name}.removed.bam > $OUTPUT_PATH/${sample_name}.bdout.txt \
+$BREAKDANCER_BIN -q 10 -r 0.1 -h 200 -c $OUTPUT_PATH/config.txt > $OUTPUT_PATH/${sample_name}.bdout.txt \
 || { echo "Error: breakdancer-max failed"; exit 4; }
 
 # Remove the intermediate files
