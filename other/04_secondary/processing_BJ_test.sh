@@ -40,9 +40,12 @@ fi
 echo "Processing ${sample_name}..."
 
 # Convert the sam file to bam file
+echo "Converting the sam file to bam file..."
 samtools view -bS $INPUT_PATH/${sample_name}.removed.sam > $OUTPUT_PATH/${sample_name}.removed.bam \
 || { echo "Error: samtools view failed"; exit 3; }
 
+# Run breakdancer-max
+echo "Running breakdancer-max..."
 $BREAKDANCER_BIN -q 10 -r 0.1 -h 200 $INPUT_PATH/${sample_name}.removed.bam > $OUTPUT_PATH/${sample_name}.bdout.txt \
 || { echo "Error: breakdancer-max failed"; exit 4; }
 
