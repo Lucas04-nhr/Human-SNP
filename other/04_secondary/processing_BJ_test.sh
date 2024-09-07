@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=analysis_BJ
-#SBATCH --output=./log/Beijing/analysis_BJ_%j.out
-#SBATCH --error=./log/Beijing/analysis_BJ_%j.err
+#SBATCH --output=./log/Beijing/secondary_BJ_%j.out
+#SBATCH --error=./log/Beijing/secondary_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/09_secondary/Beijing',BREAKDANCER_BIN='/mnt/raid6/bacphagenetwork/tools/breakdancer/build/bin/breakdancer-max'
@@ -38,8 +38,16 @@ fi
 
 # Process the file
 echo "Processing ${sample_name}..."
-$BREAKDANCER_BIN -q 10 -r 0.1 -h 200 $INPUT_PATH/${sample_name}.removed.sam > $OUTPUT_PATH/${sample_name}.bdout.txt \
+
+# Convert the sam file to bam file
+samtools view -bS $INPUT_PATH/${sample_name}.removed.sam > $OUTPUT_PATH/${sample_name}.removed.bam \
+|| { echo "Error: samtools view failed"; exit 3; }
+
+$BREAKDANCER_BIN -q 10 -r 0.1 -h 200 $INPUT_PATH/${sample_name}.removed.bam > $OUTPUT_PATH/${sample_name}.bdout.txt \
 || { echo "Error: breakdancer-max failed"; exit 4; }
+
+# Remove the intermediate files
+rm $OUTPUT_PATH/${sample_name}.removed.bam
 
 echo "The file $OUTPUT_PATH/${sample_name}.bdout.txt has been created."
 echo "The analysis of ${sample_name} has been completed."
