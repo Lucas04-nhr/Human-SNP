@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/configurate_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Beijing',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta/',REF_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Beijing',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta/',REF_FILE_CH38='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa',REF_FILE_CHM13='/mnt/raid6/bacphagenetwork/data/00_bwa_index/chm13v2'
 #SBATCH --array=1
 
 # Initialize the environment
@@ -43,6 +43,40 @@ else
     echo "The file $INPUT_PATH/${sample_name}.bam.bai exists."
 fi
 
+# Check the reference files
+echo "Checking the reference files..."
+if [ ! -f "$REF_FILE_CH38" ]
+then
+    echo "Error: $REF_FILE_CH38 does not exist."
+    exit 2
+else
+    echo "The reference file $REF_FILE_CH38 exists."
+fi
+
+if [ ! -f "${REF_FILE_CH38}.fai" ]
+then
+    echo "Error: ${REF_FILE_CH38}.fai does not exist."
+    exit 2
+else
+    echo "The index of the reference file $REF_FILE_CH38 exists."
+fi
+
+if [ ! -f "$REF_FILE_CHM13" ]
+then
+    echo "Error: $REF_FILE_CHM13 does not exist."
+    exit 2
+else
+    echo "The reference file $REF_FILE_CHM13 exists."
+fi
+
+if [ ! -f "${REF_FILE_CHM13}.fai" ]
+then
+    echo "Error: ${REF_FILE_CHM13}.fai does not exist."
+    exit 2
+else
+    echo "The index of the reference file $REF_FILE_CHM13 exists."
+fi
+
 # Check the output file
 echo "Checking $OUTPUT_PATH..."
 if [ -d "$OUTPUT_PATH" ]
@@ -63,7 +97,7 @@ echo "The configuration files will be saved in $MANTA_ANALYSIS_PATH."
 
 ${MANTA_INSTALL_PATH}/bin/configManta.py \
 --bam $INPUT_PATH/${sample_name}.bam \
---referenceFasta $REF_FILE \
+--referenceFasta $REF_FILE_CHM13 \
 --runDir ${MANTA_ANALYSIS_PATH} \
 || { echo "Error: configManta.py failed"; exit 3; }
 
