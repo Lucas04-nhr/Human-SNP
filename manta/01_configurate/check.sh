@@ -4,7 +4,7 @@
 
 echo "Checking the input folder..."
 
-if [ ! -d "/mnt/raid6/bacphagenetwork/data/06_unmapped_removed" ]
+if [ ! -d "/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/" ]
 then
     echo "The input folder does not exist, please check manually ..."
     exit 1
@@ -30,9 +30,8 @@ then
     fi
 fi
 
-mkdir log
-mkdir log/Beijing
-mkdir log/Guangzhou
+mkdir -p log/Beijing
+mkdir -p log/Guangzhou
 echo "The log folder has been created."
 
 # Create the output folder
@@ -56,14 +55,8 @@ then
     fi
 fi
 
-if [ ! -d "/mnt/raid6/bacphagenetwork/data/07_manta"]
-then
-    mkdir /mnt/raid6/bacphagenetwork/data/07_manta
-fi
-
-mkdir /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/
-mkdir /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Guangzhou
+mkdir -p /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Beijing
+mkdir -p /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Guangzhou
 
 echo "The output folder has been created."
 
@@ -121,9 +114,9 @@ then
 fi
 
 # Manta
-if [ ! -f "/mnt/raid6/bacphagenetwork/tools/manta/bin/configManta.py" ]
+if [ ! -d "/mnt/raid6/bacphagenetwork/tools/manta/" ]
 then
-    echo "The Manta is not found, please check manually ..."
+    echo "The Manta folder does not exist, please check manually ..."
     exit 1
 fi
 
