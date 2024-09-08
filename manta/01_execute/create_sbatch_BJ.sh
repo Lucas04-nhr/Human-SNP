@@ -35,6 +35,15 @@ do
     echo "The execute folder of $sample_name has been added to the config file."
 done
 
+# Create the log folder
+if [ ! -d "./log/Beijing" ]
+then
+    mkdir -p ./log/Beijing
+    echo "The log folder has been created."
+else
+    echo "The log folder already exists."
+fi
+
 # Check if any error occurred during the process
 if [ $? -eq 0 ]; then
     echo "Success!"
