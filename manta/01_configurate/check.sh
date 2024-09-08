@@ -39,31 +39,31 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/10_manta/01_configurate" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/07_manta/01_configurate" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Backing up the output folder ..."
-        mv /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate
-     /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate
+        mv /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate
+     /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate
     _bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original output folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate
+        rm -rf /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate
     
     fi
 fi
 
-if [ ! -d "/mnt/raid6/bacphagenetwork/data/10_manta"]
+if [ ! -d "/mnt/raid6/bacphagenetwork/data/07_manta"]
 then
-    mkdir /mnt/raid6/bacphagenetwork/data/10_manta
+    mkdir /mnt/raid6/bacphagenetwork/data/07_manta
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate/
-mkdir /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate/Guangzhou
+mkdir /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/
+mkdir /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Guangzhou
 
 echo "The output folder has been created."
 
