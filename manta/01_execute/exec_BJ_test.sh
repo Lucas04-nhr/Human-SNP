@@ -21,11 +21,6 @@ echo "The path to the execute folder of $sample_name has been set to $MANTA_ANAL
 echo "Initializing complete."
 echo "========================================"
 
-# Print usage information
-echo "Manta Usage:"
-${MANTA_ANALYSIS_PATH}/runWorkflow.py -h 2&>1 >> /dev/stdout
-echo "========================================"
-
 # Run the Manta analysis
 echo "Running the Manta analysis..."
 ${MANTA_ANALYSIS_PATH}/runWorkflow.py \
