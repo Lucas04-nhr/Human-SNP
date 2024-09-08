@@ -61,14 +61,6 @@ else
     echo "The reference file $REF_FILE_CHM13 exists."
 fi
 
-# Check the output file
-echo "Checking $OUTPUT_PATH..."
-if [ -d "$OUTPUT_PATH" ]
-then
-    echo "Warning: $OUTPUT_PATH exists and will be overwritten."
-    rm -rf $OUTPUT_PATH
-fi
-
 echo "Initializing complete."
 echo "=========================================================================="
 
