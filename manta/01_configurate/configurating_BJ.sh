@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/configurate_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_configurate/Beijing',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta/',REF_FILE_CH38='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa',REF_FILE_CHM13='/mnt/raid6/bacphagenetwork/data/00_bwa_index/chm13v2/chm13v2.0_noY.fa'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_exec/Beijing',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta/',REF_FILE_CH38='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa',REF_FILE_CHM13='/mnt/raid6/bacphagenetwork/data/00_bwa_index/chm13v2/chm13v2.0_noY.fa'
 #SBATCH --array=2-201%5
 
 # Initialize the environment
