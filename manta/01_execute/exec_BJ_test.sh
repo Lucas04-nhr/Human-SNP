@@ -23,12 +23,12 @@ echo "========================================"
 
 # Print usage information
 echo "Manta Usage:"
-echo ${${MANTA_ANALYSIS_PATH}/runWorkflow.py -h}
+${MANTA_ANALYSIS_PATH}/runWorkflow.py -h 2&>1 >> /dev/stdout
 echo "========================================"
 
 # Run the Manta analysis
 echo "Running the Manta analysis..."
-${MANTA_ANALYSIS_PATH}/runWorkflow.py -j 4 -g 1 \
+${MANTA_ANALYSIS_PATH}/runWorkflow.py \
 || { echo "Error: Manta analysis failed."; exit 1; }
 
 echo "Manta analysis complete."
