@@ -39,26 +39,31 @@ echo "The log folder has been created."
 
 echo "Creating the output folder..."
 
-if [ -d "/mnt/raid6/bacphagenetwork/data/09_secondary" ]
+if [ -d "/mnt/raid6/bacphagenetwork/data/10_manta/01_configurate" ]
 then
     echo "The output folder already exists, do you want to back up the output folder? (y/n)"
     read answer
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Backing up the output folder ..."
-        mv /mnt/raid6/bacphagenetwork/data/09_secondary
-     /mnt/raid6/bacphagenetwork/data/09_secondary
+        mv /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate
+     /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate
     _bak_$(date +%Y%m%d%H%M%S)
     else
         echo "The original output folder will be removed."
-        rm -rf /mnt/raid6/bacphagenetwork/data/09_secondary
+        rm -rf /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate
     
     fi
 fi
 
-mkdir /mnt/raid6/bacphagenetwork/data/09_secondary
-mkdir /mnt/raid6/bacphagenetwork/data/09_secondary/Beijing
-mkdir /mnt/raid6/bacphagenetwork/data/09_secondary/Guangzhou
+if [ ! -d "/mnt/raid6/bacphagenetwork/data/10_manta"]
+then
+    mkdir /mnt/raid6/bacphagenetwork/data/10_manta
+fi
+
+mkdir /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate/
+mkdir /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate/Beijing
+mkdir /mnt/raid6/bacphagenetwork/data/10_manta/01_configurate/Guangzhou
 
 echo "The output folder has been created."
 
@@ -115,7 +120,12 @@ then
     exit 1
 fi
 
-# Delly
+# Manta
+if [ ! -f "/mnt/raid6/bacphagenetwork/tools/manta/bin/configManta.py" ]
+then
+    echo "The Manta is not found, please check manually ..."
+    exit 1
+fi
 
 echo "All requirements are satisfied."
 
