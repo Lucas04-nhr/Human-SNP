@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=manta_copy_result_BJ
-#SBATCH --output=./log/Beijing/manta_copy_result_BJ_%j.out
-#SBATCH --error=./log/Beijing/manta_copy_result_BJ_%j.err
+#SBATCH --output=./log/Beijing/02/manta_copy_result_BJ_%j.out
+#SBATCH --error=./log/Beijing/02/manta_copy_result_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
 #SBATCH --export=PARENT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_exec/Beijing',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta',RESULT_PATH='/mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/manta/02_result/Beijing'
