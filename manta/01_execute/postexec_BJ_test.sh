@@ -34,8 +34,14 @@ else
     rm -rf ${RESULT_PATH}/${sample_name}
 fi
 
-cp -r ${STATS_PATH} ${RESULT_PATH}/${sample_name} \
+cp -r ${STATS_PATH} ${RESULT_PATH} \
 || { echo "Error: Copying the Manta analysis result failed."; exit 1; }
+echo "Copying complete."
+
+echo "Renaming the result folder..."
+mv ${RESULT_PATH}/stats ${RESULT_PATH}/${sample_name} \
+|| { echo "Error: Renaming the result folder failed."; exit 1; }
+echo "Renaming complete."
 
 echo "========================================"
 echo "The Manta analysis result has been copied successfully."
