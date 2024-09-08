@@ -53,28 +53,12 @@ else
     echo "The reference file $REF_FILE_CH38 exists."
 fi
 
-if [ ! -f "${REF_FILE_CH38}.fai" ]
-then
-    echo "Error: ${REF_FILE_CH38}.fai does not exist."
-    exit 2
-else
-    echo "The index of the reference file $REF_FILE_CH38 exists."
-fi
-
 if [ ! -f "$REF_FILE_CHM13" ]
 then
     echo "Error: $REF_FILE_CHM13 does not exist."
     exit 2
 else
     echo "The reference file $REF_FILE_CHM13 exists."
-fi
-
-if [ ! -f "${REF_FILE_CHM13}.fai" ]
-then
-    echo "Error: ${REF_FILE_CHM13}.fai does not exist."
-    exit 2
-else
-    echo "The index of the reference file $REF_FILE_CHM13 exists."
 fi
 
 # Check the output file
