@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=analysis_BJ
+#SBATCH --job-name=converting_format_BJ
 #SBATCH --output=./log/Beijing/converting_format_BJ_%j.out
 #SBATCH --error=./log/Beijing/converting_format_BJ_%j.err
 #SBATCH --cpus-per-task=4

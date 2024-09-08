@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=analysis_GZ
+#SBATCH --job-name=converting_format_GZ
 #SBATCH --output=./log/Guangzhou/converting_format_GZ_%j.out
 #SBATCH --error=./log/Guangzhou/converting_format_GZ_%j.err
 #SBATCH --cpus-per-task=4
