@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Beijing/secondary_BJ_%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1G
-#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/10_manta/00_format_converted/Beijing'
+#SBATCH --export=INPUT_PATH='/mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing',OUTPUT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Beijing'
 #SBATCH --array=1
 
 # Initialize the environment
