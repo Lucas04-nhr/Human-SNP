@@ -31,4 +31,5 @@ echo "Running the Manta analysis..."
 ${MANTA_ANALYSIS_PATH}/runWorkflow.py \
 || { echo "Error: Manta analysis failed."; exit 1; }
 
-echo "Manta analysis complete."
+echo "========================================"
+echo "The Manta analysis has been completed successfully."
