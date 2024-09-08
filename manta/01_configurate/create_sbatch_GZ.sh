@@ -28,7 +28,7 @@ echo "The path to the genome data has been set to $GENOME_PATH."
 
 # Add the genome data to the config file "samples.index"
 echo "Adding the genome data to the config file..."
-for file_fq1 in $(ls ${GENOME_PATH} | grep -E '.bam')
+for file_fq1 in $(ls ${GENOME_PATH} | grep -E '\.bam$' | grep -vE '\.bam\.bai$')
 do
     echo "$GENOME_PATH/$file_fq1" >> ./GZ_sbatch.list
     sample_name=$(echo "$file_fq1" | grep -oE 'GZ[0-9]{3}')
