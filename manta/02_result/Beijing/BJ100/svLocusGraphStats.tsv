@@ -1,0 +1,84 @@
+GraphBuildTime	0.8553h wall, 0.0843h user + 0.0030h system = 0.0873h CPU (10.20%)
+GraphMergeTime	0.0002h wall, 0.0000h user + 0.0000h system = 0.0000h CPU (28.85%)
+disjointSubgraphs	14862
+nodes	18217
+directedEdges	18586
+selfEdges	11876
+totalGraphEvidence	235130
+totalCleaned	2050637
+highestSearchCount	62
+isMaxSearchCount	0
+highestSearchDensity	0.125
+isMaxSearchDensity	0
+
+[Sample0]
+Source	/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Beijing/BJ100.bam
+MinMapqFiltered	5334916	0.3877
+NotFiltered	8423964	0.6123
+NotFilteredAndIgnored	7318615	0.5319
+NotFilteredAndAnomalousPair	929191	0.0675
+NotFilteredAndAnomalousPairRemotes	376050	0.0273
+NotFilteredAndSplitRead	157256	0.0114
+NotFilteredAndSplitReadInAnomalousPair	58653	0.0043
+NotFilteredAndSplitReadSupplementarySegments	136518	N/A
+NotFilteredAndLargeIndel	31748	0.0023
+NotFilteredAndSemiAligned	86216	0.0063
+EvidenceType_pair	0	0.0000
+EvidenceType_local_pair	408016	0.5322
+EvidenceType_cigar	32551	0.0425
+EvidenceType_softclip	0	0.0000
+EvidenceType_semialign	96433	0.1258
+EvidenceType_shadow	0	0.0000
+EvidenceType_split_align	229684	0.2996
+EvidenceType_unknown	0	0.0000
+ClosePairs	7742
+
+NodeRegionSizequantile:
+0.25	57
+0.5	302
+0.75	397
+0.9	476
+0.95	532
+0.99	652
+NodeEdgeCount:
+0	0
+1	17880
+2	311
+3	24
+4	0
+5	1
+6	0
+7	1
+8	0
+9+	0
+NodeObservationCount:
+0	1262
+1	0
+2	0
+3	0
+4	0
+5	0
+6	0
+7	0
+8	0
+9	6468
+10	30
+11	26
+12	6321
+13	32
+14	16
+15	1201
+16	21
+17	16
+18	911
+19	27
+20	20
+21	466
+22	20
+23	6
+24	349
+25	19
+26	9
+27	207
+28	18
+29+	772
