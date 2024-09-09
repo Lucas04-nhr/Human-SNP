@@ -16,15 +16,13 @@ while IFS= read -r infile; do
     # 复制 Manta 分析结果
     echo "Copying the Manta analysis result of ${sample_name}..."
     export STATS_PATH="${MANTA_ANALYSIS_PATH}/results/stats"
+    export RESULT_PATH="/mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/manta/02_result"
 
-    if [ ! -d "${RESULT_PATH}/${sample_name}" ]; then
-        mkdir -p "${RESULT_PATH}/${sample_name}"
-        echo "The result folder has been created."
-    else
-        echo "The result folder already exists, overwriting it..."
-        rm -rf "${RESULT_PATH}/${sample_name}"
+    if [ -d "${RESULT_PATH}/${sample_name}" ]; then
+        echo "Error: The result folder already exists, overwriting it."
+        rm -rf "${RESULT_PATH}/${sample_name}" 
     fi
-
+    
     cp -r "${STATS_PATH}" "${RESULT_PATH}" \
     || { echo "Error: Copying the Manta analysis result failed."; exit 1; }
     echo "Copying complete."
@@ -35,6 +33,8 @@ while IFS= read -r infile; do
     echo "Renaming complete."
 
     echo "========================================"
-    echo "The Manta analysis result has been copied successfully."
+    echo "The Manta analysis result of ${sample_name} has been successfully copied to ${RESULT_PATH}/${sample_name}."
 
-done < BJ_sbatch.list
+done \
+echo "All Manta analysis results have been successfully copied." \
+< BJ_sbatch.list
