@@ -1,47 +1,42 @@
 #!/bin/bash
-#SBATCH --job-name=manta_copy_result_GZ
-#SBATCH --output=./log/Guangzhou/02/manta_copy_result_GZ_%j.out
-#SBATCH --error=./log/Guangzhou/02/manta_copy_result_GZ_%j.err
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=1G
-#SBATCH --export=PARENT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_exec/Guangzhou',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta',RESULT_PATH='/mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/manta/02_result/Guangzhou'
-#SBATCH --array=1-160%5
 
-# Initialize the environment
-echo "Initializing..."
+# 读取 GZ_sbatch.list 文件中的每一行
+while IFS= read -r infile; do
+    # 提取 sample_name
+    sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
 
-echo "The parent folder of the execute folders is located in $PARENT_PATH."
+    # 设置 MANTA_ANALYSIS_PATH 环境变量
+    export PARENT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_exec/Guangzhou'
+    export MANTA_ANALYSIS_PATH="$PARENT_PATH/$sample_name"
+    echo "The path to the execute folder of $sample_name has been set to $MANTA_ANALYSIS_PATH."
 
-infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(echo "$infile" | grep -oE 'GZ[0-9]{3}')
+    echo "Initializing complete."
+    echo "========================================"
 
-export MANTA_ANALYSIS_PATH=$PARENT_PATH/$sample_name
-echo "The path to the execute folder of $sample_name has been set to $MANTA_ANALYSIS_PATH."
+    # 复制 Manta 分析结果
+    echo "Copying the Manta analysis result of ${sample_name}..."
+    export STATS_PATH="${MANTA_ANALYSIS_PATH}/results/stats"
+    export RESULT_PATH="/mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/manta/02_result/Guangzhou"
 
-echo "Initializing complete."
-echo "========================================"
+    mkdir -p "${RESULT_PATH}"
 
-# Copy the Manta analysis result
-echo "Copying the Manta analysis result of ${sample_name}..."
-export STATS_PATH=${MANTA_ANALYSIS_PATH}/results/stats
+    if [ -d "${RESULT_PATH}/${sample_name}" ]; then
+        echo "Error: The result folder already exists, overwriting it."
+        rm -rf "${RESULT_PATH}/${sample_name}" 
+    fi
+    
+    cp -r "${STATS_PATH}" "${RESULT_PATH}" \
+    || { echo "Error: Copying the Manta analysis result failed."; exit 1; }
+    echo "Copying complete."
 
-if [ ! -d "${RESULT_PATH}/${sample_name}" ]
-then
-    mkdir -p ${RESULT_PATH}/${sample_name}
-    echo "The result folder has been created."
-else
-    echo "The result folder already exists,overwriting it..."
-    rm -rf ${RESULT_PATH}/${sample_name}
-fi
+    echo "Renaming the result folder..."
+    mv "${RESULT_PATH}/stats" "${RESULT_PATH}/${sample_name}" \
+    || { echo "Error: Renaming the result folder failed."; exit 1; }
+    echo "Renaming complete."
 
-cp -r ${STATS_PATH} ${RESULT_PATH} \
-|| { echo "Error: Copying the Manta analysis result failed."; exit 1; }
-echo "Copying complete."
+    echo "========================================"
+    echo "The Manta analysis result of ${sample_name} has been successfully copied to ${RESULT_PATH}/${sample_name}."
 
-echo "Renaming the result folder..."
-mv ${RESULT_PATH}/stats ${RESULT_PATH}/${sample_name} \
-|| { echo "Error: Renaming the result folder failed."; exit 1; }
-echo "Renaming complete."
+done < GZ_sbatch.list
 
-echo "========================================"
-echo "The Manta analysis result has been copied successfully."
+echo "All Manta analysis results have been successfully copied."
