@@ -30,7 +30,7 @@ while IFS= read -r infile; do
     echo "Copying complete."
 
     echo "Renaming the result folder..."
-    mv "${RESULT_PATH}/stats" "${RESULT_PATH}/${sample_name}" \
+    mv "${RESULT_PATH}/results" "${RESULT_PATH}/${sample_name}" \
     || { echo "Error: Renaming the result folder failed."; exit 1; }
     echo "Renaming complete."
 
