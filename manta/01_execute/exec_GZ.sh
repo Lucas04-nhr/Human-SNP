@@ -6,7 +6,6 @@
 #SBATCH --mem=1G
 #SBATCH --export=PARENT_PATH='/mnt/raid6/bacphagenetwork/data/07_manta/01_exec/Guangzhou',MANTA_INSTALL_PATH='/mnt/raid6/bacphagenetwork/tools/manta/'
 #SBATCH --array=1-160%5
-#SBATCH --dependency=afterok:59106
 
 # Initialize the environment
 echo "Initializing..."
