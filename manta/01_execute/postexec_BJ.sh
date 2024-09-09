@@ -35,6 +35,6 @@ while IFS= read -r infile; do
     echo "========================================"
     echo "The Manta analysis result of ${sample_name} has been successfully copied to ${RESULT_PATH}/${sample_name}."
 
-done \
-echo "All Manta analysis results have been successfully copied." \
-< BJ_sbatch.list
+done < BJ_sbatch.list
+
+echo "All Manta analysis results have been successfully copied."
