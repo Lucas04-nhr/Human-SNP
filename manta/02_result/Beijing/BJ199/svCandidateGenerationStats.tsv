@@ -1,0 +1,153 @@
+EdgeStatsReport
+SVGenTotalHours	0.5307h wall, 1.3308h user + 0.1841h system = 1.5149h CPU (285.46%)
+NonEdgeHours	0.0119h wall, 0.0090h user + 0.0017h system = 0.0107h CPU (90.31%)
+
+[AllEdges]
+InputEdgeCount	11370
+InputEdgeCandidatesPerEdge:
+0	1353
+1	7811
+2	2187
+3	19
+4	0
+5+	0
+CandidateCount	12242
+ComplexCandidateCount	2436
+EdgeFilter	864
+SemiMappedFilter	111
+ComplexLowCountFilter	913
+ComplexLowSignalFilter	401
+UnmatchedReadPairFilter	0
+SpanningComplexCandidateFiltered	9326
+JunctionAssemblyOverlapSkipped	0
+JunctionCount	2911
+ComplexJunctionCount	2436
+BreaksPerJunction:
+0	0
+1	2907
+2	2
+3+	0
+TotalAssemblyCandidates	2199
+TotalSpanningAssemblyCandidates	159
+AssemblyCandidatesPerJunction:
+0	948
+1	1754
+2	175
+3	29
+4	2
+5+	0
+totalHours	0.5188h wall, 1.3217h user + 0.1825h system = 1.5042h CPU (289.91%)
+totalSecsPerEdge	0.1643s wall, 0.4185s user + 0.0578s system = 0.4763s CPU (289.91%)
+totalSecsPerCand	0.1526s wall, 0.3887s user + 0.0537s system = 0.4423s CPU (289.91%)
+candiHours	0.2327h wall, 0.4935h user + 0.0983h system = 0.5918h CPU (254.29%)
+candiSecsPerEdge	0.0737s wall, 0.1563s user + 0.0311s system = 0.1874s CPU (254.29%)
+candiSecsPerCand	0.0684s wall, 0.1451s user + 0.0289s system = 0.1740s CPU (254.29%)
+assemHours	0.1844h wall, 0.5802h user + 0.0516h system = 0.6319h CPU (342.69%)
+assemSecsPerEdge	0.0584s wall, 0.1837s user + 0.0164s system = 0.2001s CPU (342.69%)
+assemSecsPerCand	0.0542s wall, 0.1706s user + 0.0152s system = 0.1858s CPU (342.69%)
+scoreHours	0.1016h wall, 0.2478h user + 0.0325h system = 0.2803h CPU (275.74%)
+scoreSecsPerEdge	0.0322s wall, 0.0784s user + 0.0103s system = 0.0887s CPU (275.74%)
+scoreSecsPerCand	0.0299s wall, 0.0729s user + 0.0096s system = 0.0824s CPU (275.74%)
+nocatHours	0.0001h wall, 0.0002h user + 0.0000h system = 0.0002h CPU (303.77%)
+nocatSecsPerEdge	0.0000s wall, 0.0001s user + 0.0000s system = 0.0001s CPU (303.77%)
+nocatSecsPerCand	0.0000s wall, 0.0001s user + 0.0000s system = 0.0001s CPU (303.77%)
+
+[RemoteEdges]
+InputEdgeCount	3086
+InputEdgeCandidatesPerEdge:
+0	877
+1	2191
+2	17
+3	1
+4	0
+5+	0
+CandidateCount	2228
+ComplexCandidateCount	120
+EdgeFilter	864
+SemiMappedFilter	10
+ComplexLowCountFilter	2
+ComplexLowSignalFilter	13
+UnmatchedReadPairFilter	0
+SpanningComplexCandidateFiltered	1761
+JunctionAssemblyOverlapSkipped	0
+JunctionCount	465
+ComplexJunctionCount	120
+BreaksPerJunction:
+0	0
+1	461
+2	2
+3+	0
+TotalAssemblyCandidates	346
+TotalSpanningAssemblyCandidates	152
+AssemblyCandidatesPerJunction:
+0	124
+1	336
+2	5
+3	0
+4	0
+5+	0
+totalHours	0.1177h wall, 0.2587h user + 0.0536h system = 0.3122h CPU (265.21%)
+totalSecsPerEdge	0.1373s wall, 0.3017s user + 0.0625s system = 0.3642s CPU (265.21%)
+totalSecsPerCand	0.1902s wall, 0.4179s user + 0.0866s system = 0.5045s CPU (265.21%)
+candiHours	0.0736h wall, 0.1524h user + 0.0346h system = 0.1870h CPU (254.18%)
+candiSecsPerEdge	0.0858s wall, 0.1778s user + 0.0403s system = 0.2181s CPU (254.18%)
+candiSecsPerCand	0.1188s wall, 0.2462s user + 0.0559s system = 0.3021s CPU (254.18%)
+assemHours	0.0194h wall, 0.0457h user + 0.0089h system = 0.0546h CPU (281.45%)
+assemSecsPerEdge	0.0226s wall, 0.0533s user + 0.0104s system = 0.0637s CPU (281.45%)
+assemSecsPerCand	0.0313s wall, 0.0738s user + 0.0144s system = 0.0882s CPU (281.45%)
+scoreHours	0.0248h wall, 0.0606h user + 0.0101h system = 0.0707h CPU (285.27%)
+scoreSecsPerEdge	0.0289s wall, 0.0706s user + 0.0118s system = 0.0824s CPU (285.27%)
+scoreSecsPerCand	0.0400s wall, 0.0979s user + 0.0163s system = 0.1142s CPU (285.27%)
+nocatHours	0.0000h wall, 0.0000h user + 0.0000h system = 0.0001h CPU (260.07%)
+nocatSecsPerEdge	0.0000s wall, 0.0001s user + 0.0000s system = 0.0001s CPU (260.07%)
+nocatSecsPerCand	0.0000s wall, 0.0001s user + 0.0000s system = 0.0001s CPU (260.07%)
+
+[SelfEdges]
+InputEdgeCount	8284
+InputEdgeCandidatesPerEdge:
+0	476
+1	5620
+2	2170
+3	18
+4	0
+5+	0
+CandidateCount	10014
+ComplexCandidateCount	2316
+EdgeFilter	0
+SemiMappedFilter	101
+ComplexLowCountFilter	911
+ComplexLowSignalFilter	388
+UnmatchedReadPairFilter	0
+SpanningComplexCandidateFiltered	7565
+JunctionAssemblyOverlapSkipped	0
+JunctionCount	2446
+ComplexJunctionCount	2316
+BreaksPerJunction:
+0	0
+1	2446
+2	0
+3+	0
+TotalAssemblyCandidates	1853
+TotalSpanningAssemblyCandidates	7
+AssemblyCandidatesPerJunction:
+0	824
+1	1418
+2	170
+3	29
+4	2
+5+	0
+totalHours	0.4011h wall, 1.0631h user + 0.1289h system = 1.1920h CPU (297.16%)
+totalSecsPerEdge	0.1743s wall, 0.4620s user + 0.0560s system = 0.5180s CPU (297.16%)
+totalSecsPerCand	0.1442s wall, 0.3822s user + 0.0463s system = 0.4285s CPU (297.16%)
+candiHours	0.1592h wall, 0.3411h user + 0.0637h system = 0.4049h CPU (254.34%)
+candiSecsPerEdge	0.0692s wall, 0.1482s user + 0.0277s system = 0.1759s CPU (254.34%)
+candiSecsPerCand	0.0572s wall, 0.1226s user + 0.0229s system = 0.1455s CPU (254.34%)
+assemHours	0.1650h wall, 0.5346h user + 0.0427h system = 0.5773h CPU (349.89%)
+assemSecsPerEdge	0.0717s wall, 0.2323s user + 0.0186s system = 0.2509s CPU (349.89%)
+assemSecsPerCand	0.0593s wall, 0.1922s user + 0.0154s system = 0.2075s CPU (349.89%)
+scoreHours	0.0769h wall, 0.1872h user + 0.0224h system = 0.2096h CPU (272.67%)
+scoreSecsPerEdge	0.0334s wall, 0.0814s user + 0.0097s system = 0.0911s CPU (272.67%)
+scoreSecsPerCand	0.0276s wall, 0.0673s user + 0.0081s system = 0.0754s CPU (272.67%)
+nocatHours	0.0001h wall, 0.0002h user + 0.0000h system = 0.0002h CPU (318.36%)
+nocatSecsPerEdge	0.0000s wall, 0.0001s user + 0.0000s system = 0.0001s CPU (318.36%)
+nocatSecsPerCand	0.0000s wall, 0.0001s user + 0.0000s system = 0.0001s CPU (318.36%)
