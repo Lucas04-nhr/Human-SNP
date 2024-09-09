@@ -1,0 +1,84 @@
+GraphBuildTime	1.0366h wall, 0.1029h user + 0.0032h system = 0.1061h CPU (10.24%)
+GraphMergeTime	0.0002h wall, 0.0000h user + 0.0000h system = 0.0000h CPU (24.33%)
+disjointSubgraphs	7168
+nodes	7620
+directedEdges	7675
+selfEdges	6771
+totalGraphEvidence	134329
+totalCleaned	260713
+highestSearchCount	35
+isMaxSearchCount	0
+highestSearchDensity	0.1
+isMaxSearchDensity	0
+
+[Sample0]
+Source	/mnt/raid6/bacphagenetwork/data/07_manta/00_format_converted/Guangzhou/GZ035.bam
+MinMapqFiltered	18534040	0.5882
+NotFiltered	12973455	0.4118
+NotFilteredAndIgnored	12040831	0.3822
+NotFilteredAndAnomalousPair	879086	0.0279
+NotFilteredAndAnomalousPairRemotes	24249	0.0008
+NotFilteredAndSplitRead	19901	0.0006
+NotFilteredAndSplitReadInAnomalousPair	6303	0.0002
+NotFilteredAndSplitReadSupplementarySegments	17978	N/A
+NotFilteredAndLargeIndel	2396	0.0001
+NotFilteredAndSemiAligned	44789	0.0014
+EvidenceType_pair	0	0.0000
+EvidenceType_local_pair	34137	0.2505
+EvidenceType_cigar	2473	0.0182
+EvidenceType_softclip	0	0.0000
+EvidenceType_semialign	70199	0.5152
+EvidenceType_shadow	0	0.0000
+EvidenceType_split_align	29440	0.2161
+EvidenceType_unknown	0	0.0000
+ClosePairs	7001
+
+NodeRegionSizequantile:
+0.25	59
+0.5	65
+0.75	95
+0.9	385
+0.95	507
+0.99	819
+NodeEdgeCount:
+0	0
+1	7567
+2	51
+3	2
+4	0
+5	0
+6	0
+7	0
+8	0
+9+	0
+NodeObservationCount:
+0	281
+1	0
+2	0
+3	0
+4	0
+5	0
+6	0
+7	0
+8	0
+9	1934
+10	6
+11	8
+12	2278
+13	7
+14	9
+15	481
+16	6
+17	4
+18	681
+19	3
+20	4
+21	279
+22	24
+23	6
+24	373
+25	40
+26	12
+27	146
+28	34
+29+	1004
