@@ -15,7 +15,7 @@ while IFS= read -r infile; do
 
     # 复制 Manta 分析结果
     echo "Copying the Manta analysis result of ${sample_name}..."
-    export STATS_PATH="${MANTA_ANALYSIS_PATH}/results/stats"
+    export STATS_PATH="${MANTA_ANALYSIS_PATH}/results"
     export RESULT_PATH="/mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/manta/02_result/Beijing"
 
     mkdir -p "${RESULT_PATH}"
