@@ -59,7 +59,9 @@ def collect_rnext_for_qname(sam_file):
         continue
       
       qname = read.query_name  # QNAME
+      print("Processing QNAME: ", qname)
       rnext = read.next_reference_name  # RNEXT
+      print("RNEXT: \t\t", rnext)
 
       qname_rnext[qname].append(rnext)
   return qname_rnext
