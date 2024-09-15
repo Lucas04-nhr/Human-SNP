@@ -12,6 +12,7 @@ from collections import defaultdict, Counter
 import argparse
 import sys
 import os
+import re
 
 # Define exit code
 exit_codes = {
