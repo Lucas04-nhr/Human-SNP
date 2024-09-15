@@ -72,8 +72,8 @@ def collect_rnext_for_qname(sam_file):
 
       processed_lines += 1
 
-      # Log every 10000000 reads
-      if processed_lines % 10000000 == 0:
+      # Log every 1000000 reads
+      if processed_lines % 1000000 == 0:
           print(f"Processing QNAME: {qname}")
           print(f"RNEXT: \t\t{rnext}")
           # Calculate and print progress percentage
@@ -128,9 +128,9 @@ def write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity
       # If the QNAME is in the best_rnext and the RNEXT is the best_rnext and the QNAME is valid
       if qname in best_rnext and best_rnext[qname] == rnext and qname_validity.get(qname, False):
         outfile.write(read)
-        
-        # Log every 10000000 reads
-        if processed_lines % 10000000 == 0:
+
+        # Log every 1000000 reads
+        if processed_lines % 1000000 == 0:
             print(f"Writing QNAME: {qname}")
             print(f"RNEXT: \t\t{rnext}")
             # Calculate and print progress percentage
