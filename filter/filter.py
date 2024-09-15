@@ -59,7 +59,7 @@ def calculate_lines(sam_file):
 # 1. Collect the RNEXT for each QNAME
 def collect_rnext_for_qname(sam_file):
   qname_rnext = defaultdict(list)
-  calculate_lines(sam_file)
+  total_line = calculate_lines(sam_file)
   with pysam.AlignmentFile(sam_file, "r") as infile:
     for read in infile:
       if read.is_unmapped:  # Jump over the unmapped reads
@@ -73,7 +73,7 @@ def collect_rnext_for_qname(sam_file):
           print(f"Processing QNAME: {qname}")
           print(f"RNEXT: \t\t{rnext}")
           # Calculate and print progress percentage
-          progress = (infile.tell() / infile.length) * 100
+          progress = (infile.tell() / total_line) * 100
           print(f"Progress: {progress:.2f}%")
 
       qname_rnext[qname].append(rnext)
