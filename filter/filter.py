@@ -55,6 +55,7 @@ def calculate_lines(sam_file):
         for line in infile:
             lines += 1
     print("Total lines in SAM file: ", lines)
+    return lines
 
 # 1. Collect the RNEXT for each QNAME
 def collect_rnext_for_qname(sam_file):
