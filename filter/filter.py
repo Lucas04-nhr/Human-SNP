@@ -72,8 +72,8 @@ def collect_rnext_for_qname(sam_file):
 
       processed_lines += 1
 
-      # Log every 100000 reads
-      if processed_lines % 100000 == 0:
+      # Log every 10000000 reads
+      if processed_lines % 10000000 == 0:
           print(f"Processing QNAME: {qname}")
           print(f"RNEXT: \t\t{rnext}")
           # Calculate and print progress percentage
@@ -114,6 +114,8 @@ def filter_qname_by_rnext(sam_file, best_rnext):
 
 # 4. Write the best RNEXT for each QNAME to the output file
 def write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity):
+  total_line = calculate_lines(sam_file)
+  processed_lines = 0
   with pysam.AlignmentFile(sam_file, "r") as infile, pysam.AlignmentFile(output_file, "w", header=infile.header) as outfile:
     for read in infile:
       if read.is_unmapped:  # Jump over the unmapped reads
@@ -121,10 +123,19 @@ def write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity
       
       qname = read.query_name
       rnext = read.next_reference_name
+      processed_lines += 1
 
       # If the QNAME is in the best_rnext and the RNEXT is the best_rnext and the QNAME is valid
       if qname in best_rnext and best_rnext[qname] == rnext and qname_validity.get(qname, False):
         outfile.write(read)
+        
+        # Log every 10000000 reads
+        if processed_lines % 10000000 == 0:
+            print(f"Writing QNAME: {qname}")
+            print(f"RNEXT: \t\t{rnext}")
+            # Calculate and print progress percentage
+            progress = (processed_lines / total_line) * 100
+            print(f"Progress: {progress:.2f}%")
 
 def extract_best_rnext(sam_file, output_file):
   # 1. Collect the RNEXT for each QNAME
@@ -135,6 +146,9 @@ def extract_best_rnext(sam_file, output_file):
 
   # 3. Check if the best RNEXT for each QNAME is all "=" in the RNEXT column
   qname_validity = filter_qname_by_rnext(sam_file, best_rnext)
+
+  print("=====================================")
+  print("Writing to output file...")
 
   # 4. Write the best RNEXT for each QNAME to the output file
   write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity)
