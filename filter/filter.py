@@ -34,8 +34,6 @@ def print_exit_message_and_exit(code):
   else:
     print("An unknown error occurred during the program.")
     sys.exit(1)
-    
-
 
 def extract_sample_name(input_file):
     print("Extracting sample name...")
@@ -51,6 +49,13 @@ def extract_sample_name(input_file):
         sample_name = "NoMatchFound"
     return sample_name
 
+def calculate_lines(sam_file):
+    with open(sam_file, "r") as infile:
+        lines = 0
+        for line in infile:
+            lines += 1
+    print("Total lines in SAM file: ", lines)
+
 # 1. Collect the RNEXT for each QNAME
 def collect_rnext_for_qname(sam_file):
   qname_rnext = defaultdict(list)
@@ -59,10 +64,17 @@ def collect_rnext_for_qname(sam_file):
       if read.is_unmapped:  # Jump over the unmapped reads
         continue
       
+      calculate_lines(sam_file)
       qname = read.query_name  # QNAME
-      print("Processing QNAME: ", qname)
       rnext = read.next_reference_name  # RNEXT
-      print("RNEXT: \t\t", rnext)
+
+      # Log every 10000 reads
+      if infile.tell() % 10000 == 0:
+          print(f"Processing QNAME: {qname}")
+          print(f"RNEXT: \t\t{rnext}")
+          # Calculate and print progress percentage
+          progress = (infile.tell() / infile.length) * 100
+          print(f"Progress: {progress:.2f}%")
 
       qname_rnext[qname].append(rnext)
   return qname_rnext
