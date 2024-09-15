@@ -21,39 +21,75 @@ def extract_sample_name(input_file):
         sample_name = "NoMatchFound"
     return sample_name
 
-def extract_best_rnext(sam_file, output_file):
-    # Step 1: Collect RNEXT for each QNAME
-    qname_rnext = defaultdict(list)
+# 1. Collect the RNEXT for each QNAME
+def collect_rnext_for_qname(sam_file):
+  qname_rnext = defaultdict(list)
+  with pysam.AlignmentFile(sam_file, "r") as infile:
+    for read in infile:
+      if read.is_unmapped:  # Jump over the unmapped reads
+        continue
+      
+      qname = read.query_name  # QNAME
+      rnext = read.next_reference_name  # RNEXT
+
+      qname_rnext[qname].append(rnext)
+  return qname_rnext
+
+# 2. Find the most common RNEXT for each QNAME
+def find_most_common_rnext(qname_rnext):
+  best_rnext = {}
+  for qname, rnext_list in qname_rnext.items():
+    counter = Counter(rnext_list)
+    most_common_rnext, _ = counter.most_common(1)[0]  # Get the most common RNEXT
+    best_rnext[qname] = most_common_rnext
+  return best_rnext
+
+# 3. Check if the best RNEXT for each QNAME is all "=" in the RNEXT column
+def filter_qname_by_rnext(sam_file, best_rnext):
+    qname_validity = defaultdict(bool)
 
     with pysam.AlignmentFile(sam_file, "r") as infile:
         for read in infile:
-            if read.is_unmapped:  # Skip unmapped reads
-                continue
-            
-            qname = read.query_name  # QNAME
-            rnext = read.next_reference_name  # RNEXT
-
-            qname_rnext[qname].append(rnext)
-
-    # Step 2: Find the most common RNEXT for each QNAME
-    best_rnext = {}
-    for qname, rnext_list in qname_rnext.items():
-        counter = Counter(rnext_list)
-        most_common_rnext, _ = counter.most_common(1)[0]  # Get the most common RNEXT
-        best_rnext[qname] = most_common_rnext
-
-    # Step 3: Write the best RNEXT reads to the output file
-    with pysam.AlignmentFile(sam_file, "r") as infile, pysam.AlignmentFile(output_file, "w", header=infile.header) as outfile:
-        for read in infile:
-            if read.is_unmapped:  # Skip unmapped reads
+            if read.is_unmapped:  # Jump over the unmapped reads
                 continue
             
             qname = read.query_name
             rnext = read.next_reference_name
 
-            # Write the read if the RNEXT is the best RNEXT for the QNAME
+            # If the QNAME is in the best_rnext and the RNEXT is the best_rnext
             if qname in best_rnext and best_rnext[qname] == rnext:
-                outfile.write(read)
+                # Check if the RNEXT is "="
+                if rnext == "=":
+                    qname_validity[qname] = True  # Set the QNAME to be valid
+
+    return qname_validity
+
+# 4. Write the best RNEXT for each QNAME to the output file
+def write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity):
+  with pysam.AlignmentFile(sam_file, "r") as infile, pysam.AlignmentFile(output_file, "w", header=infile.header) as outfile:
+    for read in infile:
+      if read.is_unmapped:  # Jump over the unmapped reads
+        continue
+      
+      qname = read.query_name
+      rnext = read.next_reference_name
+
+      # If the QNAME is in the best_rnext and the RNEXT is the best_rnext and the QNAME is valid
+      if qname in best_rnext and best_rnext[qname] == rnext and qname_validity.get(qname, False):
+        outfile.write(read)
+
+def extract_best_rnext(sam_file, output_file):
+  # 1. Collect the RNEXT for each QNAME
+  qname_rnext = collect_rnext_for_qname(sam_file)
+
+  # 2. Find the most common RNEXT for each QNAME
+  best_rnext = find_most_common_rnext(qname_rnext)
+
+  # 3. Check if the best RNEXT for each QNAME is all "=" in the RNEXT column
+  qname_validity = filter_qname_by_rnext(sam_file, best_rnext)
+
+  # 4. Write the best RNEXT for each QNAME to the output file
+  write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity)
 
 
 # Set up the argument parser
