@@ -68,8 +68,8 @@ def collect_rnext_for_qname(sam_file):
       qname = read.query_name  # QNAME
       rnext = read.next_reference_name  # RNEXT
 
-      # Log every 10000 reads
-      if infile.tell() % 10000 == 0:
+      # Log every 100000 reads
+      if infile.tell() % 100000 == 0:
           print(f"Processing QNAME: {qname}")
           print(f"RNEXT: \t\t{rnext}")
           # Calculate and print progress percentage
