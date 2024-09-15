@@ -138,11 +138,19 @@ def write_best_rnext_to_output(sam_file, output_file, best_rnext, qname_validity
             print(f"Progress: {progress:.2f}%")
 
 def extract_best_rnext(sam_file, output_file):
+
+  print("Collecting RNEXT for each QNAME...")
   # 1. Collect the RNEXT for each QNAME
   qname_rnext = collect_rnext_for_qname(sam_file)
 
+  print("=====================================")
+  print("Finding the most common RNEXT for each QNAME...")
+
   # 2. Find the most common RNEXT for each QNAME
   best_rnext = find_most_common_rnext(qname_rnext)
+
+  print("=====================================")
+  print("Checking QNAME validity...")
 
   # 3. Check if the best RNEXT for each QNAME is all "=" in the RNEXT column
   qname_validity = filter_qname_by_rnext(sam_file, best_rnext)
