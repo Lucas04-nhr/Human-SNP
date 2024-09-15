@@ -6,6 +6,31 @@
 import pysam
 from collections import defaultdict, Counter
 import argparse
+import sys
+import os
+
+# Define exit code
+exit_codes = {
+    0: "SUCCESS",
+    1: "ERROR",
+    127: "ERR_NO_SAMPLE_NAME_FOUND"
+}
+
+def print_exit_message_and_exit(code):
+  if code in exit_codes and code != 0 and code != 1:
+    print(f"Exit code: {code} ({exit_codes[code]})")
+    sys.exit(code)
+  elif code == 0:
+    print("The program has run successfully.")
+    sys.exit(0)
+  elif code == 1:
+    print("An uncatched error occurred during the program.")
+    sys.exit(1)
+  else:
+    print("An unknown error occurred during the program.")
+    sys.exit(1)
+    
+
 
 def extract_sample_name(input_file):
     print("Extracting sample name...")
@@ -110,7 +135,7 @@ sample_name = extract_sample_name(input_file)
 # Check if sample name was extracted
 if sample_name == "NoMatchFound":
     print("No sample name found in the input file name. Please check the input file name.")
-    exit(127)
+    print_exit_message_and_exit(127)
 else:
     print("Sample name: \t\t" + sample_name)
     output_file = os.path.join(output_path, sample_name + ".best_rnext.sam")
