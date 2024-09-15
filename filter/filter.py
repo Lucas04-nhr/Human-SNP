@@ -74,7 +74,7 @@ def collect_rnext_for_qname(sam_file):
           print(f"Processing QNAME: {qname}")
           print(f"RNEXT: \t\t{rnext}")
           # Calculate and print progress percentage
-          progress = (infile.tell() / total_line) * 100
+          progress = (infile.tell() / total_line) * 10
           print(f"Progress: {progress:.2f}%")
 
       qname_rnext[qname].append(rnext)
