@@ -59,12 +59,12 @@ def calculate_lines(sam_file):
 # 1. Collect the RNEXT for each QNAME
 def collect_rnext_for_qname(sam_file):
   qname_rnext = defaultdict(list)
+  calculate_lines(sam_file)
   with pysam.AlignmentFile(sam_file, "r") as infile:
     for read in infile:
       if read.is_unmapped:  # Jump over the unmapped reads
         continue
       
-      calculate_lines(sam_file)
       qname = read.query_name  # QNAME
       rnext = read.next_reference_name  # RNEXT
 
