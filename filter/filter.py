@@ -3,6 +3,10 @@
 # 找到出现次数最多的 RNEXT 染色体编号。
 # 仅保留这些 QNAME 的最佳比对行，并输出到新的文件中。
 
+# Test command (execute in the same directory as the script):
+# python filter.py -i /mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing/BJ001.removed.sam -o /mnt/raid6/bacphagenetwork/data/08_filtered/Beijing
+
+
 import pysam
 from collections import defaultdict, Counter
 import argparse
