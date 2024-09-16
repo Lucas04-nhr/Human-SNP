@@ -67,6 +67,7 @@ def process_sam_file(infile, best_rnext, total_lines):
   for line in infile:
     # Skip lines with insert size of 0
     if line.template_length == 0:
+      processed_lines += 1
       continue
 
     # Get the QNAME and RNEXT
@@ -95,11 +96,12 @@ def write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
 
     # Write the best RNEXT to the output file
     infile = pysam.AlignmentFile(input_file, "r")
+    outfile = pysam.AlignmentFile(output_file, "w", template=infile)
     for line in infile:
+      processed_lines += 1
       if line.query_name == qname and line.next_reference_name == best_rnext_value:
         outfile.write(line)
-        processed_lines += 1
-
+    
       # Print the progress every 1000000 lines, calculate the percentage of processed lines
       if processed_lines % 1000000 == 0:
         print_log(total_lines, processed_lines)
@@ -166,10 +168,8 @@ total_lines = calculate_lines(input_file)
 
 print("Initializing complete.")
 print("=====================================")
-print("Processing SAM file...")
 
 # Extract the best RNEXT for each QNAME and write to the output file
 extract_best(input_file, output_file, total_lines)
 
 print("Processing complete.")
-
