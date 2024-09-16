@@ -61,25 +61,30 @@ def print_log(total_lines, processed_lines):
   progress = (processed_lines / total_lines) * 100
   print(f"Progress: \t\t{progress:.2f}%")
 
-def process_sam_file(infile, best_rnext, total_lines):
+def process_sam_file(input_file, output_file, total_lines):
 
+  # Open the input and output files
+  infile = pysam.AlignmentFile(input_file, "r")
+  outfile = pysam.AlignmentFile(output_file, "w", template=infile)
   processed_lines = 0
 
   # Iterate through the SAM file
   for line in infile:
-    # Skip lines with insert size of 0
+    # Drop lines with insert size of 0
     if line.template_length == 0:
       processed_lines += 1
       continue
 
     # Get the QNAME and RNEXT
-    qname = line.query_name
-    rnext = line.next_reference_name
-    processed_lines += 1
-
+    # qname = line.query_name
+    # rnext = line.next_reference_name
+    
     # Add the RNEXT to the dictionary
-    best_rnext[qname][rnext] += 1
+    # best_rnext[qname][rnext] += 1
 
+    # Write the line to the output file
+    outfile.write(line)
+    processed_lines += 1
     # Print the progress every 1000000 lines, calculate the percentage of processed lines
     if processed_lines % 1000000 == 0:
       print_log(total_lines, processed_lines)
@@ -97,7 +102,7 @@ def write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
 
     # Iterate through the dictionary to get the best RNEXT for each QNAME
     for qname, rnexts in best_rnext.items():
-        best_rnext_value = rnexts.most_common(1)[0][0]
+        
 
         # Iterate through the input file and write the best RNEXT to the output file
         for line in infile:
@@ -114,9 +119,6 @@ def write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
 
 # MAIN FUNCTION
 def extract_best(input_file, output_file, total_lines):
-  # Open the input and output files
-  infile = pysam.AlignmentFile(input_file, "r")
-  outfile = pysam.AlignmentFile(output_file, "w", template=infile)
 
   # Initialize a dictionary to store the best RNEXT for each QNAME
   best_rnext = defaultdict(Counter)
@@ -125,16 +127,16 @@ def extract_best(input_file, output_file, total_lines):
   print("Filtering out insert size of 0...")
 
   # Process the SAM file
-  process_sam_file(infile, best_rnext, total_lines)
+  process_sam_file(input_file, output_file, total_lines)
 
   print("Filtering complete.")
-  print("=====================================")
-  print("Writing to output file...")
+  # print("=====================================")
+  # print("Writing to output file...")
 
-  # Write the best RNEXT to the output file
-  write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
+  # # Write the best RNEXT to the output file
+  # write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
 
-  print("Writing complete.")
+  # print("Writing complete.")
 
 
 # Set up the argument parser
