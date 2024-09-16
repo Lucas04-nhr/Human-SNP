@@ -98,9 +98,9 @@ def write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
     infile = pysam.AlignmentFile(input_file, "r")
     outfile = pysam.AlignmentFile(output_file, "w", template=infile)
     for line in infile:
-      processed_lines += 1
       if line.query_name == qname and line.next_reference_name == best_rnext_value:
         outfile.write(line)
+        processed_lines += 1
     
       # Print the progress every 1000000 lines, calculate the percentage of processed lines
       if processed_lines % 1000000 == 0:
