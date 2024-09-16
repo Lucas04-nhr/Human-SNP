@@ -59,7 +59,7 @@ def print_log(total_lines, processed_lines):
     percentage = round(processed_lines / total_lines * 100, 2)
     print(f"Processed {processed_lines} lines, ({percentage}%)")
 
-def process_sam_file(infile, best_rnext):
+def process_sam_file(infile, best_rnext, total_lines):
 
   # Calculate the total number of lines in the SAM file
   total_lines = calculate_lines(infile)
@@ -86,10 +86,9 @@ def process_sam_file(infile, best_rnext):
   # Close the input file
   infile.close()
 
-def write_best_rnext_to_output(input_file, output_file, best_rnext):
+def write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines):
   
   # Calculate the total number of lines in the SAM file
-  total_lines = calculate_lines(infile)
   processed_lines = 0
 
   # Iterate through the dictionary to get the best RNEXT for each QNAME
@@ -113,7 +112,7 @@ def write_best_rnext_to_output(input_file, output_file, best_rnext):
   outfile.close()
 
 # MAIN FUNCTION
-def extract_best(input_file, output_file):
+def extract_best(input_file, output_file, total_lines):
   # Open the input and output files
   infile = pysam.AlignmentFile(input_file, "r")
   outfile = pysam.AlignmentFile(output_file, "w", template=infile)
@@ -125,14 +124,14 @@ def extract_best(input_file, output_file):
   print("Filtering out insert size of 0...")
 
   # Process the SAM file
-  process_sam_file(infile, best_rnext)
+  process_sam_file(infile, best_rnext, total_lines)
 
   print("Filtering complete.")
   print("=====================================")
   print("Writing to output file...")
 
   # Write the best RNEXT to the output file
-  write_best_rnext_to_output(input_file, output_file, best_rnext)
+  write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines)
 
   print("Writing complete.")
 
@@ -163,12 +162,16 @@ else:
 # Print out the input and output file names
 print("Input file: \t\t" + input_file)
 print("Output file: \t\t" + output_file)
+
+# Calculate the total number of lines in the SAM file
+total_lines = calculate_lines(input_file)
+
 print("Initializing complete.")
 print("=====================================")
 print("Processing SAM file...")
 
 # Extract the best RNEXT for each QNAME and write to the output file
-extract_best(input_file, output_file)
+extract_best(input_file, output_file, total_lines)
 
 print("Processing complete.")
 
