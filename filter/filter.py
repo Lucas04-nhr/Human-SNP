@@ -85,6 +85,7 @@ def process_sam_file(input_file, output_file, total_lines):
     # Write the line to the output file
     outfile.write(line)
     processed_lines += 1
+    
     # Print the progress every 1000000 lines, calculate the percentage of processed lines
     if processed_lines % 1000000 == 0:
       print_log(total_lines, processed_lines)
