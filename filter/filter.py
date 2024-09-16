@@ -61,8 +61,6 @@ def print_log(total_lines, processed_lines):
 
 def process_sam_file(infile, best_rnext, total_lines):
 
-  # Calculate the total number of lines in the SAM file
-  total_lines = calculate_lines(infile)
   processed_lines = 0
 
   # Iterate through the SAM file
