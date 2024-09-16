@@ -6,6 +6,9 @@ import re
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Test prompt:
+# python mapq.py -i /mnt/raid6/bacphagenetwork/data/06_unmapped_removed/Beijing/BJ001.removed.sam -o ./ -s ./
+
 def extract_sample_name(input_file):
     print("Extracting sample name...")
     
