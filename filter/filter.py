@@ -56,8 +56,13 @@ def calculate_lines(sam_file):
     return lines
 
 def print_log(total_lines, processed_lines):
-    percentage = round(processed_lines / total_lines * 100, 2)
-    print(f"Processed {processed_lines} lines, ({percentage}%)")
+  print(f"Processed lines: {processed_lines}")
+  if qname and rnext:
+      print(f"QNAME: {qname}")
+      print(f"RNEXT: {rnext}")
+  # Calculate and print progress percentage
+  progress = (processed_lines / total_lines) * 100
+  print(f"Progress: {progress:.2f}%")
 
 def process_sam_file(infile, best_rnext, total_lines):
 
@@ -86,31 +91,29 @@ def process_sam_file(infile, best_rnext, total_lines):
   infile.close()
 
 def write_best_rnext_to_output(input_file, output_file, best_rnext, total_lines):
-  
-  # Calculate the total number of lines in the SAM file
-  processed_lines = 0
+    # Initialize processed_lines outside the loop
+    processed_lines = 0
 
-  # Iterate through the dictionary to get the best RNEXT for each QNAME
-  for qname, rnexts in best_rnext.items():
-    best_rnext_value = rnexts.most_common(1)[0][0]
-
-    # Write the best RNEXT to the output file
+    # Open the input and output files once
     infile = pysam.AlignmentFile(input_file, "r")
     outfile = pysam.AlignmentFile(output_file, "w", template=infile)
-    for line in infile:
-      if line.query_name == qname and line.next_reference_name == best_rnext_value:
-        outfile.write(line)
 
-      processed_lines += 1
-    
-      # Print the progress every 1000000 lines, calculate the percentage of processed lines
-      if processed_lines % 1000000 == 0:
-        print_log(total_lines, processed_lines)
+    # Iterate through the dictionary to get the best RNEXT for each QNAME
+    for qname, rnexts in best_rnext.items():
+        best_rnext_value = rnexts.most_common(1)[0][0]
+
+        # Iterate through the input file and write the best RNEXT to the output file
+        for line in infile:
+            if line.query_name == qname and line.next_reference_name == best_rnext_value:
+                outfile.write(line)
+                processed_lines += 1
+
+                # Print the progress every 1000000 lines, calculate the percentage of processed lines
+                if processed_lines % 1000000 == 0:
+                    print_log(total_lines, processed_lines, qname, best_rnext_value)
 
     infile.close()
-
-  # Close the output file
-  outfile.close()
+    outfile.close()
 
 # MAIN FUNCTION
 def extract_best(input_file, output_file, total_lines):
