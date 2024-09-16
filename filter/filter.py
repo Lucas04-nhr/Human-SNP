@@ -56,13 +56,10 @@ def calculate_lines(sam_file):
     return lines
 
 def print_log(total_lines, processed_lines):
-  print(f"Processed lines: {processed_lines}")
-  if qname and rnext:
-      print(f"QNAME: \t\t{qname}")
-      print(f"RNEXT: \t\t{rnext}")
+  print(f"Processed lines: \t{processed_lines}")
   # Calculate and print progress percentage
   progress = (processed_lines / total_lines) * 100
-  print(f"Progress: \t{progress:.2f}%")
+  print(f"Progress: \t\t{progress:.2f}%")
 
 def process_sam_file(infile, best_rnext, total_lines):
 
