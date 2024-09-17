@@ -7,7 +7,7 @@ export GENE_DATA_1=${BASE_PATH}/BJ001_1.fastq.gz
 export GENE_DATA_2=${BASE_PATH}/BJ001_2.fastq.gz
 
 echo "Re-aligning..."
-bwa mem -t 4 -p $INDEXING_PATH $GENE_DATA_1 $GENE_DATA_2 > ${BASE_PATH}/BJ001.sam
+bwa mem -t 4 -p $INDEXING_PATH $GENE_DATA_1 $GENE_DATA_2 -M > ${BASE_PATH}/BJ001.sam
 echo "Re-alignment done."
 
 echo "===================="
