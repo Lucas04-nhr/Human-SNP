@@ -32,7 +32,7 @@ do
     sample_name="${file_name%%_1*}"
     echo "Processing $sample_name..."
     file_fq2="${sample_name}_2.fastq.gz"
-    echo "$file_fq1" >> ./slurm/bj_sbatch.list
+    echo "$file_fq1" >> BJ_sbatch.list
     echo "The genome data of $sample_name has been added to the config file."
 done
 
