@@ -27,7 +27,7 @@ echo "Initializing completed."
 echo "=============================="
 
 # Get the list of all *.fastq files
-infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat BJ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 file_base=$(basename "$infile" _1.fastq.gz)
 
 # Extract the sample name
