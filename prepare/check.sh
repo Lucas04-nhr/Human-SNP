@@ -31,14 +31,8 @@ then
     fi
 fi
 
-mkdir -p log/01_align/Beijing
-mkdir -p log/01_align/Guangzhou
-mkdir -p log/02_filter/Beijing
-mkdir -p log/02_filter/Guangzhou
-mkdir -p log/03_sort/Beijing
-mkdir -p log/03_sort/Guangzhou
-mkdir -p log/04_convert/Beijing
-mkdir -p log/04_convert/Guangzhou
+mkdir -p log/Beijing
+mkdir -p log/Guangzhou
 echo "The log folder has been created."
 
 # Create the output folder
