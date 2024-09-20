@@ -47,6 +47,8 @@ mkdir -p ${DATA_PATH}/03_sort/Beijing
 mkdir -p ${DATA_PATH}/03_sort/Guangzhou
 mkdir -p ${DATA_PATH}/04_convert/Beijing
 mkdir -p ${DATA_PATH}/04_convert/Guangzhou
+mkdir -p ${DATA_PATH}/03_tag_added/Beijing
+mkdir -p ${DATA_PATH}/03_tag_added/Guangzhou
 
 echo "Do you want to create sbatch files? (y/n)"
 read answer
