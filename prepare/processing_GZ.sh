@@ -76,6 +76,12 @@ samtools view -h $SORTED_DATA_PATH/${sample_name}.sorted.bam > $CONVERTED_DATA_P
 || { echo "Error: samtools view failed in processing $sample_name."; exit 1; }
 echo "Conversion completed."
 
+# Step 5: Add the tag to the reads
+echo "Adding the tag to the reads..."
+samtools addreplacerg -r 'ID:${sample_name}' -r 'SM=${sample_name}' -r 'PL:illumina' -r 'CN:GZ' $CONVERTED_DATA_PATH/${sample_name}.sam > $ADDED_TAG_DATA_PATH/${sample_name}.bam \
+|| { echo "Error: samtools addreplacerg failed in processing $sample_name."; exit 1; }
+echo "Indexing completed."
+
 # All done
 echo "=============================="
 echo "Processing $sample_name completed."
