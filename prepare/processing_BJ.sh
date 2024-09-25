@@ -2,15 +2,18 @@
 #SBATCH --job-name=preprocessing_BJ
 #SBATCH --output=./log/Beijing/preprocessing_BJ.%j.out
 #SBATCH --error=./log/Beijing/preprocessing_BJ.%j.err
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=5
 #SBATCH --mem=1G
-#SBATCH --export=DATA_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/00_bwa_index/chm13v2/chm13v2.0_noY.fa',OUTPUT_BASE_PATH='/mnt/raid6/bacphagenetwork/data/'
+#SBATCH --export=DATA_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',OUTPUT_BASE_PATH='/mnt/raid6/bacphagenetwork/data/'
 #SBATCH --array=1-201%4
 
 # Initialize the environment
 echo "Initializing..."
 
 # Set the paths of the output files
+
+INDEXING_PATH="$OUTPUT_BASE_PATH/00_bwa_index/GRCh38"
+INDEXING_FILE="$OUTPUT_BASE_PATH/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa"
 ALIGNED_DATA_PATH="$OUTPUT_BASE_PATH/01_align/Beijing"
 FILTERED_DATA_PATH="$OUTPUT_BASE_PATH/02_filter/Beijing"
 SORTED_DATA_PATH="$OUTPUT_BASE_PATH/03_sort/Beijing"
@@ -18,6 +21,7 @@ CONVERTED_DATA_PATH="$OUTPUT_BASE_PATH/04_convert/Beijing"
 
 echo "The original *.fastq files are located in $DATA_PATH."
 echo "The indexing data is located in $INDEXING_PATH."
+echo "The indexing genome data is $INDEXING_FILE."
 echo "The alignment results will be saved in $ALIGNED_DATA_PATH."
 echo "The *.bam files removed unmapped reads will be saved in $FILTERED_DATA_PATH."
 echo "The sorted *.bam files and their indexes will be saved in $SORTED_DATA_PATH."
@@ -49,7 +53,7 @@ GENE_DATA_2="$DATA_PATH/${file_base}_2.fastq.gz"
 
 # Step 1: Align the reads to the reference genome
 echo "Aligning the reads to the reference genome..."
-bwa mem -t 4 $INDEXING_PATH $GENE_DATA_1 $GENE_DATA_2 -M > $ALIGNED_DATA_PATH/${sample_name}.sam \
+bwa mem -t 4 -R "@RG\tID:${sample_name}\tSM:${sample_name}\tPL:Illumina\tCN:BJ" $INDEXING_FILE $GENE_DATA_1 $GENE_DATA_2 -M > $ALIGNED_DATA_PATH/${sample_name}.sam
 || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
 echo "Alignment completed."
 
@@ -61,20 +65,14 @@ echo "Filtering completed."
 
 # Step 3: Sort the filtered reads
 echo "Sorting the filtered reads..."
-samtools sort $FILTERED_DATA_PATH/${sample_name}.bam -o $SORTED_DATA_PATH/${sample_name}.sorted.bam \
+samtools sort $FILTERED_DATA_PATH/${sample_name}.bam -o $SORTED_DATA_PATH/${sample_name}.bam \
 || { echo "Error: samtools sort failed in processing $sample_name."; exit 1; }
 echo "Sorting completed."
 
 echo "Indexing the sorted reads..."
-samtools index $SORTED_DATA_PATH/${sample_name}.sorted.bam \
+samtools index $SORTED_DATA_PATH/${sample_name}.bam \
 || { echo "Error: samtools index failed in processing $sample_name."; exit 1; }
 echo "Indexing completed."
-
-# Step 4: Convert the sorted reads to the SAM format
-echo "Converting the sorted reads to the SAM format..."
-samtools view -h $SORTED_DATA_PATH/${sample_name}.sorted.bam > $CONVERTED_DATA_PATH/${sample_name}.sam \
-|| { echo "Error: samtools view failed in processing $sample_name."; exit 1; }
-echo "Conversion completed."
 
 # All done
 echo "=============================="
