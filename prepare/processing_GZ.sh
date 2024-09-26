@@ -3,7 +3,7 @@
 #SBATCH --output=./log/Guangzhou/preprocessing_GZ.%j.out
 #SBATCH --error=./log/Guangzhou/preprocessing_GZ.%j.err
 #SBATCH --cpus-per-task=5
-#SBATCH --mem=2G
+#SBATCH --mem=5G
 #SBATCH --export=DATA_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Guangzhou/02_rm_host',OUTPUT_BASE_PATH='/mnt/raid6/bacphagenetwork/data/'
 #SBATCH --array=1-160%4
 
