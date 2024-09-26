@@ -3,7 +3,7 @@
 #SBATCH --output=./log/Beijing/preprocessing_BJ.%j.out
 #SBATCH --error=./log/Beijing/preprocessing_BJ.%j.err
 #SBATCH --cpus-per-task=5
-#SBATCH --mem=2G
+#SBATCH --mem=5G
 #SBATCH --export=DATA_PATH='/mnt/raid6/bacphagenetwork/data/skin_metagenome/Beijing/02_rm_host',OUTPUT_BASE_PATH='/mnt/raid6/bacphagenetwork/data/'
 #SBATCH --array=1-201%4
 
