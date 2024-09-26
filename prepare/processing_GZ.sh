@@ -53,7 +53,7 @@ GENE_DATA_2="$DATA_PATH/${file_base}_2.fastq.gz"
 
 # Step 1: Align the reads to the reference genome
 echo "Aligning the reads to the reference genome..."
-bwa mem -t 4 -R "@RG\tID:${sample_name}\tSM:${sample_name}\tPL:Illumina\tCN:GZ" $INDEXING_FILE $GENE_DATA_1 $GENE_DATA_2 -M > $ALIGNED_DATA_PATH/${sample_name}.sam
+bwa mem -t 5 -R "@RG\tID:${sample_name}\tSM:${sample_name}\tPL:Illumina\tCN:GZ" $INDEXING_FILE $GENE_DATA_1 $GENE_DATA_2 -M > $ALIGNED_DATA_PATH/${sample_name}.sam
 || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
 echo "Alignment completed."
 
