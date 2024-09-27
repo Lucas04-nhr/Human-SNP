@@ -8,17 +8,17 @@ export JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/'
 export JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java'
 export LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server'
 export CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
-BASE_PATH="/mnt/raid6/bacphagenetwork/data/"
-GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
-GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
-INDEXING_PATH="$OUTPUT_BASE_PATH/00_bwa_index/GRCh38"
-INDEXING_FILE="$INDEXING_PATH/Homo_sapiens.GRCh38.dna.toplevel.fa"
-KNOWN_SITES_PATH="$BASE_PATH/00_bwa_index/GRCh38/known_sites"
-KNOWN_SITES_FILE="$KNOWN_SITES_PATH/Homo_sapiens_assembly38.dbsnp138.vcf"
-SORTED_DATA_PATH="$BASE_PATH/03_sort/Beijing"
-RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Beijing"
-APPLYBQSR_DATA_PATH="$BASE_PATH/06_ApplyBQSR/Beijing"
-HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller/Beijing"
+export BASE_PATH="/mnt/raid6/bacphagenetwork/data/"
+export GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
+export GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
+export INDEXING_PATH="$OUTPUT_BASE_PATH/00_bwa_index/GRCh38"
+export INDEXING_FILE="$INDEXING_PATH/Homo_sapiens.GRCh38.dna.toplevel.fa"
+export KNOWN_SITES_PATH="$BASE_PATH/00_bwa_index/GRCh38/known_sites"
+export KNOWN_SITES_FILE="$KNOWN_SITES_PATH/Homo_sapiens_assembly38.dbsnp138.vcf"
+export SORTED_DATA_PATH="$BASE_PATH/03_sort/Beijing"
+export RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Beijing"
+export APPLYBQSR_DATA_PATH="$BASE_PATH/06_ApplyBQSR/Beijing"
+export HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller/Beijing"
 
 echo "The sorted *.bam files are located in $SORTED_DATA_PATH."
 echo "The indexing data is located in $INDEXING_PATH."
