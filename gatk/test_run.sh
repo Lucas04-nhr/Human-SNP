@@ -4,6 +4,10 @@
 echo "Initializing..."
 
 # Set the paths of the output files
+export JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/'
+export JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java'
+export LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server'
+export CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
 BASE_PATH="/mnt/raid6/bacphagenetwork/data/"
 GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
 GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
@@ -34,7 +38,7 @@ sample_name=$(basename "$infile" .bam)
 
 # Perform the BaseRecalibrator
 echo "Performing BaseRecalibrator for ${sample_name}..."
-$GATK_NEW_BIN BaseRecalibrator \
+$JAVA_BIN -jar $GATK_NEW_BIN BaseRecalibrator \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
   -R $INDEXING_FILE \
   --known-sites $KNOWN_SITES_FILE \
@@ -49,7 +53,7 @@ echo "=============================="
 # Perform the ApplyBQSR
 
 echo "Performing ApplyBQSR for ${sample_name}..."
-$GATK_NEW_BIN ApplyBQSR \
+$JAVA_BIN -jar $GATK_NEW_BIN ApplyBQSR \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
   -R $INDEXING_PATH \
   --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
@@ -63,7 +67,7 @@ echo "=============================="
 # Perform the HaplotypeCaller
 
 echo "Performing HaplotypeCaller for ${sample_name}..."
-$GATK_NEW_BIN HaplotypeCaller \
+$JAVA_BIN -jar $GATK_NEW_BIN HaplotypeCaller \
   -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
   -R $INDEXING_PATH \
   -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
