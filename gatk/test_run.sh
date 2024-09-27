@@ -44,7 +44,6 @@ $GATK_OLD_BIN BaseRecalibrator \
   --known-sites $KNOWN_SITES_FILE \
   -O $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
   --use-original-qualities \
-  --num-threads 5 \
 || { echo "BaseRecalibrator for ${sample_name} failed"; exit 1; }
 
 echo "BaseRecalibrator for ${sample_name} completed."
@@ -58,7 +57,6 @@ $GATK_OLD_BIN ApplyBQSR \
   -R $INDEXING_PATH \
   --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
   -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
-  --num-threads 5 \
 || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
 
 echo "ApplyBQSR for ${sample_name} completed."
