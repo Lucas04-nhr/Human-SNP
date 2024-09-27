@@ -38,7 +38,7 @@ sample_name=$(basename "$infile" .bam)
 
 # Perform the BaseRecalibrator
 echo "Performing BaseRecalibrator for ${sample_name}..."
-$JAVA_BIN -jar $GATK_NEW_BIN BaseRecalibrator \
+$GATK_OLD_BIN BaseRecalibrator \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
   -R $INDEXING_FILE \
   --known-sites $KNOWN_SITES_FILE \
@@ -53,7 +53,7 @@ echo "=============================="
 # Perform the ApplyBQSR
 
 echo "Performing ApplyBQSR for ${sample_name}..."
-$JAVA_BIN -jar $GATK_NEW_BIN ApplyBQSR \
+$GATK_OLD_BIN ApplyBQSR \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
   -R $INDEXING_PATH \
   --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
@@ -67,7 +67,7 @@ echo "=============================="
 # Perform the HaplotypeCaller
 
 echo "Performing HaplotypeCaller for ${sample_name}..."
-$JAVA_BIN -jar $GATK_NEW_BIN HaplotypeCaller \
+$GATK_OLD_BIN HaplotypeCaller \
   -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
   -R $INDEXING_PATH \
   -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
