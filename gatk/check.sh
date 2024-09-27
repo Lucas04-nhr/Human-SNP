@@ -5,7 +5,7 @@
 export DATA_PATH=/mnt/raid6/bacphagenetwork/data/
 echo "Checking the source data folder..."
 
-if [ ! -d "${DATA_PATH}/04_convert/" ]
+if [ ! -d "${DATA_PATH}/03_sort/" ]
 then
     echo "The input folder does not exist, please check manually ..."
     exit 1
