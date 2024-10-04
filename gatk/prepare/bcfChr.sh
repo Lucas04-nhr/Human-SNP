@@ -11,7 +11,7 @@ OUTPUT_INDEX="/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/known-sites/Ho
 bcftools annotate --rename-chrs ./chr_names.txt $INPUT_VCF -o $OUTPUT_VCF
 
 # Reindex new VCF file
-gatk IndexFeatureFile -i $OUTPUT_VCF
+gatk IndexFeatureFile -I $OUTPUT_VCF
 
 echo "Chromosome names have been modified and saved to $OUTPUT_VCF."
 echo "Output file has already been indexed and saved to $OUTPUT_INDEX."
