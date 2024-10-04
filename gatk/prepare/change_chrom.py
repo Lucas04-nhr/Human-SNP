@@ -9,8 +9,10 @@ def modify_chrom_prefix(input_vcf, output_vcf):
             # Modify the CHROM field, remove the 'chr' prefix
             if record.chrom.startswith('chr'):
                 print("Removing 'chr' prefix from CHROM field")
-                record.chrom = record.chrom[3:]  # Remove the 'chr' prefix
-                print("CHROM field after modification:", record.chrom)
+                new_record = record.copy()
+                new_record.chrom = record.chrom[3:]  # Remove the 'chr' prefix
+                print("CHROM field after modification:", new_record.chrom)
+                vcf_out.write(new_record)
             else:
                 print("CHROM field does not start with 'chr'")
             
@@ -33,7 +35,7 @@ input_vcf = os.path.abspath(input_path)
 output_vcf = os.path.join(os.path.abspath(output_path), 'modified_' + os.path.basename(input_vcf))
 
 # Call the function to remove the 'chr' prefix
-print("Input VCF file:\t", input_vcf)
+print("Input VCF file:\t\t", input_vcf)
 print("Output VCF file:\t", output_vcf)
 modify_chrom_prefix(input_vcf, output_vcf)
 
