@@ -4,36 +4,17 @@ import argparse
 
 def modify_header_and_records(input_vcf, output_vcf):
     with pysam.VariantFile(input_vcf) as vcf_in:
-        # Create a VCF Writer
-        with pysam.VariantFile(output_vcf, 'w', header=vcf_in.header) as vcf_out:
-            print("Modifying the header and records...")
-            # Modify the header
-            new_header = vcf_in.header.copy()
-            for record in new_header.records:
-                if record.type == 'CO':
-                    # Modify the header chromosome, remove the 'chr' prefix
-                    if record.key.startswith('chr'):
-                        new_key = record.key[3:]  # Remove the 'chr' prefix
-                        print(f"Modifying header chromosome from {record.key} to {new_key}")
-                        record.key = new_key  # Update the header chromosome
+        # Modify the header
+        new_header = vcf_in.header.copy()
+        for contig in new_header.contigs:
+            if contig.startswith('chr'):
+                new_contig = contig[3:]  # Remove the 'chr' prefix
+                print(f"Modifying header contig from {contig} to {new_contig}")
+                new_header.contigs[new_contig] = new_header.contigs.pop(contig)
 
-            # Create a VCF Writer with the modified header
-            with pysam.VariantFile(output_vcf, 'w', header=new_header) as vcf_out:                
-                # Modify the records
-                for record in vcf_in:
-                    original_chrom = record.chrom
-                    if original_chrom.startswith('chr'):
-                        new_chrom = original_chrom[3:]  # Remove the 'chr' prefix
-                        print(f"Modifying record chromosome from {original_chrom} to {new_chrom}")
-                        record.chrom = new_chrom  # Update the record chromosome
-                    
-                    # Write the record to the output VCF file
-                    vcf_out.write(record)
-                    
-            print("Writing the modified header completed.")
-            print("=====================================")
+        # Create a VCF Writer with the modified header
+        with pysam.VariantFile(output_vcf, 'w', header=new_header) as vcf_out:
             print("Modifying the records...")
-            
             # Modify the records
             for record in vcf_in:
                 original_chrom = record.chrom
@@ -41,9 +22,9 @@ def modify_header_and_records(input_vcf, output_vcf):
                     new_chrom = original_chrom[3:]  # Remove the 'chr' prefix
                     print(f"Modifying record chromosome from {original_chrom} to {new_chrom}")
                     record.chrom = new_chrom  # Update the record chromosome
-                
-                # Write the record to the output VCF file
-                vcf_out.write(record)
+            
+            # Write the record to the output VCF file
+            vcf_out.write(record)
 
 
 # Parse the input arguments
