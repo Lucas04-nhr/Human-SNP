@@ -35,5 +35,5 @@ output_vcf = os.path.join(os.path.abspath(output_path), 'modified_' + os.path.ba
 # Call the function to remove the 'chr' prefix
 print("Input VCF file:\t", input_vcf)
 print("Output VCF file:\t", output_vcf)
-remove_chr_prefix(input_vcf, output_vcf)
+modify_chrom_prefix(input_vcf, output_vcf)
 
