@@ -1,3 +1,5 @@
+#! /bin/bash
+
 export BCFTOOLS_BIN=“/mnt/raid6/bacphagenetwork/tools/bcftools/bin/bcftools”
 
 # Define the input and output file paths
