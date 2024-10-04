@@ -2,21 +2,38 @@ import os
 import pysam
 import argparse
 
-def modify_chrom_prefix(input_vcf, output_vcf):
-    with pysam.VariantFile(input_vcf) as vcf_in, pysam.VariantFile(output_vcf, 'w', header=vcf_in.header) as vcf_out:
-        for record in vcf_in:
-            print("CHROM field before modification:", record.chrom)
-            # Check if CHROM field is valid
-            if record.chrom.startswith('chr') and record.chrom[3:] in vcf_out.header.contigs:
-                print("Removing 'chr' prefix from CHROM field")
-                record.chrom = record.chrom[3:]  # Remove the 'chr' prefix
-                print("CHROM field after modification:", record.chrom)
-            else:
-                print("CHROM field does not start with 'chr' or is invalid")
+def modify_header_and_records(input_vcf, output_vcf):
+    with pysam.VariantFile(input_vcf) as vcf_in:
+        # Create a VCF Writer
+        with pysam.VariantFile(output_vcf, 'w', header=vcf_in.header) as vcf_out:
+            print("Modifying the header and records...")
+            # Modify the header
+            new_header = vcf_in.header.copy()
+            for record in new_header.records:
+                if record.type == 'CO':
+                    # Modify the header chromosome, remove the 'chr' prefix
+                    if record.key.startswith('chr'):
+                        new_key = record.key[3:]  # Remove the 'chr' prefix
+                        print(f"Modifying header chromosome from {record.key} to {new_key}")
+                        record.key = new_key  # Update the header chromosome
             
-            # Write the modified record to the output VCF file
-            vcf_out.write(record)
+            # Write the modified header to the output VCF file
+            vcf_out.header = new_header
+            print("Writing the modified header completed.")
+            print("=====================================")
+            print("Modifying the records...")
             
+            # Modify the records
+            for record in vcf_in:
+                original_chrom = record.chrom
+                if original_chrom.startswith('chr'):
+                    new_chrom = original_chrom[3:]  # Remove the 'chr' prefix
+                    print(f"Modifying record chromosome from {original_chrom} to {new_chrom}")
+                    record.chrom = new_chrom  # Update the record chromosome
+                
+                # Write the record to the output VCF file
+                vcf_out.write(record)
+
 
 # Parse the input arguments
 parser = argparse.ArgumentParser(description='Remove the chr prefix from the CHROM field in a VCF file')
