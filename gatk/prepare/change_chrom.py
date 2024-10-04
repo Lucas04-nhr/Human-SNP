@@ -9,13 +9,15 @@ def remove_chr_prefix(input_vcf, output_vcf):
     vcf_out = pysam.VariantFile(output_vcf, 'w', header=vcf_in.header)
 
     for record in vcf_in:
-        print("Processing record:", record)
         print("CHROM field before modification:", record.chrom)
         # Modify the CHROM field, remove the 'chr' prefix
         if record.chrom.startswith('chr'):
             print("Removing 'chr' prefix from CHROM field")
-            record.chrom = record.chrom[3:]  # Remove the 'chr' prefix
-            print("CHROM field after modification:", record.chrom)
+            new_chrom = record.chrom[3:]  # Remove the 'chr' prefix
+            print("CHROM field after modification:", new_chrom)
+            record.chrom = new_chrom
+            if new_chrom not in vcf_out.header.contigs:
+                vcf_out.header.contigs.add(new_chrom)
         else:
             print("CHROM field does not start with 'chr'")
         
@@ -30,6 +32,8 @@ def remove_chr_prefix(input_vcf, output_vcf):
 parser = argparse.ArgumentParser(description='Remove the chr prefix from the CHROM field in a VCF file')
 parser.add_argument('-i', '--input', required=True, help='Input VCF file')
 parser.add_argument('-o', '--output', required=True, help='Output VCF file path')
+
+# python change_chrom.py -i /mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/known-sites/Homo_sapiens_assembly38.dbsnp138.vcf -o /mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/known-sites/
 
 # Parse the input arguments
 args = parser.parse_args()
