@@ -1,29 +1,30 @@
 import os
-import vcf
+import pysam
 import argparse
 
 def remove_chr_prefix(input_vcf, output_vcf):
-    # Create a VCF Reader
-    vcf_reader = vcf.Reader(open(input_vcf, 'r'))
-    # Create a VCF Writer
-    vcf_writer = vcf.Writer(open(output_vcf, 'w'), vcf_reader)
+    # Open the input VCF file with pysam
+    vcf_in = pysam.VariantFile(input_vcf, 'r')
+    # Open the output VCF file with pysam
+    vcf_out = pysam.VariantFile(output_vcf, 'w', header=vcf_in.header)
 
-    for record in vcf_reader:
+    for record in vcf_in:
         print("Processing record:", record)
-        print("CHROM field before modification:", record.CHROM)
+        print("CHROM field before modification:", record.chrom)
         # Modify the CHROM field, remove the 'chr' prefix
-        if record.CHROM.startswith('chr'):
+        if record.chrom.startswith('chr'):
             print("Removing 'chr' prefix from CHROM field")
-            record.CHROM = record.CHROM[3:]  # Remove the 'chr' prefix
-            print("CHROM field after modification:", record.CHROM)
+            record.chrom = record.chrom[3:]  # Remove the 'chr' prefix
+            print("CHROM field after modification:", record.chrom)
         else:
             print("CHROM field does not start with 'chr'")
         
         # Write the record to the output VCF file
-        vcf_writer.write_record(record)
+        vcf_out.write(record)
 
-    # Close the VCF Reader and Writer
-    vcf_writer.close()
+    # Close the VCF files
+    vcf_in.close()
+    vcf_out.close()
 
 # Parse the input arguments
 parser = argparse.ArgumentParser(description='Remove the chr prefix from the CHROM field in a VCF file')
