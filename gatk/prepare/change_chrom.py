@@ -10,7 +10,9 @@ def modify_header_and_records(input_vcf, output_vcf):
             if contig.startswith('chr'):
                 new_contig = contig[3:]  # Remove the 'chr' prefix
                 print(f"Modifying header contig from {contig} to {new_contig}")
-                new_header.contigs[new_contig] = new_header.contigs.pop(contig)
+                new_header.contigs.add(new_contig, new_header.contigs[contig].length)
+                new_header.contigs.remove(contig)
+
 
         # Create a VCF Writer with the modified header
         with pysam.VariantFile(output_vcf, 'w', header=new_header) as vcf_out:
