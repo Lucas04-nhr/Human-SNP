@@ -36,7 +36,22 @@ echo "=============================="
 infile="/mnt/raid6/bacphagenetwork/data/test/BJ001.bam"
 sample_name=$(basename "$infile" .bam)
 
+# Parse command line arguments
+perform_base_recalibrator=false
+perform_apply_bqsr=false
+perform_haplotype_caller=false
+
+while getopts "bah" opt; do
+  case $opt in
+    b) perform_base_recalibrator=true ;;
+    a) perform_apply_bqsr=true ;;
+    h) perform_haplotype_caller=true ;;
+    *) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
+  esac
+done
+
 # Perform the BaseRecalibrator
+if $perform_base_recalibrator; then
 echo "Performing BaseRecalibrator for ${sample_name}..."
 $GATK_OLD_BIN BaseRecalibrator \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
@@ -48,9 +63,10 @@ $GATK_OLD_BIN BaseRecalibrator \
 
 echo "BaseRecalibrator for ${sample_name} completed."
 echo "=============================="
+fi
 
 # Perform the ApplyBQSR
-
+if $perform_apply_bqsr; then
 echo "Performing ApplyBQSR for ${sample_name}..."
 $GATK_OLD_BIN ApplyBQSR \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
@@ -61,9 +77,10 @@ $GATK_OLD_BIN ApplyBQSR \
 
 echo "ApplyBQSR for ${sample_name} completed."
 echo "=============================="
+fi
 
 # Perform the HaplotypeCaller
-
+if $perform_haplotype_caller; then
 echo "Performing HaplotypeCaller for ${sample_name}..."
 $GATK_OLD_BIN HaplotypeCaller \
   -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
@@ -74,5 +91,6 @@ $GATK_OLD_BIN HaplotypeCaller \
 
 echo "HaplotypeCaller for ${sample_name} completed."
 echo "=============================="
+fi
 
 echo "All processes completed."
