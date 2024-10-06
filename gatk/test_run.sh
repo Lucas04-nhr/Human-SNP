@@ -50,6 +50,13 @@ while getopts "bah" opt; do
   esac
 done
 
+# If no options were provided, set all to true
+if ! $perform_base_recalibrator && ! $perform_apply_bqsr && ! $perform_haplotype_caller; then
+  perform_base_recalibrator=true
+  perform_apply_bqsr=true
+  perform_haplotype_caller=true
+fi
+
 # Perform the BaseRecalibrator
 if $perform_base_recalibrator; then
   echo "Performing BaseRecalibrator for ${sample_name}..."
