@@ -54,7 +54,7 @@ echo "=============================="
 echo "Performing ApplyBQSR for ${sample_name}..."
 $GATK_OLD_BIN ApplyBQSR \
   -I $SORTED_DATA_PATH/${sample_name}.bam \
-  -R $INDEXING_PATH \
+  -R $INDEXING_FILE \
   --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
   -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
 || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
@@ -67,7 +67,7 @@ echo "=============================="
 echo "Performing HaplotypeCaller for ${sample_name}..."
 $GATK_OLD_BIN HaplotypeCaller \
   -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
-  -R $INDEXING_PATH \
+  -R $INDEXING_FILE \
   -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
   --native-pair-hmm-threads 5 \
 || { echo "HaplotypeCaller for ${sample_name} failed"; exit 1; }
