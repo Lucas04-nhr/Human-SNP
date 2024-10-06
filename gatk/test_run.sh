@@ -52,45 +52,54 @@ done
 
 # Perform the BaseRecalibrator
 if $perform_base_recalibrator; then
-echo "Performing BaseRecalibrator for ${sample_name}..."
-$GATK_OLD_BIN BaseRecalibrator \
-  -I $SORTED_DATA_PATH/${sample_name}.bam \
-  -R $INDEXING_FILE \
-  --known-sites $KNOWN_SITES_FILE \
-  -O $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
-  --use-original-qualities \
-|| { echo "BaseRecalibrator for ${sample_name} failed"; exit 1; }
+  echo "Performing BaseRecalibrator for ${sample_name}..."
+  $GATK_OLD_BIN BaseRecalibrator \
+    -I $SORTED_DATA_PATH/${sample_name}.bam \
+    -R $INDEXING_FILE \
+    --known-sites $KNOWN_SITES_FILE \
+    -O $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
+    --use-original-qualities \
+  || { echo "BaseRecalibrator for ${sample_name} failed"; exit 1; }
 
-echo "BaseRecalibrator for ${sample_name} completed."
-echo "=============================="
+  echo "BaseRecalibrator for ${sample_name} completed."
+  echo "=============================="
+else
+  echo "BaseRecalibrator for ${sample_name} skipped."
+  echo "=============================="
 fi
 
 # Perform the ApplyBQSR
 if $perform_apply_bqsr; then
-echo "Performing ApplyBQSR for ${sample_name}..."
-$GATK_OLD_BIN ApplyBQSR \
-  -I $SORTED_DATA_PATH/${sample_name}.bam \
-  -R $INDEXING_FILE \
-  --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
-  -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
-|| { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
+  echo "Performing ApplyBQSR for ${sample_name}..."
+  $GATK_OLD_BIN ApplyBQSR \
+    -I $SORTED_DATA_PATH/${sample_name}.bam \
+    -R $INDEXING_FILE \
+    --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
+    -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
+  || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
 
-echo "ApplyBQSR for ${sample_name} completed."
-echo "=============================="
+  echo "ApplyBQSR for ${sample_name} completed."
+  echo "=============================="
+else
+  echo "ApplyBQSR for ${sample_name} skipped."
+  echo "=============================="
 fi
 
 # Perform the HaplotypeCaller
 if $perform_haplotype_caller; then
-echo "Performing HaplotypeCaller for ${sample_name}..."
-$GATK_OLD_BIN HaplotypeCaller \
-  -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
-  -R $INDEXING_FILE \
-  -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
-  --native-pair-hmm-threads 5 \
-|| { echo "HaplotypeCaller for ${sample_name} failed"; exit 1; }
+  echo "Performing HaplotypeCaller for ${sample_name}..."
+  $GATK_OLD_BIN HaplotypeCaller \
+    -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
+    -R $INDEXING_FILE \
+    -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
+    --native-pair-hmm-threads 5 \
+  || { echo "HaplotypeCaller for ${sample_name} failed"; exit 1; }
 
-echo "HaplotypeCaller for ${sample_name} completed."
-echo "=============================="
+  echo "HaplotypeCaller for ${sample_name} completed."
+  echo "=============================="
+else
+  echo "HaplotypeCaller for ${sample_name} skipped."
+  echo "=============================="
 fi
 
 echo "All processes completed."
