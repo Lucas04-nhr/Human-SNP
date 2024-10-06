@@ -61,6 +61,7 @@ fi
 if $perform_base_recalibrator; then
   echo "Performing BaseRecalibrator for ${sample_name}..."
   $GATK_OLD_BIN BaseRecalibrator \
+    --num_cpu_threads_per_data_thread=5 \
     -I $SORTED_DATA_PATH/${sample_name}.bam \
     -R $INDEXING_FILE \
     --known-sites $KNOWN_SITES_FILE \
@@ -78,7 +79,8 @@ fi
 # Perform the ApplyBQSR
 if $perform_apply_bqsr; then
   echo "Performing ApplyBQSR for ${sample_name}..."
-  $GATK_OLD_BIN ApplyBQSR \
+  $GATK_OLD_BIN ApplyBQSRSpark \
+    --spark-master local[$SLURM_CPUS_PER_TASK]
     -I $SORTED_DATA_PATH/${sample_name}.bam \
     -R $INDEXING_FILE \
     --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
