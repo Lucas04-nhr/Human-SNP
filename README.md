@@ -13,6 +13,8 @@ See notes at WPS cloud document: [Human SNP](https://kdocs.cn/l/ctgvmxKPKfYD).
 
 ## Dataset Location
 
+### Raw Data
+
 ```
 data
 ├── 00_bwa_index                  # Index files and reference genome, known sites for the pipeline
@@ -44,7 +46,32 @@ data
 ├── 07_HaplotypeCaller            # HaplotypeCaller results, end with *.called.vcf.gz
 │   ├── Beijing
 │   └── Guangzhou
-├── skin_metagenome
-├── skin_microbiome_2022
-└── test
+├── skin_metagenome               # Skin metagenome original data, end with *.fastq.gz
+├── skin_microbiome_2022          # Compressed skin metagenome original data, end with *.fastq.gz
+└── test                          # Simlink files to sample BJ001, used for testing the pipeline
+```
+
+### Pipeline Scripts
+
+```
+Human-SNP
+├── filter                        # Filter out unmapped reads
+│   ├── filter
+│   └── mapq_analysis
+├── gatk                          # GATK pipeline, used for SNP calling
+│   ├── combine
+│   ├── joint
+│   └── prepare
+├── manta                         # Manta pipeline, used for SV calling, deprecated
+│   ├── 00_convert_format
+│   ├── 01_configurate
+│   └── 01_execute
+├── old                           # Old scripts, deprecated
+│   ├── BQSR
+│   ├── bwa
+│   ├── env
+│   ├── files
+│   ├── other
+│   └── samtools
+└── prepare                       # Prepare scripts for WEScall pipeline, deprecated
 ```
