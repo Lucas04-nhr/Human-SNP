@@ -74,4 +74,4 @@ Human-SNP
 │   ├── files
 │   ├── other
 │   └── samtools
-└── prepare                       # Prepare scripts for WEScall pipeline, deprecated
+└── prepare                       # Preparation of SNP calling pipeline
