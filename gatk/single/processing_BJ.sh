@@ -79,11 +79,11 @@ fi
 if $perform_apply_bqsr; then
   echo "Performing ApplyBQSR for ${sample_name}..."
   $GATK_OLD_BIN ApplyBQSRSpark \
-    --spark-master local[$SLURM_CPUS_PER_TASK]
+    --spark-master local[$SLURM_CPUS_PER_TASK] \
     -I $SORTED_DATA_PATH/${sample_name}.bam \
     -R $INDEXING_FILE \
     --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
-    -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
+    --output $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
   || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
 
   echo "ApplyBQSR for ${sample_name} completed."
