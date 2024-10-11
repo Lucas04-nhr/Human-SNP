@@ -1,3 +1,4 @@
+#! /bin/bash
 # Initialize the environment
 echo "Initializing..."
 
