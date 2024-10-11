@@ -46,7 +46,13 @@ data
 ├── 07_HaplotypeCaller            # HaplotypeCaller results, end with *.g.vcf.gz
 │   ├── Beijing
 │   └── Guangzhou
-├── 08            # HaplotypeCaller results, end with *.g.vcf.gz
+├── 08_GenotypeGVCF               # Combined gVCF files, joint_genotyped.vcf.gz
+│   ├── Beijing
+│   └── Guangzhou
+├── 09_09_VariantRecalibrator     # VariantRecalibrator results, output{.tranches, .rscript, .model}
+│   ├── Beijing
+│   └── Guangzhou
+├── 10_ApplyVQSR                  # VQSR results, joint_genotyped.filtered.vcf.gz
 │   ├── Beijing
 │   └── Guangzhou
 ├── skin_metagenome               # Skin metagenome original data, end with *.fastq.gz
