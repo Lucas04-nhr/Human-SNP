@@ -22,10 +22,10 @@ data
 │   │   └── known_sites
 │   └── GRCh38                    # Reference genome and known sites for GRCh38
 │       ├── known-sites           # Known sites for GRCh38, using when performing SNP calling
-│       │   ├── 1000g             #
-│       │   ├── dbsnp138          # Homo_sapiens_assembly38_modified.dbsnp138.vcf(.idx)
-│       │   ├── hapmap            #
-│       │   └── omni              #
+│       │   ├── 1000g             # hg38_v0_1000G_phase1.snps.high_confidence.modified.hg38.vcf(.idx)
+│       │   ├── dbsnp138          # hg38_v0_Homo_sapiens_assembly38.dbsnp138.modified.vcf(.idx)
+│       │   ├── hapmap            # hg38_v0_hapmap_3.3.hg38.modified.vcf(.idx)
+│       │   └── omni              # hg38_v0_1000G_omni2.5.hg38.modified.vcf(.idx)
 │       └── ref                   # 1000G reference genome for GRCh38, using when performing genome phasing
 │           └── 1000G
 ├── 01_align                      # Alignment results, end with *.sam
