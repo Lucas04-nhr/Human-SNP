@@ -15,7 +15,7 @@ See notes at WPS cloud document: [Human SNP](https://kdocs.cn/l/ctgvmxKPKfYD).
 
 ### Raw Data
 
-``` txt
+``` bash
 data
 ├── 00_bwa_index                  # Index files and reference genome, known sites for the pipeline
 │   ├── chm13v2                   # Reference genome and known sites for CHM13v2, deprecated
@@ -53,7 +53,7 @@ data
 
 ### Pipeline Scripts
 
-``` txt
+``` bash
 Human-SNP
 ├── filter                        # Filter out unmapped reads
 │   ├── filter
