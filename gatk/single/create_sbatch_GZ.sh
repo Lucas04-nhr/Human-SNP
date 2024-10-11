@@ -18,6 +18,7 @@ else
     if [ $answer == "y" ] || [ $answer == "Y" ]
     then
         echo "Overwriting the index ..."
+        rm GZ_sbatch.list
     else
         echo "The index will not be overwritten."
         exit
