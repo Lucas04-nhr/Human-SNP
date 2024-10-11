@@ -47,4 +47,3 @@ for INPUT_VCF in "${!VCF_FILES[@]}"; do
 done
 
 echo "All chromosome names have been modified and reindexed successfully."
-
