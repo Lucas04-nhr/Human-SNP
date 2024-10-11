@@ -59,9 +59,10 @@ Human-SNP
 │   ├── filter
 │   └── mapq_analysis
 ├── gatk                          # GATK pipeline, used for SNP calling
-│   ├── combine
-│   ├── joint
-│   └── prepare
+│   ├── combine                   # Combine VCF files to GVCF files
+│   ├── single                    # Single calling
+│   ├── joint                     # Joint calling
+│   └── prepare                   # Prepare scripts for GATK pipeline
 ├── manta                         # Manta pipeline, used for SV calling, deprecated
 │   ├── 00_convert_format
 │   ├── 01_configurate
