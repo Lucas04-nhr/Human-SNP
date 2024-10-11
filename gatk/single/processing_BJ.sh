@@ -61,7 +61,6 @@ fi
 if $perform_base_recalibrator; then
   echo "Performing BaseRecalibrator for ${sample_name}..."
   $GATK_OLD_BIN BaseRecalibrator \
-    --num_cpu_threads_per_data_thread=5 \
     -I $SORTED_DATA_PATH/${sample_name}.bam \
     -R $INDEXING_FILE \
     --known-sites $KNOWN_SITES_FILE \
