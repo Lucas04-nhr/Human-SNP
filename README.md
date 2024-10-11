@@ -62,7 +62,6 @@ Human-SNP
 │   ├── filter
 │   └── mapq_analysis
 ├── gatk                          # GATK pipeline, used for SNP calling
-│   ├── combine                   # Combine VCF files to GVCF files
 │   ├── single                    # Single calling
 │   ├── joint                     # Joint calling
 │   └── prepare                   # Prepare scripts for GATK pipeline
