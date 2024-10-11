@@ -13,7 +13,7 @@ echo "Initializing..."
 # Set the paths of the output files
 export INDEXING_PATH="$BASE_PATH/00_bwa_index/GRCh38"
 export INDEXING_FILE="$INDEXING_PATH/Homo_sapiens.GRCh38.dna.toplevel.fa"
-export KNOWN_SITES_PATH="$BASE_PATH/00_bwa_index/GRCh38/known-sites/modified"
+export KNOWN_SITES_PATH="$BASE_PATH/00_bwa_index/GRCh38/known-sites/dbsnp138"
 export KNOWN_SITES_FILE="$KNOWN_SITES_PATH/Homo_sapiens_assembly38_modified.dbsnp138.vcf"
 export SORTED_DATA_PATH="$BASE_PATH/03_sort/Beijing"
 export RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Beijing"
