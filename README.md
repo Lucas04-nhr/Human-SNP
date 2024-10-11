@@ -75,3 +75,4 @@ Human-SNP
 │   ├── other
 │   └── samtools
 └── prepare                       # Preparation of SNP calling pipeline
+```
