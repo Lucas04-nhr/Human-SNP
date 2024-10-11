@@ -83,7 +83,7 @@ if $perform_apply_bqsr; then
     -I $SORTED_DATA_PATH/${sample_name}.bam \
     -R $INDEXING_FILE \
     --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
-    --output $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
+    -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
   || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
 
   echo "ApplyBQSR for ${sample_name} completed."
