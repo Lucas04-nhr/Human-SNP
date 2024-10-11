@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=processing_BJ
-#SBATCH --output=./log/Beijing/processing_BJ.%j.out
-#SBATCH --error=./log/Beijing/processing_BJ.%j.err
+#SBATCH --job-name=processing_GZ
+#SBATCH --output=./log/Guangzhou/processing_GZ.%j.out
+#SBATCH --error=./log/Guangzhou/processing_GZ.%j.err
 #SBATCH --cpus-per-task=5
 #SBATCH --mem=2G
 #SBATCH --export=BASE_PATH='/mnt/raid6/bacphagenetwork/data/',GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk",GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk",JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
-#SBATCH --array=2-201%4
+#SBATCH --array=1-160%4
 
 # Initialize the environment
 echo "Initializing..."
@@ -15,10 +15,10 @@ export INDEXING_PATH="$BASE_PATH/00_bwa_index/GRCh38"
 export INDEXING_FILE="$INDEXING_PATH/Homo_sapiens.GRCh38.dna.toplevel.fa"
 export KNOWN_SITES_PATH="$BASE_PATH/00_bwa_index/GRCh38/known-sites/dbsnp138"
 export KNOWN_SITES_FILE="$KNOWN_SITES_PATH/hg38_v0_Homo_sapiens_assembly38.dbsnp138.modified.vcf"
-export SORTED_DATA_PATH="$BASE_PATH/03_sort/Beijing"
-export RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Beijing"
-export APPLYBQSR_DATA_PATH="$BASE_PATH/06_ApplyBQSR/Beijing"
-export HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller/Beijing"
+export SORTED_DATA_PATH="$BASE_PATH/03_sort/Guangzhou"
+export RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Guangzhou"
+export APPLYBQSR_DATA_PATH="$BASE_PATH/06_ApplyBQSR/Guangzhou"
+export HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller/Guangzhou"
 
 echo "The sorted *.bam files are located in $SORTED_DATA_PATH."
 echo "The indexing data is located in $INDEXING_PATH."
@@ -33,7 +33,7 @@ echo "Initializing completed."
 echo "=============================="
 
 # Get the list of all *.bam files
-infile=($( cat BJ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(basename "$infile" .bam)
 
 # Parse command line arguments
