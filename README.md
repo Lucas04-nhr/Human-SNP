@@ -43,7 +43,10 @@ data
 ├── 06_ApplyBQSR                  # BQSR results, end with *.recalibrated.bam
 │   ├── Beijing
 │   └── Guangzhou
-├── 07_HaplotypeCaller            # HaplotypeCaller results, end with *.called.vcf.gz
+├── 07_HaplotypeCaller            # HaplotypeCaller results, end with *.g.vcf.gz
+│   ├── Beijing
+│   └── Guangzhou
+├── 08            # HaplotypeCaller results, end with *.g.vcf.gz
 │   ├── Beijing
 │   └── Guangzhou
 ├── skin_metagenome               # Skin metagenome original data, end with *.fastq.gz
