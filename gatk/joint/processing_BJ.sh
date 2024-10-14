@@ -43,12 +43,14 @@ echo "Initializing completed."
 echo "=============================="
 
 # Phase command line arguments
+perform_merge=false
 perform_genotype_gvcf=false
 perform_variant_recalibrator=false
 perform_apply_vqsr=false
 
 while getopts "gvr" opt; do
   case $opt in
+    m) perform_merge=true ;;
     g) perform_genotype_gvcf=true ;;
     v) perform_variant_recalibrator=true ;;
     r) perform_apply_vqsr=true ;;
@@ -57,28 +59,45 @@ while getopts "gvr" opt; do
 done
 
 # If no options were provided, set all to true
-if ! $perform_genotype_gvcf && ! $perform_variant_recalibrator && ! $perform_apply_vqsr; then
+if ! $perform_merge && ! $perform_genotype_gvcf && ! $perform_variant_recalibrator && ! $perform_apply_vqsr; then
+  perform_merge=true
   perform_genotype_gvcf=true
   perform_variant_recalibrator=true
   perform_apply_vqsr=true
 fi
 
-if $perform_genotype_gvcf; then
+if $perform_merge; then
   # Merge all gVCF files
   gvcf_files=($(ls $HAPLOTYPECALLER_DATA_PATH/*.g.vcf.gz))
   gvcf_list=$(printf " -V %s" "${gvcf_files[@]}")
 
+  echo "Merging all gVCF files..."
+  $GATK_OLD_BIN CombineGVCFs \
+    -R $INDEXING_FILE \
+    $gvcf_list \
+    -O $GENOTYPE_GVCF_PATH/merged_genome.vcf.gz \
+  || { echo "Merging gVCF files failed"; exit 1; }
+
+  echo "Merging gVCF files completed."
+  echo "=============================="
+else
+  echo "Skipping to merge all gVCFs..."
+  echo "=============================="
+fi
+
+# Perform joint genotyping
+if $perform_genotype_gvcf; then
   echo "Performing joint genotyping..."
   $GATK_OLD_BIN GenotypeGVCFs \
     -R $INDEXING_FILE \
-    $gvcf_list \
+    -V $GENOTYPE_GVCF_PATH/merged_genome.vcf.gz \
     -O $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz \
   || { echo "Joint genotyping failed"; exit 1; }
 
   echo "Joint genotyping completed."
   echo "=============================="
 else
-  echo "Skipping joint genotyping."
+  echo "Skipping joint genotyping..."
   echo "=============================="
 fi
 
