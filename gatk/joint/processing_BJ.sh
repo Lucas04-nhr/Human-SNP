@@ -7,7 +7,7 @@ export JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/'
 export JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java'
 export LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server'
 export CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
-export BASE_PATH="/mnt/raid6/bacphagenetwork/data/"
+export BASE_PATH="/mnt/raid6/bacphagenetwork/data"
 
 export GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
 export GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
