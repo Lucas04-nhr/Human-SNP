@@ -99,7 +99,8 @@ if $perform_haplotype_caller; then
     -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
     -R $INDEXING_FILE \
     -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
-    --native-pair-hmm-threads 5 \
+    -ERC GVCF \
+    --native-pair-hmm-threads 2 \
   || { echo "HaplotypeCaller for ${sample_name} failed"; exit 1; }
 
   echo "HaplotypeCaller for ${sample_name} completed."
