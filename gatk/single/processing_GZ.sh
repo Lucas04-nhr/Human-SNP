@@ -98,7 +98,7 @@ if $perform_haplotype_caller; then
   $GATK_OLD_BIN HaplotypeCaller \
     -I $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
     -R $INDEXING_FILE \
-    -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.called.vcf.gz \
+    -O $HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz \
     --native-pair-hmm-threads 5 \
   || { echo "HaplotypeCaller for ${sample_name} failed"; exit 1; }
 
