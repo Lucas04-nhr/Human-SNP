@@ -77,9 +77,9 @@ if $perform_merge; then
     --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb \
     --batch-size 20 \
     $gvcf_list \
-    -L 1 -L 2 -L 3 -L 4 -L 5 -L 6 -L 7 -L 8 -L 9 \
-    -L 10 -L 11 -L 12 -L 13 -L 14 -L 15 -L 16 -L 17 \
-    -L 18 -L 19 -L 20 -L 21 -L 22 -L X \
+    -L chr1 -L chr2 -L chr3 -L chr4 -L chr5 -L chr6 -L chr7 -L chr8 -L chr9 \
+    -L chr10 -L chr11 -L chr12 -L chr13 -L chr14 -L chr15 -L chr16 -L chr17 \
+    -L chr18 -L chr19 -L chr20 -L chr21 -L chr22 -L chrX \
     --reader-threads 5 \
   || { echo "GenomicsDBImport failed"; exit 1; }
 
