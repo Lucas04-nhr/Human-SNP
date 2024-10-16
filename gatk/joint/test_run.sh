@@ -77,6 +77,7 @@ if $perform_merge; then
     --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb \
     --batch-size 20 \
     $gvcf_list \
+    -L all \
     --reader-threads 5 \
   || { echo "GenomicsDBImport failed"; exit 1; }
 
@@ -84,6 +85,7 @@ if $perform_merge; then
     -R $INDEXING_FILE \
     -V gendb://$GENOTYPE_GVCF_PATH/genomicsdb \
     -O $GENOTYPE_GVCF_PATH/merged_genome.vcf.gz \
+    -L all \
     --reader-threads 5 \
   || { echo "Genotyping from GenomicsDB failed"; exit 1; }
 
