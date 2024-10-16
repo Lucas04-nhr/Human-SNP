@@ -86,9 +86,8 @@ if $perform_merge; then
       $GATK_OLD_BIN GenomicsDBImport \
           -R $INDEXING_FILE \
           --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb/chr$chr \
-          --batch-size 20 \
           $gvcf_list \
-          --max-num-intervals-to-import-in-parallel 2 \
+          --max-num-intervals-to-import-in-parallel 5 \
           --overwrite-existing-genomicsdb-workspace true \
           -L $chr \
           --reader-threads 5 \
