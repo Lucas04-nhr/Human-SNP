@@ -77,9 +77,11 @@ if $perform_merge; then
     --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb \
     --batch-size 20 \
     $gvcf_list \
+    --overwrite-existing-genomicsdb-workspace true \
     -L 1 -L 2 -L 3 -L 4 -L 5 -L 6 -L 7 -L 8 -L 9 \
     -L 10 -L 11 -L 12 -L 13 -L 14 -L 15 -L 16 -L 17 \
     -L 18 -L 19 -L 20 -L 21 -L 22 -L X \
+    --max-num-intervals-to-import-in-parallel 2 \
     --reader-threads 5 \
   || { echo "GenomicsDBImport failed"; exit 1; }
 
@@ -87,7 +89,11 @@ if $perform_merge; then
     -R $INDEXING_FILE \
     -V gendb://$GENOTYPE_GVCF_PATH/genomicsdb \
     -O $GENOTYPE_GVCF_PATH/merged_genome.vcf.gz \
-    -L all \
+    --overwrite-existing-genomicsdb-workspace true \
+    -L 1 -L 2 -L 3 -L 4 -L 5 -L 6 -L 7 -L 8 -L 9 \
+    -L 10 -L 11 -L 12 -L 13 -L 14 -L 15 -L 16 -L 17 \
+    -L 18 -L 19 -L 20 -L 21 -L 22 -L X \
+    --max-num-intervals-to-import-in-parallel 2 \
     --reader-threads 5 \
   || { echo "Genotyping from GenomicsDB failed"; exit 1; }
 
