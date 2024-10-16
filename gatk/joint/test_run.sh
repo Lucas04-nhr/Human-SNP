@@ -72,44 +72,30 @@ if $perform_merge; then
   gvcf_list=$(printf " -V %s" "${gvcf_files[@]}")
 
   echo "Merging all gVCF files..."
-  # Define the chromosomes
-  chromosomes=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X)
+  $GATK_OLD_BIN GenomicsDBImport \
+    -R $INDEXING_FILE \
+    --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb \
+    --batch-size 20 \
+    $gvcf_list \
+    --overwrite-existing-genomicsdb-workspace true \
+    -L 1 -L 2 -L 3 -L 4 -L 5 -L 6 -L 7 -L 8 -L 9 \
+    -L 10 -L 11 -L 12 -L 13 -L 14 -L 15 -L 16 -L 17 \
+    -L 18 -L 19 -L 20 -L 21 -L 22 -L X \
+    --max-num-intervals-to-import-in-parallel 2 \
+    --reader-threads 5 \
+  || { echo "GenomicsDBImport failed"; exit 1; }
 
-  # Create the intermediate VCF directory
-  mkdir -p $GENOTYPE_GVCF_PATH/intermediate_vcfs
-
-  # Process each chromosome
-  for chr in "${chromosomes[@]}"; do
-      echo "Processing chromosome $chr"
-
-      # GenomicsDBImport for the current chromosome
-      $GATK_OLD_BIN GenomicsDBImport \
-          -R $INDEXING_FILE \
-          --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb/chr$chr \
-          --batch-size 20 \
-          $gvcf_list \
-          --max-num-intervals-to-import-in-parallel 2 \
-          --overwrite-existing-genomicsdb-workspace true \
-          -L $chr \
-          --reader-threads 5 \
-      || { echo "GenomicsDBImport for chromosome $chr failed"; exit 1; }
-
-      # GenotypeGVCFs for the current chromosome
-      $GATK_OLD_BIN GenotypeGVCFs \
-          -R $INDEXING_FILE \
-          -V gendb://$GENOTYPE_GVCF_PATH/genomicsdb/chr$chr \
-          -O $GENOTYPE_GVCF_PATH/intermediate_vcfs/merged_genome_chr$chr.vcf.gz \
-          -L $chr \
-          --reader-threads 5 \
-      || { echo "Genotyping for chromosome $chr failed"; exit 1; }
-  done
-
-  # Concatenate all chromosome VCF files
-  echo "Merging all chromosome VCF files"
-  bcftools concat -Oz -o $GENOTYPE_GVCF_PATH/merged_genome_final.vcf.gz $GENOTYPE_GVCF_PATH/intermediate_vcfs/*.vcf.gz \
-  || { echo "Merging VCF files failed"; exit 1; }
-
-echo "Pipeline completed successfully"
+  $GATK_OLD_BIN GenotypeGVCFs \
+    -R $INDEXING_FILE \
+    -V gendb://$GENOTYPE_GVCF_PATH/genomicsdb \
+    -O $GENOTYPE_GVCF_PATH/merged_genome.vcf.gz \
+    --overwrite-existing-genomicsdb-workspace true \
+    -L 1 -L 2 -L 3 -L 4 -L 5 -L 6 -L 7 -L 8 -L 9 \
+    -L 10 -L 11 -L 12 -L 13 -L 14 -L 15 -L 16 -L 17 \
+    -L 18 -L 19 -L 20 -L 21 -L 22 -L X \
+    --max-num-intervals-to-import-in-parallel 2 \
+    --reader-threads 5 \
+  || { echo "Genotyping from GenomicsDB failed"; exit 1; }
 
   echo "Merging gVCF files completed."
   echo "=============================="
