@@ -72,20 +72,11 @@ if $perform_merge; then
   gvcf_list=$(printf " -V %s" "${gvcf_files[@]}")
 
   echo "Merging all gVCF files..."
-  $GATK_OLD_BIN GenomicsDBImport \
+  $GATK_OLD_BIN CombineGVCFs \
     -R $INDEXING_FILE \
-    --genomicsdb-workspace-path $GENOTYPE_GVCF_PATH/genomicsdb \
-    --batch-size 20 \
     $gvcf_list \
-    --reader-threads 5 \
-  || { echo "GenomicsDBImport failed"; exit 1; }
-
-  $GATK_OLD_BIN GenotypeGVCFs \
-    -R $INDEXING_FILE \
-    -V gendb://$GENOTYPE_GVCF_PATH/genomicsdb \
     -O $GENOTYPE_GVCF_PATH/merged_genome.vcf.gz \
-    --reader-threads 5 \
-  || { echo "Genotyping from GenomicsDB failed"; exit 1; }
+  || { echo "Merging gVCF files failed"; exit 1; }
 
   echo "Merging gVCF files completed."
   echo "=============================="
