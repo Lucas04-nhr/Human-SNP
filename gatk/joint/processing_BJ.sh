@@ -1,4 +1,19 @@
 #! /bin/bash
+
+# Function to handle SIGINT (Ctrl+C)
+trap 'confirm_exit' SIGINT
+
+confirm_exit() {
+  echo -e "\nAre you sure you want to exit? (y/n)"
+  read -r answer
+  if [[ $answer == "y" || $answer == "Y" ]]; then
+    echo "Exiting..."
+    exit 0
+  else
+    echo "Continuing..."
+  fi
+}
+
 # Initialize the environment
 echo "Initializing..."
 
@@ -48,7 +63,7 @@ perform_genotype_gvcf=false
 perform_variant_recalibrator=false
 perform_apply_vqsr=false
 
-while getopts "gvr" opt; do
+while getopts "mgvr" opt; do
   case $opt in
     m) perform_merge=true ;;
     g) perform_genotype_gvcf=true ;;
