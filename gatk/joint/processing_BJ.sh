@@ -1,18 +1,10 @@
 #! /bin/bash
-
-# Function to handle SIGINT (Ctrl+C)
-trap 'confirm_exit' SIGINT
-
-confirm_exit() {
-  echo -e "\nAre you sure you want to exit? (y/n)"
-  read -r answer
-  if [[ $answer == "y" || $answer == "Y" ]]; then
-    echo "Exiting..."
-    exit 0
-  else
-    echo "Continuing..."
-  fi
-}
+#SBATCH --job-name=joint_BJ
+#SBATCH --output=./log_BJ.%j.out
+#SBATCH --error=./log_BJ.%j.err
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=32G
+#SBATCH --export=BASE_PATH='/mnt/raid6/bacphagenetwork/data/',GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk",GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk",JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
 
 # Initialize the environment
 echo "Initializing..."
