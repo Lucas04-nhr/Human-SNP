@@ -9,6 +9,9 @@
 # Initialize the environment
 echo "Initializing..."
 
+# Activate conda env
+conda activate snp_analysis
+
 # Set the paths of the output files
 export JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/'
 export JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java'
