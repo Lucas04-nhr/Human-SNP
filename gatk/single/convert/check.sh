@@ -70,6 +70,7 @@ check_directory "$KNOWN_SITES_BASE_PATH"
 check_directory "$RECALIBRATED_DATA_PATH"
 check_directory "$APPLYBQSR_DATA_PATH"
 check_directory "$HAPLOTYPECALLER_DATA_PATH"
+check_directory "$GVCF_TO_VCF_PATH"
 
 # Check files
 check_file "$INDEXING_FILE"
