@@ -11,6 +11,7 @@
 echo "Initializing..."
 
 # Activate conda env
+conda init bash
 conda activate snp_analysis
 
 # Set the paths of the output files
