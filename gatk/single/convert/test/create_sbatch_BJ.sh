@@ -1,11 +1,17 @@
 #! /bin/bash
 
 # Set the path to the genome data
-echo "Please enter the path to the sorted *bam files of Beijing:"
+echo "Please enter the path to the *.g.vcf files of Beijing:"
 read genome_path
-# The path of the genome data is '/mnt/raid6/bacphagenetwork/data/03_sort/Beijing'
+# The path of the genome data is '/mnt/raid6/bacphagenetwork/data/07_HaplotypeCaller/Beijing'
 export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
+
+# Print the test file range
+echo "THIS SCRIPT IS FOR TESTING PURPOSES ONLY!"
+echo "PRESS CTRL+C TO ABORT THE PROCESS!"
+sleep 5
+echo "The test file range is BJ001~BJ099."
 
 # Check whether the index exists
 if [ ! -f "./BJ_sbatch.list" ]
@@ -27,11 +33,17 @@ fi
 
 # Add the genome data to the config file "samples.index"
 echo "Adding the genome data to the config file..."
-for file in $GENOME_PATH/*.bam
+for file in $GENOME_PATH/*.g.vcf
 do
-    sample_name=$(basename "$file" .sorted.bam)
-    echo "Processing ${sample_name}..."
-    echo $file >> BJ_sbatch.list
+    sample_name=$(basename "$file" .g.vcf)
+    if [[ $sample_name == BJ0* ]]; then
+        echo "Sample name ${sample_name} is in the test file range."
+        echo "Processing ${sample_name}..."
+        echo $file >> BJ_sbatch.list
+    else
+        echo "Sample name ${sample_name} is not in the test file range."
+        continue
+    fi
 done
 
 # Check if any error occurred during the process
