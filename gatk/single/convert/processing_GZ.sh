@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=processing_BJ
-#SBATCH --output=./log/Beijing/processing_BJ.%j.out
-#SBATCH --error=./log/Beijing/processing_BJ.%j.err
+#SBATCH --job-name=processing_GZ
+#SBATCH --output=./log/Guangzhou/processing_GZ.%j.out
+#SBATCH --error=./log/Guangzhou/processing_GZ.%j.err
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=2G
+#SBATCH --mem=16G
 #SBATCH --export=BASE_PATH='/mnt/raid6/bacphagenetwork/data/',GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk",GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk",JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
-#SBATCH --array=9-201%8
+#SBATCH --array=1-160%8
 
 # Initialize the environment
 echo "Initializing..."
@@ -15,10 +15,10 @@ export INDEXING_PATH="$BASE_PATH/00_bwa_index/GRCh38"
 export INDEXING_FILE="$INDEXING_PATH/Homo_sapiens.GRCh38.dna.toplevel.fa"
 export KNOWN_SITES_PATH="$BASE_PATH/00_bwa_index/GRCh38/known-sites/dbsnp138"
 export KNOWN_SITES_FILE="$KNOWN_SITES_PATH/hg38_v0_Homo_sapiens_assembly38.dbsnp138.modified.vcf"
-export SORTED_DATA_PATH="$BASE_PATH/03_sort/Beijing"
-export RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Beijing"
-export APPLYBQSR_DATA_PATH="$BASE_PATH/06_ApplyBQSR/Beijing"
-export HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller/Beijing"
+export SORTED_DATA_PATH="$BASE_PATH/03_sort/Guangzhou"
+export RECALIBRATED_DATA_PATH="$BASE_PATH/05_BaseRecalibrator/Guangzhou"
+export APPLYBQSR_DATA_PATH="$BASE_PATH/06_ApplyBQSR/Guangzhou"
+export HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller/Guangzhou"
 
 echo "The sorted *.bam files are located in $SORTED_DATA_PATH."
 echo "The indexing data is located in $INDEXING_PATH."
@@ -33,7 +33,7 @@ echo "Initializing completed."
 echo "=============================="
 
 # Get the list of all *.bam files
-infile=($( cat BJ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(basename "$infile" .bam)
 
 # Parse command line arguments
@@ -57,40 +57,40 @@ if ! $perform_base_recalibrator && ! $perform_apply_bqsr && ! $perform_haplotype
   perform_haplotype_caller=true
 fi
 
-# # Perform the BaseRecalibrator
-# if $perform_base_recalibrator; then
-#   echo "Performing BaseRecalibrator for ${sample_name}..."
-#   $GATK_OLD_BIN BaseRecalibrator \
-#     -I $SORTED_DATA_PATH/${sample_name}.bam \
-#     -R $INDEXING_FILE \
-#     --known-sites $KNOWN_SITES_FILE \
-#     -O $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
-#     --use-original-qualities \
-#   || { echo "BaseRecalibrator for ${sample_name} failed"; exit 1; }
+# Perform the BaseRecalibrator
+if $perform_base_recalibrator; then
+  echo "Performing BaseRecalibrator for ${sample_name}..."
+  $GATK_OLD_BIN BaseRecalibrator \
+    -I $SORTED_DATA_PATH/${sample_name}.bam \
+    -R $INDEXING_FILE \
+    --known-sites $KNOWN_SITES_FILE \
+    -O $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
+    --use-original-qualities \
+  || { echo "BaseRecalibrator for ${sample_name} failed"; exit 1; }
 
-#   echo "BaseRecalibrator for ${sample_name} completed."
-#   echo "=============================="
-# else
-#   echo "BaseRecalibrator for ${sample_name} skipped."
-#   echo "=============================="
-# fi
+  echo "BaseRecalibrator for ${sample_name} completed."
+  echo "=============================="
+else
+  echo "BaseRecalibrator for ${sample_name} skipped."
+  echo "=============================="
+fi
 
-# # Perform the ApplyBQSR
-# if $perform_apply_bqsr; then
-#   echo "Performing ApplyBQSR for ${sample_name}..."
-#   $GATK_OLD_BIN ApplyBQSR \
-#     -I $SORTED_DATA_PATH/${sample_name}.bam \
-#     -R $INDEXING_FILE \
-#     --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
-#     -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
-#   || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
+# Perform the ApplyBQSR
+if $perform_apply_bqsr; then
+  echo "Performing ApplyBQSR for ${sample_name}..."
+  $GATK_OLD_BIN ApplyBQSR \
+    -I $SORTED_DATA_PATH/${sample_name}.bam \
+    -R $INDEXING_FILE \
+    --bqsr-recal-file $RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table \
+    -O $APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam \
+  || { echo "ApplyBQSR for ${sample_name} failed"; exit 1; }
 
-#   echo "ApplyBQSR for ${sample_name} completed."
-#   echo "=============================="
-# else
-#   echo "ApplyBQSR for ${sample_name} skipped."
-#   echo "=============================="
-# fi
+  echo "ApplyBQSR for ${sample_name} completed."
+  echo "=============================="
+else
+  echo "ApplyBQSR for ${sample_name} skipped."
+  echo "=============================="
+fi
 
 # Perform the HaplotypeCaller
 if $perform_haplotype_caller; then
