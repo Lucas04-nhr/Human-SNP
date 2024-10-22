@@ -11,7 +11,7 @@
 echo "Initializing..."
 
 # Activate conda env
-conda init bash
+source /home/bacphagenetwork/.bashrc
 conda activate snp_analysis
 
 # Set the paths of the output files
