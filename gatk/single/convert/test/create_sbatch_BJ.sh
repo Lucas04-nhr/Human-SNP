@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Set the path to the genome data
-echo "Please enter the path to the *.g.vcf files of Beijing:"
+echo "Please enter the path to the *.g.vcf.gz files of Beijing:"
 read genome_path
 # The path of the genome data is '/mnt/raid6/bacphagenetwork/data/07_HaplotypeCaller/Beijing'
 export GENOME_PATH=$genome_path
@@ -33,9 +33,9 @@ fi
 
 # Add the genome data to the config file "samples.index"
 echo "Adding the genome data to the config file..."
-for file in $GENOME_PATH/*.g.vcf
+for file in $GENOME_PATH/*.g.vcf.gz
 do
-    sample_name=$(basename "$file" .g.vcf)
+    sample_name=$(basename "$file" .g.vcf.gz)
     if [[ $sample_name == BJ0* ]]; then
         echo "Sample name ${sample_name} is in the test file range."
         echo "Processing ${sample_name}..."
