@@ -42,7 +42,7 @@ sample_name=$(basename "$infile" .g.vcf.gz)
 
 # Perform Converting
 echo "Converting ${sample_name}..."
-BCFTOOLS_BIN convert --gvcf2vcf $infile -O z -o $GVCF_TO_VCF_PATH/$sample_name.vcf.gz \
+$BCFTOOLS_BIN convert --gvcf2vcf $infile -O z -o $GVCF_TO_VCF_PATH/$sample_name.vcf.gz \
 || { echo "Converting ${sample_name} failed."; exit 1; }
 
 # Perform Simlinking
