@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=processing_test
+#SBATCH --job-name=convert_test
 #SBATCH --output=./convert_gvcf_test.%j.out.log
 #SBATCH --error=./convert_gvcf_test.%j.err.log
 #SBATCH --cpus-per-task=4
