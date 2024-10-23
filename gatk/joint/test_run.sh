@@ -1,9 +1,20 @@
 #! /bin/bash
+#SBATCH --job-name=test_joint
+#SBATCH --output=./test_log.%j.out
+#SBATCH --error=./test_log.%j.err
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=32G
+#SBATCH --export=BASE_PATH='/mnt/raid6/bacphagenetwork/data/',GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk",GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk",JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/',JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java',LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server',CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
+
 # Initialize the environment
 echo "Initializing..."
 
+# Activate conda env
+source /home/bacphagenetwork/.bashrc
+conda activate snp_analysis
+
 # Set the paths of the output files
-export JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/'
+export JAVA_HOME='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1'
 export JAVA_BIN='/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/bin/java'
 export LDFLAGS='-L/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/lib/server'
 export CPPFLAGS='-I/mnt/raid6/bacphagenetwork/tools/jdk-22.0.1/include'
@@ -68,7 +79,7 @@ fi
 
 if $perform_merge; then
   # Merge all gVCF files
-  gvcf_files=($(ls $HAPLOTYPECALLER_DATA_PATH/*.g.vcf.gz))
+  gvcf_files=($(ls $HAPLOTYPECALLER_DATA_PATH/*.g.vcf.gz | head -n 6))
   gvcf_list=$(printf " -V %s" "${gvcf_files[@]}")
 
   echo "Merging all gVCF files..."
