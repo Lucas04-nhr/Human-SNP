@@ -26,6 +26,8 @@ export TEST_PATH="$BASE_PATH/test"
 
 export GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
 export GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
+export PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar'
+export PICARD_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar'
 export PLINK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/plink-1.07-x86_64/plink"
 export PLINK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/plink_1.9_linux_x86_64/plink"
 
@@ -70,12 +72,40 @@ echo "The converted plink files for testing will be located in $PLINK_CONVERTED_
 echo "Initializing completed."
 echo "=============================="
 
+# Unzip the VCF file
+if [ ! -f "$GENOTYPE_GVCF_PATH/joint_genotyped.vcf" ]; then
+  echo "Unzipping the VCF file..."
+  cp $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz $GENOTYPE_GVCF_PATH/joint_genotyped_copy.vcf.gz
+  gunzip $GENOTYPE_GVCF_PATH/joint_genotyped_copy.vcf.gz
+  mv $GENOTYPE_GVCF_PATH/joint_genotyped_copy.vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
+  echo "The VCF file has been unzipped."
+  echo "=============================="
+else
+  echo "The VCF file is already unzipped."
+  echo "=============================="
+fi
+
+# Indexing the VCF file
+if [ ! -f "$GENOTYPE_GVCF_PATH/joint_genotyped.vcf.idx" ]; then
+  echo "Indexing the VCF file..."
+  $GATK_NEW_BIN IndexFeatureFile -I $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
+  echo "The VCF file has been indexed."
+  echo "=============================="
+else
+  echo "The VCF file is already indexed."
+  echo "=============================="
+fi
+
 # Performing plink converting
-export GENOTYPE_GVCF_FILE="$GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz"
 echo "Converting the VCF files to plink format..."
-$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_FILE --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
+$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
 || { echo "Error: plink converting failed."; exit 1; }
 
 echo "The plink converting has been completed."
 echo "=============================="
+
+# Remove the intermediate files
+echo "Removing the intermediate files..."
+rm $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
+rm $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.idx
 

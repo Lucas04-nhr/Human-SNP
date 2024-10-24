@@ -13,6 +13,8 @@ export TEST_PATH="$BASE_PATH/test"
 
 export GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
 export GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
+export PICARD_OLD_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v2.26.0/picard.jar'
+export PICARD_NEW_BIN='/mnt/raid6/bacphagenetwork/tools/picard_pre-built/v3.0/picard.jar'
 export PLINK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/plink-1.07-x86_64/plink"
 export PLINK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/plink_1.9_linux_x86_64/plink"
 
@@ -112,6 +114,8 @@ echo "Checking files..."
 check_file "$JAVA_BIN"
 check_file "$GATK_OLD_BIN"
 check_file "$GATK_NEW_BIN"
+check_file "$PICARD_OLD_BIN"
+check_file "$PICARD_NEW_BIN"
 check_file "$PLINK_OLD_BIN"
 check_file "$PLINK_NEW_BIN"
 
