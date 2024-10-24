@@ -65,18 +65,14 @@ echo "The converted VCF files are located in $TEST_VCF_PATH."
 echo "The plink files will be located in $PLINK_BASE_PATH."
 # Add prompts of more sub-folders of plink here...
 echo "The converted plink files will be located in $PLINK_CONVERTED_DATA."
-echo "The converted plink files for testing will be simlinked to $PLINK_CONVERTED_DATA_TEST."
+echo "The converted plink files for testing will be located in $PLINK_CONVERTED_DATA_TEST."
 
 echo "Initializing completed."
 echo "=============================="
 
-# Get the list of all *.g.vcf.gz files
-infile=($( cat test_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(basename "$infile" .vcf.gz)
-
 # Performing plink converting
-echo "Converting the VCF files to plink format of ${sample_name}..."
-$PLINK_BIN --noweb --vcf $TEST_VCF_PATH/$sample_name.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA/$sample_name \
+echo "Converting the VCF files to plink format of ..."
+$PLINK_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped \
 || { echo "Error: plink converting failed for ${sample_name}"; exit 1; }
 
 # Create a symbolic link to the test folder
