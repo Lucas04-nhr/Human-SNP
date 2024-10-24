@@ -73,7 +73,7 @@ echo "=============================="
 # Performing plink converting
 echo "Converting the VCF files to plink format.."
 $PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
-|| { echo "Error: plink converting failed for ${sample_name}"; exit 1; }
+|| { echo "Error: plink converting failed."; exit 1; }
 
 echo "The plink converting has been completed."
 echo "=============================="
