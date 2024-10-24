@@ -40,31 +40,13 @@ export KNOWN_SITES_DBSNP="$KNOWN_SITES_BASE_PATH/dbsnp138/hg38_v0_Homo_sapiens_a
 export KNOWN_SITES_HAPMAP="$KNOWN_SITES_BASE_PATH/hapmap/hg38_v0_hapmap_3.3.hg38.modified.vcf"
 export KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/hg38_v0_1000G_omni2.5.hg38.modified.vcf"
 
-export SORTED_DATA_PATH="$BASE_PATH"
-export RECALIBRATED_DATA_PATH="$BASE_PATH"
-export APPLYBQSR_DATA_PATH="$BASE_PATH"
-export HAPLOTYPECALLER_DATA_PATH="$BASE_PATH/07_HaplotypeCaller"
-export GENOTYPE_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF"
-export VARIANTRECALIBRATOR_DATA_PATH="$BASE_PATH/09_VariantRecalibrator"
-export APPLYVQSR_DATA_PATH="$BASE_PATH/10_ApplyVQSR"
-export TEST_VCF_PATH="$BASE_PATH/11_ConvertedVCF"
-export PLINK_BASE_PATH="$BASE_PATH/12_plink"
+export GENOTYPE_GVCF_TEST_PATH="$TEST_PATH/08_GenotypeGVCF"
 export PLINK_TEST_PATH="$TEST_PATH/12_plink"
 # Add more sub-folders of plink here...
-export PLINK_CONVERTED_DATA="$PLINK_BASE_PATH/01_Converted"
 export PLINK_CONVERTED_DATA_TEST="$PLINK_TEST_PATH/01_Converted"
 
-echo "The sorted *.bam files are located in $SORTED_DATA_PATH."
-echo "The indexing data is located in $INDEXING_PATH."
-echo "The indexing genome data is $INDEXING_FILE."
-echo "The recalibrated *.bam files are located in $RECALIBRATED_DATA_PATH."
-echo "The ApplyBQSR results are located in $APPLYBQSR_DATA_PATH."
-echo "The HaplotypeCaller results are located in $HAPLOTYPECALLER_DATA_PATH."
-echo "The GenotypeGVCF results are located in $GENOTYPE_GVCF_PATH."
-echo "The VariantRecalibrator results are located in $VARIANTRECALIBRATOR_DATA_PATH."
-echo "The ApplyVQSR results are located in $APPLYVQSR_DATA_PATH."
-echo "The converted VCF files are located in $TEST_VCF_PATH."
-echo "The plink files will be located in $PLINK_BASE_PATH."
+echo "The GenotypeGVCF results are located in $GENOTYPE_GVCF_TEST_PATH."
+echo "The plink files will be located in $PLINK_TEST_PATH."
 # Add prompts of more sub-folders of plink here...
 echo "The converted plink files will be located in $PLINK_CONVERTED_DATA."
 echo "The converted plink files for testing will be located in $PLINK_CONVERTED_DATA_TEST."
@@ -72,39 +54,10 @@ echo "The converted plink files for testing will be located in $PLINK_CONVERTED_
 echo "Initializing completed."
 echo "=============================="
 
-# Unzip the VCF file
-if [ ! -f "$GENOTYPE_GVCF_PATH/joint_genotyped.vcf" ]; then
-  echo "Unzipping the VCF file..."
-  cp $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz $GENOTYPE_GVCF_PATH/joint_genotyped_copy.vcf.gz
-  gunzip $GENOTYPE_GVCF_PATH/joint_genotyped_copy.vcf.gz
-  mv $GENOTYPE_GVCF_PATH/joint_genotyped_copy.vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
-  echo "The VCF file has been unzipped."
-  echo "=============================="
-else
-  echo "The VCF file is already unzipped."
-  echo "=============================="
-fi
-
-# Indexing the VCF file
-if [ ! -f "$GENOTYPE_GVCF_PATH/joint_genotyped.vcf.idx" ]; then
-  echo "Indexing the VCF file..."
-  $GATK_NEW_BIN IndexFeatureFile -I $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
-  echo "The VCF file has been indexed."
-  echo "=============================="
-else
-  echo "The VCF file is already indexed."
-  echo "=============================="
-fi
-
 # Performing plink converting
 echo "Converting the VCF files to plink format..."
-$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
+$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_TEST_PATH/joint_genotyped.vcf --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
 || { echo "Error: plink converting failed."; exit 1; }
 
 echo "The plink converting has been completed."
 echo "=============================="
-
-# Remove the intermediate files
-echo "Removing the intermediate files..."
-rm $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
-rm $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.idx
