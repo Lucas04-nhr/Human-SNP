@@ -108,4 +108,3 @@ echo "=============================="
 echo "Removing the intermediate files..."
 rm $GENOTYPE_GVCF_PATH/joint_genotyped.vcf
 rm $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.idx
-
