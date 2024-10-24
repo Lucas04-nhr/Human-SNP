@@ -1,7 +1,7 @@
 #! /bin/bash
 #SBATCH --job-name=plink_test
-#SBATCH --output=./log/test_log.%j.out
-#SBATCH --error=./log/test_log.%j.err
+#SBATCH --output=./test_log.%j.out
+#SBATCH --error=./test_log.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --array=1-6%2
