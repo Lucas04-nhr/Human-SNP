@@ -71,15 +71,10 @@ echo "Initializing completed."
 echo "=============================="
 
 # Performing plink converting
-echo "Converting the VCF files to plink format of ..."
-$PLINK_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped \
+echo "Converting the VCF files to plink format.."
+$PLINK_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
 || { echo "Error: plink converting failed for ${sample_name}"; exit 1; }
 
-# Create a symbolic link to the test folder
-echo "Creating a symbolic link for ${sample_name}..."
-ln -s $PLINK_CONVERTED_DATA/$sample_name.* $PLINK_CONVERTED_DATA_TEST \
-|| { echo "Error: Failed to create a symbolic link for ${sample_name}"; exit 1; }
-
-echo "The plink converting for ${sample_name} has been completed."
+echo "The plink converting has been completed."
 echo "=============================="
 
