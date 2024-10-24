@@ -2,9 +2,8 @@
 #SBATCH --job-name=plink_test
 #SBATCH --output=./test_log.%j.out
 #SBATCH --error=./test_log.%j.err
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
-#SBATCH --array=1-6%2
 
 # Initialize the environment
 echo "THIS IS A TEST SCRIPT FOR PLINK CONVERTING."
