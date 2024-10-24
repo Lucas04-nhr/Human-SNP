@@ -71,8 +71,9 @@ echo "Initializing completed."
 echo "=============================="
 
 # Performing plink converting
-echo "Converting the VCF files to plink format.."
-$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
+export GENOTYPE_GVCF_FILE="$GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz"
+echo "Converting the VCF files to plink format..."
+$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_FILE --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
 || { echo "Error: plink converting failed."; exit 1; }
 
 echo "The plink converting has been completed."
