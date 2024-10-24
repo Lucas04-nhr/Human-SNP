@@ -93,6 +93,8 @@ check_file() {
 }
 
 # Check directories
+echo "=============================="
+echo "Checking directories..."
 check_directory "$SORTED_DATA_PATH"
 check_directory "$INDEXING_PATH"
 check_directory "$KNOWN_SITES_BASE_PATH"
@@ -105,6 +107,8 @@ check_directory "$APPLYVQSR_DATA_PATH"
 check_directory "$TEST_VCF_PATH"
 
 # Check files
+echo "=============================="
+echo "Checking files..."
 check_file "$JAVA_BIN"
 check_file "$GATK_OLD_BIN"
 check_file "$GATK_NEW_BIN"
@@ -117,6 +121,8 @@ check_file "$KNOWN_SITES_OMNI"
 check_file "$KNOWN_SITES_1000G"
 
 # Check if the output directory exists
+echo "=============================="
+echo "Checking output directories..."
 check_output_directory "$PLINK_BASE_PATH"
 check_output_directory "$PLINK_TEST_PATH"
 check_output_directory "$PLINK_CONVERTED_DATA"
