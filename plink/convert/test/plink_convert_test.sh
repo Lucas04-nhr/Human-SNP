@@ -27,7 +27,8 @@ export TEST_PATH="$BASE_PATH/test"
 
 export GATK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.3.0.0/gatk"
 export GATK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/gatk-4.5.0.0/gatk"
-export PLINK_BIN="/mnt/raid6/bacphagenetwork/tools/plink-1.07-x86_64/plink"
+export PLINK_OLD_BIN="/mnt/raid6/bacphagenetwork/tools/plink-1.07-x86_64/plink"
+export PLINK_NEW_BIN="/mnt/raid6/bacphagenetwork/tools/plink_1.9_linux_x86_64/plink"
 
 export INDEXING_PATH="$BASE_PATH/00_bwa_index/GRCh38"
 export INDEXING_FILE="$INDEXING_PATH/Homo_sapiens.GRCh38.dna.toplevel.fa"
@@ -72,7 +73,7 @@ echo "=============================="
 
 # Performing plink converting
 echo "Converting the VCF files to plink format.."
-$PLINK_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
+$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA_TEST/converted_genotyped --silent\
 || { echo "Error: plink converting failed for ${sample_name}"; exit 1; }
 
 echo "The plink converting has been completed."
