@@ -76,7 +76,7 @@ sample_name=$(basename "$infile" .vcf.gz)
 
 # Performing plink converting
 echo "Converting the VCF files to plink format of ${sample_name}..."
-plink --vcf $TEST_VCF_PATH/$sample_name.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA/$sample_name \
+$PLINK_BIN --vcf $TEST_VCF_PATH/$sample_name.vcf.gz --recode --allow-extra-chr --out $PLINK_CONVERTED_DATA/$sample_name \
 || { echo "Error: plink converting failed for ${sample_name}"; exit 1; }
 
 # Create a symbolic link to the test folder
