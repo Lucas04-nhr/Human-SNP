@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # Set the path to the genome data
-echo "Please enter the path to the *.g.vcf.gz files of Beijing:"
+echo "Please enter the path to the *.vcf.gz files of Beijing:"
 read genome_path
-# The path of the genome data is '/mnt/raid6/bacphagenetwork/data/07_HaplotypeCaller/Beijing'
+# The path of the genome data is 'mnt/raid6/bacphagenetwork/data/11_ConvertedVCF/Beijing/'
 export GENOME_PATH=$genome_path
 echo "The path to the genome data has been set to $GENOME_PATH."
 
