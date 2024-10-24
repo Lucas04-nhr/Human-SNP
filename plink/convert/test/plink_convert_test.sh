@@ -4,7 +4,7 @@
 #SBATCH --error=./log/test_log.%j.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
-#SBATCH --array=1-9
+#SBATCH --array=1-6%2
 
 # Initialize the environment
 echo "THIS IS A TEST SCRIPT FOR PLINK CONVERTING."
