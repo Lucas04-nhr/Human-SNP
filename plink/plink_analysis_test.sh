@@ -42,23 +42,16 @@ export KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/hg38_v0_1000G_omni2.5.hg38.
 
 export GENOTYPE_GVCF_TEST_PATH="$TEST_PATH/08_GenotypeGVCF"
 export PLINK_TEST_PATH="$TEST_PATH/12_plink"
-# Add more sub-folders of plink here...
-export PLINK_CONVERTED_DATA_TEST="$PLINK_TEST_PATH/01_Converted"
-export PLINK_ANALYSIS_DATA_TEST="$PLINK_TEST_PATH/02_Analysis"
 
 echo "The GenotypeGVCF results are located in $GENOTYPE_GVCF_TEST_PATH."
 echo "The plink files will be located in $PLINK_TEST_PATH."
-# Add prompts of more sub-folders of plink here...
-echo "The converted plink files will be located in $PLINK_CONVERTED_DATA."
-echo "The converted plink files for testing will be located in $PLINK_CONVERTED_DATA_TEST."
-echo "The prepared plink files for testing will be located in $PLINK_ANALYSIS_DATA_TEST."
 
 echo "Initializing completed."
 echo "=============================="
 
 # Performing plink 
 echo "Performing..."
-$PLINK_NEW_BIN --noweb --file $PLINK_CONVERTED_DATA_TEST/converted_genotyped --out $PLINK_ANALYSIS_DATA_TEST/converted_genotyped --allow-extra-chr --make-bed\
+$PLINK_NEW_BIN --noweb --file $PLINK_TEST_PATH/converted_genotyped --out $PLINK_TEST_PATH/converted_genotyped --allow-extra-chr --make-bed\
 || { echo "Error: plink executing failed."; exit 1; }
 
 echo "The process has been completed."
