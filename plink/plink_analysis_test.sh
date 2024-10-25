@@ -58,7 +58,7 @@ echo "=============================="
 
 # Performing plink 
 echo "Performing..."
-$PLINK_NEW_BIN --noweb --file $PLINK_CONVERTED_DATA_TEST/converted_genotyped --out $PLINK_ANALYSIS_DATA_TEST/converted_genotyped --make-bed\
+$PLINK_NEW_BIN --noweb --file $PLINK_CONVERTED_DATA_TEST/converted_genotyped --out $PLINK_ANALYSIS_DATA_TEST/converted_genotyped --allow-extra-chr --make-bed\
 || { echo "Error: plink executing failed."; exit 1; }
 
 echo "The process has been completed."
