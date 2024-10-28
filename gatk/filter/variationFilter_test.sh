@@ -15,7 +15,7 @@ OUTPUT_VCF="$BASE_PATH/test/08_GenotypeGVCF/filtered_output.vcf.gz"
 REFERENCE_GENOME="$BASE_PATH/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa"
 
 # Define filter expressions
-SNP_FILTER="QD < 2.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0"
+SNP_FILTER="MQ<40.0 || QD < 2.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0"
 
 
 # Apply hard filters to SNPs
@@ -26,4 +26,4 @@ $GATK_OLD_BIN VariantFiltration \
     --filter-name "SNP_Hard_Filter" \
     -O $OUTPUT_VCF
 
-echo "Variant filtration complete. Filtered VCF is saved as $OUTPUT_VCF"
+echo "Variant filtration complete. Filtered VCF is saved as $OUTPUT_VCF."
