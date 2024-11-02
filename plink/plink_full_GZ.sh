@@ -47,7 +47,7 @@ export FILTERED_GVCF_PATH="$BASE_PATH/10_ApplyVQSR/Guangzhou"
 export PLINK_PATH="$BASE_PATH/12_plink/Guangzhou"
 
 echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
-echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCFPATH."
+echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCF_PATH."
 echo "The plink files will be located in $PLINK_PATH."
 # Add prompts of more sub-folders of plink here...
 
@@ -60,7 +60,7 @@ echo "=============================="
 
 # Performing plink converting
 echo "Converting the VCF files to plink format..."
-$PLINK_NEW_BIN --noweb --vcf $FILETERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz --recode --allow-extra-chr --out $PLINK_PATH/converted_genotyped \
+$PLINK_NEW_BIN --noweb --vcf $FILTERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz --recode --allow-extra-chr --out $PLINK_PATH/converted_genotyped \
 || { echo "Error: plink converting failed."; exit 1; }
 
 echo "The plink converting has been completed."
