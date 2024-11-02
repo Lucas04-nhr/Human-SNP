@@ -42,17 +42,12 @@ export KNOWN_SITES_DBSNP="$KNOWN_SITES_BASE_PATH/dbsnp138/hg38_v0_Homo_sapiens_a
 export KNOWN_SITES_HAPMAP="$KNOWN_SITES_BASE_PATH/hapmap/hg38_v0_hapmap_3.3.hg38.modified.vcf"
 export KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/hg38_v0_1000G_omni2.5.hg38.modified.vcf"
 
-export GENOTYPE_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF/Beijing"
-
-#######################################
-
-export FILTERED_GVCF_PATH="$BASE_PATH/"                         ## TO BE FILLED
-
-#######################################
-
+export UNFILTERED_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF/Beijing"
+export FILTERED_GVCF_PATH="$BASE_PATH/10_ApplyVQSR/Beijing"
 export PLINK_PATH="$BASE_PATH/12_plink/Beijing"
 
-echo "The GenotypeGVCF results are located in $GENOTYPE_GVCF_PATH."
+echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
+echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCFPATH."
 echo "The plink files will be located in $PLINK_PATH."
 # Add prompts of more sub-folders of plink here...
 
@@ -65,7 +60,7 @@ echo "=============================="
 
 # Performing plink converting
 echo "Converting the VCF files to plink format..."
-$PLINK_NEW_BIN --noweb --vcf $GENOTYPE_GVCF_PATH/joint_genotyped.vcf.gz --recode --allow-extra-chr --out $PLINK_PATH/converted_genotyped \
+$PLINK_NEW_BIN --noweb --vcf $FILETERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz --recode --allow-extra-chr --out $PLINK_PATH/converted_genotyped \
 || { echo "Error: plink converting failed."; exit 1; }
 
 echo "The plink converting has been completed."
