@@ -1,9 +1,9 @@
 #! /bin/bash
-#SBATCH --job-name=plink_test
+#SBATCH --job-name=plink_BJ
 #SBATCH --output=./BJ_log.%j.out
 #SBATCH --error=./BJ_log.%j.err
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
+#SBATCH --mem=64G
 
 # Initialize the environment
 echo "Initializing the environment..."
