@@ -63,12 +63,24 @@ echo "=============================="
 plink_convert=false
 plink_preprocess=false
 plink_execute=false
+plink_draw_fig=false
+covar_number=""
 
-while getopts "cpe" opt; do
+while getopts "cpef-:" opt; do
   case $opt in
     c) plink_convert=true ;;
     p) plink_preprocess=true ;;
     e) plink_execute=true ;;
+    f) plink_draw_fig=true ;;
+    -)
+      case "${OPTARG}" in
+        covar-number=*)
+          covar_number=${OPTARG#*=}
+          ;;
+        *)
+          echo "Invalid option: --${OPTARG}" ;;
+      esac
+      ;;
     \?) echo "Invalid option: $OPTARG" ;;
   esac
 done
@@ -107,19 +119,36 @@ fi
 
 # Performing plink execution
 if $plink_execute; then
+  if ! [[ $covar_number =~ ^[1-9][0-9]?$ ]]; then
+    echo "Error: covar_number must be a number between 1 and 99."
+    exit 1
+  fi
   echo "Performing plink execution..."
-  $PLINK_NEW_BIN --bfile $PLINK_PATH/converted_genotyped --linear --pheno $PLINK_PATH/phenotype_GZ.tsv --all-pheno --covar $PLINK_PATH/covariate_BJ.tsv --covar-number 5 --out result --noweb --allow-extra-chr --allow-no-sex
+  $PLINK_NEW_BIN --bfile $PLINK_PATH/converted_genotyped --linear --pheno $PLINK_PATH/phenotype_GZ.tsv --all-pheno --covar $PLINK_PATH/covariate_BJ.tsv --covar-number $covar_number --out result --noweb --allow-extra-chr --allow-no-sex
   echo "The plink execution has been completed."
   echo "=============================="
 
   # Move the results to the result folder
   echo "Moving the results to the result folder..."
-  mkdir -p $PLINK_PATH/results/c05
-  mv $PLINK_PATH/result* $PLINK_PATH/results/c05
+  covar_number=$(printf "%02d" $covar_number)
+  mkdir -p $PLINK_PATH/results/c${covar_number}
+  mkdir -p $PLINK_PATH/results/fig/c${covar_number}
+  mv $PLINK_PATH/result* $PLINK_PATH/results/c${covar_number}
   echo "The results have been moved to the result folder."
   echo "=============================="
 else
   echo "The plink execution has been skipped."
+  echo "=============================="
+fi
+
+# Performing plink drawing figures
+if $plink_draw_fig; then
+  echo "Drawing figures..."
+  python3 ./analysis.py --input $PLINK_PATH/results/c${covar_number} --output $PLINK_PATH/results/fig/c${covar_number}
+  echo "The figures have been drawn."
+  echo "=============================="
+else
+  echo "The drawing figures have been skipped."
   echo "=============================="
 fi
 
