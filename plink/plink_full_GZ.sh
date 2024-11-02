@@ -119,7 +119,7 @@ fi
 
 # Performing plink execution
 if $plink_execute; then
-  if ! [ "$covar_number" -gt 483 ]; then
+  if [ "$covar_number" -gt 483 ]; then
     echo "Error: covar_number must be a number between 1 and 483."
     exit 1
   fi
