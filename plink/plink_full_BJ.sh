@@ -124,7 +124,8 @@ if $plink_execute; then
     exit 1
   fi
   echo "Performing plink execution..."
-  $PLINK_NEW_BIN --bfile $PLINK_PATH/converted_genotyped --linear --pheno $PLINK_PATH/phenotype_BJ.tsv --all-pheno --covar $PLINK_PATH/covariate_BJ.tsv --covar-number $covar_number --out $PLINK_PATH/result --noweb --allow-extra-chr --allow-no-sex
+  $PLINK_NEW_BIN --bfile $PLINK_PATH/converted_genotyped --linear --pheno $PLINK_PATH/phenotype_BJ.tsv --all-pheno --covar $PLINK_PATH/covariate_BJ.tsv --covar-number $covar_number --out $PLINK_PATH/result --noweb --allow-extra-chr --allow-no-sex \
+  || { echo "Error: plink execution failed."; exit 1; }
   echo "The plink execution has been completed."
   echo "=============================="
 
