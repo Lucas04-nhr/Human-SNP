@@ -19,4 +19,4 @@ echo "The conda environment has been activated."
 echo "=============================="
 
 
-python ../analysis.py --input /mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/results/c005/result.P1.assoc.linear --output /mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/results/fig/c005
+python ../analysis.py --input /mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/results/c005 --output /mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/results/fig/c005
