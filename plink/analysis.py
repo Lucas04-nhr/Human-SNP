@@ -39,7 +39,7 @@ for file_name in file_list:
   
   # Extract the number from the file name
   i = re.search(r'\d+', file_name).group()
-  output_file = f'{output_path}/c{chromosome_name}_{i}.pdf'
+  output_file = f'{output_path}/c005_P{i}.pdf'
   stats.plot_mqq(
     save=output_file,
     font_family="DejaVu Sans",
