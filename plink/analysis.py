@@ -25,7 +25,7 @@ for file_name in file_list:
   file_path = os.path.join(input_path, file_name)
   
   # Load data
-  data = pd.read_table(file_path, sep='\s+')
+  data = pd.read_table(file_path, sep='\s+', low_memory=False)
   
   # Draw the plot
   stats = gl.Sumstats(
