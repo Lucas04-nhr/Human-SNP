@@ -41,6 +41,6 @@ for file_name in file_list:
   i = re.search(r'\d+', file_name).group()
   output_file = f'{output_path}/c{chromosome_name}_{i}.pdf'
   stats.plot_mqq(
-    save=output_path,
+    save=output_file,
     save_args={"dpi": 300, "facecolor": "white"}
   )
