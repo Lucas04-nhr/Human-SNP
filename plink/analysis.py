@@ -42,5 +42,6 @@ for file_name in file_list:
   output_file = f'{output_path}/c{chromosome_name}_{i}.pdf'
   stats.plot_mqq(
     save=output_file,
+    font_family="DejaVu Sans",
     save_args={"dpi": 300, "facecolor": "white"}
   )
