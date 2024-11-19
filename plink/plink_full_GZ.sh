@@ -66,6 +66,8 @@ plink_execute=false
 plink_draw_fig=false
 covar_number=""
 
+# sbatch plink_full_BJ.sh -c -p -e --covar-number=4
+
 while getopts "cpef-:" opt; do
   case $opt in
     c) plink_convert=true ;;
@@ -119,8 +121,8 @@ fi
 
 # Performing plink execution
 if $plink_execute; then
-  if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 5 ]; then
-    echo "Error: covar_number must be a number between 5 and 483."
+  if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 4 ]; then
+    echo "Error: covar_number must be a number between 4 and 483."
     exit 1
   fi
   echo "Performing plink execution..."
