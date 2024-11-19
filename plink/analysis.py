@@ -45,3 +45,7 @@ for file_name in file_list:
     font_family="DejaVu Sans",
     save_args={"dpi": 300, "facecolor": "white"}
   )
+
+  # Clean up
+  del data
+  del stats
