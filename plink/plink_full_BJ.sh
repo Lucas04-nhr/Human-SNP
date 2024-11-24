@@ -109,7 +109,7 @@ fi
 # Performing plink preprocessing
 if $plink_preprocess; then
   echo "Performing plink preprocessing..."
-  $PLINK_NEW_BIN --noweb --file $PLINK_PATH/converted_genotyped --set-all-var-ids @:#\[$r,$a\] --out $PLINK_PATH/converted_genotyped --allow-extra-chr --make-bed \
+  $PLINK_NEW_BIN --noweb --file $PLINK_PATH/converted_genotyped --set-missing-var-ids @:#\[$r,$a\] --recode --out $PLINK_PATH/converted_genotyped --allow-extra-chr --make-bed \
   || { echo "Error: plink preprocessing failed."; exit 1; }
   echo "The plink preprocessing has been completed."
   echo "=============================="
