@@ -1,22 +1,56 @@
-import os
+import numpy as np
 import pandas as pd
+import os
+import argparse
 
-# 设置文件路径
-input_directory = '/mnt/raid6/bacphagenetwork/data/12_plink/Beijing/results/modified/c004'
-output_file = '/mnt/raid6/bacphagenetwork/data/12_plink/Beijing/results/modified/c004/merged_first_five_lines.csv'
-input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
-
-# 读取第一个文件的表头
-first_file = input_files[0]
-header = pd.read_csv(first_file, nrows=0)
-
-# 初始化一个空的 DataFrame 来存储合并的结果，并添加表头
-merged_data = pd.DataFrame(columns=header.columns)
-
-# 读取每个文件的前五行（不包含表头）并合并
-for input_file in input_files:
-    data = pd.read_csv(input_file, skiprows=1, nrows=5)
+# Define the function
+def adj_merge (input_directory, output_file, nrows_threshold=5):
+  # Get the list of files
+  input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
+  len_files = len(input_files)
+  # Read the first file
+  first_file = input_files[0]
+  header = pd.read_csv(first_file, nrows=0)
+  # Create an empty DataFrame
+  merged_data = pd.DataFrame(columns=header.columns)
+  # Read the first five lines of each file and merge
+  count = 0
+  for input_file in input_files:
+    count += 1
+    print('Processing file: ', input_file)
+    print('Progress: ', count, '/', len_files)
+    data = pd.read_csv(input_file, nrows=nrows_threshold)
     merged_data = pd.concat([merged_data, data], ignore_index=True)
+  # Save the merged data
+  merged_data.to_csv(output_file, index=False, sep='\t')
+  # Clear the memory
+  del data
+  del merged_data
 
-# 保存合并结果到新的文件
-merged_data.to_csv(output_file, index=False)
+# Set the arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--input-directory', type=str, required=True)
+parser.add_argument('--output-file', type=str, required=False)
+parser.add_argument('--nrows-threshold', '-n', type=int, required=False, default=5)
+
+# Parse the arguments
+args = parser.parse_args()
+input_directory = args.input_directory
+output_file = args.output_file
+nrows_threshold = args.nrows_threshold
+
+# Process the output file name if not given
+if output_file is None:
+  input_path = os.path.dirname(input_file)
+  parent_folder = input_path.split('/')[-1]
+  output_path = os.path.join(input_path, '..', '..', 'merged', parent_folder)
+  # Get the absolute path
+  output_path = os.path.abspath(output_path)
+  os.makedirs(output_path, exist_ok=True)
+  output_file = os.path.join(output_path, 'result_merged.tsv')
+
+# Call the function
+print('Merging the files in the directory: ', input_directory)
+print('Output file: ', output_file)
+adj_merge(input_directory, output_file, nrows_threshold)
+print('Done!')
