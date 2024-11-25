@@ -16,11 +16,12 @@ def adj_merge (input_directory, output_file, nrows_threshold=5):
   # Read the first five lines of each file and merge
   count = 0
   for input_file in input_files:
-    count += 1
-    print('Processing file: ', input_file)
-    print('Progress: ', count, '/', len_files)
-    data = pd.read_csv(input_file, nrows=nrows_threshold)
-    merged_data = pd.concat([merged_data, data], ignore_index=True)
+    if input_file.endswith(".assoc.linear.adjusted"):
+      count += 1
+      print('Processing file: ', input_file)
+      print('Progress: ', count, '/', len_files)
+      data = pd.read_csv(input_file, nrows=nrows_threshold)
+      merged_data = pd.concat([merged_data, data], ignore_index=True)
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep='\t')
   # Clear the memory
