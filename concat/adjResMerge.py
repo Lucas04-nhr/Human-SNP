@@ -57,7 +57,8 @@ if output_file is None:
 # Check if the sort parameter is leagal
 sort_avail_list = ['CHR', 'SNP', 'UNADJ', 'GC', 'BONF', 'HOLM', 'SIDAK_SS', 'SIDAK_SD', 'FDR_BH', 'FDR_BY', 'Bacteria']
 if sort is not None and sort not in sort_avail_list:
-  raise ValueError(f"Invalid sort parameter. Available options are: {', '.join(sort_avail_list)}")
+  print('The sort parameter is not available. Please choose from the following list:')
+  print(sort_avail_list)
   exit()
 
 # Call the function
