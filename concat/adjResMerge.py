@@ -41,8 +41,7 @@ nrows_threshold = args.nrows_threshold
 
 # Process the output file name if not given
 if output_file is None:
-  input_path = os.path.dirname(input_file)
-  parent_folder = input_path.split('/')[-1]
+  parent_folder = input_directory.split('/')[-1]
   output_path = os.path.join(input_path, '..', '..', 'merged', parent_folder)
   # Get the absolute path
   output_path = os.path.abspath(output_path)
