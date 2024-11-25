@@ -21,6 +21,8 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
       print('Processing file: ', input_file)
       print('Progress: ', count, '/', len_files)
       data = pd.read_csv(input_file, nrows=nrows_threshold, sep='\s+', engine='python')
+      print('Head of the data:')
+      print(data.head())
       merged_data = pd.concat([merged_data, data], ignore_index=True)
   # Sort the data
   if sort is not None:
