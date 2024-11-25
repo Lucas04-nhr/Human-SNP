@@ -4,7 +4,7 @@
 #SBATCH --error=./log/Guangzhou/GZ_log.%j.err
 #SBATCH --cpus-per-task=2
 #SBATCH --array=1-92%4
-#SBATCH --mem=64G
+#SBATCH --mem=24G
 
 # Initialize the environment
 echo "Initializing the environment..."
