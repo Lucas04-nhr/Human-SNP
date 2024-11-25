@@ -7,7 +7,7 @@ import argparse
 def adj_merge (input_directory, output_file, nrows_threshold, sort):
   # Get the list of files
   input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
-  len_files = len(input_files)
+  len_files = len(input_files)/2
   # Read the first file
   first_file = input_files[0]
   header = pd.read_csv(first_file, nrows=0)
