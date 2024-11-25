@@ -7,7 +7,7 @@ import argparse
 def adj_merge (input_directory, output_file, nrows_threshold, sort):
   # Get the list of files
   input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
-  len_files = len(input_files)/2
+  len_files = int(len(input_files)/2)
   # Read the first file
   first_file = input_files[0]
   header = pd.read_csv(first_file, nrows=0)
@@ -23,8 +23,8 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
       data = pd.read_csv(input_file, nrows=nrows_threshold)
       merged_data = pd.concat([merged_data, data], ignore_index=True)
   # Sort the data
-  if sort is not None:
-    merged_data = merged_data.sort_values(by=sort)
+  # if sort is not None:
+  #   merged_data = merged_data.sort_values(by=sort)
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep='\t')
   # Clear the memory
@@ -36,7 +36,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input-directory', type=str, required=True)
 parser.add_argument('--output-file', type=str, required=False)
 parser.add_argument('--nrows-threshold', '-n', type=int, required=False, default=5)
-parser.add_argument('--sort', '-s', type=str, required=False, default="FDR_BY")
+parser.add_argument('--sort', '-s', type=str, required=False, default=FDR_BY)
 
 # Parse the arguments
 args = parser.parse_args()
@@ -56,7 +56,7 @@ if output_file is None:
 
 # Check if the sort parameter is leagal
 sort_avail_list = ['CHR', 'SNP', 'UNADJ', 'GC', 'BONF', 'HOLM', 'SIDAK_SS', 'SIDAK_SD', 'FDR_BH', 'FDR_BY', 'Bacteria']
-if sort is not None and sort not in sort_avail_list:
+if sort not in sort_avail_list:
   print('The sort parameter is not available. Please choose from the following list:')
   print(sort_avail_list)
   exit()
