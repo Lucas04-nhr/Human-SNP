@@ -62,6 +62,8 @@ if sort is not None and sort not in sort_avail_list:
 
 # Call the function
 print('Merging the files in the directory: ', input_directory)
-print('Output file: ', output_file)
+print("===============================================")
 adj_merge(input_directory, output_file, nrows_threshold, sort)
+print("===============================================")
+print('Output file: ', output_file)
 print('Done!')
