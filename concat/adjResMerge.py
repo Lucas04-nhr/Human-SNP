@@ -36,7 +36,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input-directory', type=str, required=True)
 parser.add_argument('--output-file', type=str, required=False)
 parser.add_argument('--nrows-threshold', '-n', type=int, required=False, default=5)
-parser.add_argument('--sort', '-s', type=str, required=False, default=FDR_BY)
+parser.add_argument('--sort', '-s', type=str, required=False, default='FDR_BY')
 
 # Parse the arguments
 args = parser.parse_args()
