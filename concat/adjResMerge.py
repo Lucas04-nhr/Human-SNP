@@ -54,7 +54,7 @@ if output_file is None:
   # Get the absolute path
   output_path = os.path.abspath(output_path)
   os.makedirs(output_path, exist_ok=True)
-  output_file = os.path.join(output_path, f'merged_{parent_folder}.tsv')
+  output_file = os.path.join(output_path, f'merged_{parent_folder}.csv')
 
 # Check if the sort parameter is leagal
 sort_avail_list = ['CHR', 'SNP', 'UNADJ', 'GC', 'BONF', 'HOLM', 'SIDAK_SS', 'SIDAK_SD', 'FDR_BH', 'FDR_BY', 'Bacteria']
