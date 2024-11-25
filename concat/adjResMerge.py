@@ -48,7 +48,7 @@ sort = args.sort
 # Process the output file name if not given
 if output_file is None:
   parent_folder = input_directory.split('/')[-1]
-  output_path = os.path.join(input_directory, '..', '..', 'merged', parent_folder)
+  output_path = os.path.join(input_directory, '..', '..', 'merged')
   # Get the absolute path
   output_path = os.path.abspath(output_path)
   os.makedirs(output_path, exist_ok=True)
