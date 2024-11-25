@@ -18,16 +18,14 @@ echo "========================================"
 echo "Writing all the file names to a file..."
 echo " "
 echo "Processing Beijing files..."
-for file in ${PLINK_BJ_RESULT}; do
-    echo ${file} >> ${CURRENT_PATH}/BJ_sbatch.list \
-    || { echo "Error: Failed to write to BJ_sbatch.list"; exit 1; }
+find "${PLINK_BJ_RESULT}" -type f | while read -r file; do
+    echo "$file" >> BJ_sbatch.list
 done
 echo "Done."
 echo "----------------------------------------"
 echo "Processing Guangzhou files..."
-for file in ${PLINK_GZ_RESULT}; do
-    echo ${file} >> ${CURRENT_PATH}/GZ_sbatch.list \
-    || { echo "Error: Failed to write to GZ_sbatch.list"; exit 1; }
+find "${PLINK_GZ_RESULT}" -type f | while read -r file; do
+    echo "$file" >> GZ_sbatch.list
 done
 echo "Done."
 echo "========================================"
