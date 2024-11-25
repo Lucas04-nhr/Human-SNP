@@ -4,7 +4,7 @@ import os
 import argparse
 
 # Define the function
-def adj_merge (input_directory, output_file, nrows_threshold=5):
+def adj_merge (input_directory, output_file, nrows_threshold=5, sort=None):
   # Get the list of files
   input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
   len_files = len(input_files)
@@ -22,6 +22,9 @@ def adj_merge (input_directory, output_file, nrows_threshold=5):
       print('Progress: ', count, '/', len_files)
       data = pd.read_csv(input_file, nrows=nrows_threshold)
       merged_data = pd.concat([merged_data, data], ignore_index=True)
+  # Sort the data
+  if sort is not None:
+    merged_data = merged_data.sort_values(by=sort)
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep='\t')
   # Clear the memory
@@ -33,12 +36,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input-directory', type=str, required=True)
 parser.add_argument('--output-file', type=str, required=False)
 parser.add_argument('--nrows-threshold', '-n', type=int, required=False, default=5)
+parser.add_argument('--sort', '-s', type=str, required=False)
 
 # Parse the arguments
 args = parser.parse_args()
 input_directory = args.input_directory
 output_file = args.output_file
 nrows_threshold = args.nrows_threshold
+sort = args.sort
 
 # Process the output file name if not given
 if output_file is None:
@@ -47,10 +52,16 @@ if output_file is None:
   # Get the absolute path
   output_path = os.path.abspath(output_path)
   os.makedirs(output_path, exist_ok=True)
-  output_file = os.path.join(output_path, 'result_merged.tsv')
+  output_file = os.path.join(output_path, f'merged_{parent_folder}.tsv')
+
+# Check if the sort parameter is leagal
+sort_avail_list = ['CHR', 'SNP', 'UNADJ', 'GC', 'BONF', 'HOLM', 'SIDAK_SS', 'SIDAK_SD', 'FDR_BH', 'FDR_BY', 'Bacteria']
+if sort is not None and sort not in sort_avail_list:
+  raise ValueError(f"Invalid sort parameter. Available options are: {', '.join(sort_avail_list)}")
+  exit()
 
 # Call the function
 print('Merging the files in the directory: ', input_directory)
 print('Output file: ', output_file)
-adj_merge(input_directory, output_file, nrows_threshold)
+adj_merge(input_directory, output_file, nrows_threshold, sort)
 print('Done!')
