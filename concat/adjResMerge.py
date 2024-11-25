@@ -10,7 +10,7 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
   len_files = int(len(input_files)/2)
   # Read the first file
   first_file = input_files[0]
-  header = pd.read_csv(first_file, nrows=0)
+  header = pd.read_csv(first_file, nrows=0, sep='\s+', engine='python')
   # Create an empty DataFrame
   merged_data = pd.DataFrame(columns=header.columns)
   # Read the first five lines of each file and merge
@@ -20,12 +20,12 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
       count += 1
       print('Processing file: ', input_file)
       print('Progress: ', count, '/', len_files)
-      data = pd.read_csv(input_file, nrows=nrows_threshold)
+      data = pd.read_csv(input_file, nrows=nrows_threshold, sep='\s+', engine='python')
       merged_data = pd.concat([merged_data, data], ignore_index=True)
   # Sort the data
-  # if sort is not None:
-  #   merged_data = merged_data.sort_values(by=sort)
-  # Save the merged data
+  if sort is not None:
+    merged_data = merged_data.sort_values(by=sort)
+  Save the merged data
   merged_data.to_csv(output_file, index=False, sep='\t')
   # Clear the memory
   del data
