@@ -4,7 +4,7 @@ import os
 import argparse
 
 # Define the function
-def adj_merge (input_directory, output_file, nrows_threshold=5, sort=None):
+def adj_merge (input_directory, output_file, nrows_threshold, sort):
   # Get the list of files
   input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
   len_files = len(input_files)
@@ -36,7 +36,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input-directory', type=str, required=True)
 parser.add_argument('--output-file', type=str, required=False)
 parser.add_argument('--nrows-threshold', '-n', type=int, required=False, default=5)
-parser.add_argument('--sort', '-s', type=str, required=False)
+parser.add_argument('--sort', '-s', type=str, required=False, default="FDR_BY")
 
 # Parse the arguments
 args = parser.parse_args()
