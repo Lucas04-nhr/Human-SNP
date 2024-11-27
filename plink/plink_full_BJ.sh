@@ -45,11 +45,17 @@ export KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/hg38_v0_1000G_omni2.5.hg38.
 export UNFILTERED_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF/Beijing"
 export FILTERED_GVCF_PATH="$BASE_PATH/10_ApplyVQSR/Beijing"
 export PLINK_PATH="$BASE_PATH/12_plink/Beijing"
+export PLINK_OUTPUT_PATH="$PLINK_PATH/output/cov-as-phe_age"
+export PLINK_RESULT_PATH="$PLINK_PATH/results/cov-as-phe_age"
 
 echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
 echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCF_PATH."
-echo "The plink files will be located in $PLINK_PATH."
+echo "The plink output files will be located in $PLINK_OUTPUT_PATH."
+echo "The plink result files will be located in $PLINK_RESULT_PATH."
 # Add prompts of more sub-folders of plink here...
+
+mkdir -p $PLINK_OUTPUT_PATH
+mkdir -p $PLINK_RESULT_PATH
 
 echo "Setting completed."
 
@@ -97,7 +103,7 @@ fi
 # Performing plink converting
 if $plink_convert; then
   echo "Converting the VCF files to plink format..."
-  $PLINK_NEW_BIN --noweb --vcf $FILTERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz --recode --allow-extra-chr --out $PLINK_PATH/converted_genotyped \
+  $PLINK_NEW_BIN --noweb --vcf $FILTERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz --recode --allow-extra-chr --out $PLINK_OUTPUT_PATH/converted_genotyped \
   || { echo "Error: plink converting failed."; exit 1; }
   echo "The plink converting has been completed."
   echo "=============================="
@@ -109,7 +115,7 @@ fi
 # Performing plink preprocessing
 if $plink_preprocess; then
   echo "Performing plink preprocessing..."
-  $PLINK_NEW_BIN --noweb --file $PLINK_PATH/converted_genotyped --set-missing-var-ids @:# --recode --out $PLINK_PATH/converted_genotyped --allow-extra-chr --make-bed \
+  $PLINK_NEW_BIN --noweb --file $PLINK_OUTPUT_PATH/converted_genotyped --set-missing-var-ids @:# --recode --out $PLINK_PATH/converted_genotyped --allow-extra-chr --make-bed \
   || { echo "Error: plink preprocessing failed."; exit 1; }
   echo "The plink preprocessing has been completed."
   echo "=============================="
@@ -125,18 +131,11 @@ if $plink_execute; then
     exit 1
   fi
   echo "Performing plink execution..."
-  $PLINK_NEW_BIN --bfile $PLINK_PATH/converted_genotyped --linear --adjust --pheno $PLINK_PATH/phenotype_BJ.tsv --all-pheno --covar $PLINK_PATH/covariate_BJ.tsv --covar-number $covar_number --out $PLINK_PATH/result --noweb --allow-extra-chr --allow-no-sex \
+  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --linear --adjust --pheno $PLINK_OUTPUT_PATH/phenotype_BJ.tsv --all-pheno --covar $PLINK_OUTPUT_PATH/covariate_BJ.tsv --covar-number $covar_number --out $PLINK_RESULT_PATH/result --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
   echo "The plink execution has been completed."
   echo "=============================="
 
-  # Move the results to the result folder
-  echo "Moving the results to the result folder..."
-  covar_number=$(printf "%03d" $covar_number)
-  mkdir -p $PLINK_PATH/results/c${covar_number}
-  mv $PLINK_PATH/result* $PLINK_PATH/results/c${covar_number}
-  echo "The results have been moved to the result folder."
-  echo "=============================="
 else
   echo "The plink execution has been skipped."
   echo "=============================="
