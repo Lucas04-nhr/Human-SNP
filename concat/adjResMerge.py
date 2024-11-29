@@ -9,7 +9,7 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
   input_files = [os.path.join(input_directory, f) for f in os.listdir(input_directory) if os.path.isfile(os.path.join(input_directory, f))]
   len_files = int(len(input_files)/2)
   # Read the first file
-  first_file = input_files[0]
+  first_file = input_files[1]
   header = pd.read_csv(first_file, nrows=0, sep='\s+', engine='python')
   # Create an empty DataFrame
   merged_data = pd.DataFrame(columns=header.columns)
@@ -31,8 +31,6 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
   merged_data = merged_data.dropna(axis=1, how='all')
   # Reset the index
   merged_data.reset_index(drop=True, inplace=True)
-  # Move the 3rd row to the last row
-  merged_data = pd.concat([merged_data[:2], merged_data[3:], merged_data[2:3]], ignore_index=True)
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep=',')
   # Clear the memory
