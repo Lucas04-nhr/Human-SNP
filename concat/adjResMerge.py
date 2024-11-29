@@ -27,6 +27,8 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
   # Sort the data
   if sort is not None:
     merged_data = merged_data.sort_values(by=sort)
+  # Drop the empty columns
+  merged_data = merged_data.dropna(axis=1, how='all')
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep=',')
   # Clear the memory
