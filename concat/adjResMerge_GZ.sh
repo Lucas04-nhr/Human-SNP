@@ -19,7 +19,7 @@ echo "=============================="
 
 # Merge the files
 echo "Merging the files of Guangzhou..."
-python3 ./adjResMerge.py --input-directory=/mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/results/cov-as-phe_numeric_age \
+python3 ./adjResMerge.py --input-directory=/mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/modified/cov-as-phe_numeric_age \
 || { echo "Error during the merging process."; exit 1; }
 echo "The files have been merged."
 
