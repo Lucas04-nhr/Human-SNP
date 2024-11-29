@@ -31,6 +31,8 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
   merged_data = merged_data.dropna(axis=1, how='all')
   # Reset the index
   merged_data.reset_index(drop=True, inplace=True)
+  # Move the 3rd row to the last row
+  merged_data = pd.concat([merged_data[:2], merged_data[3:], merged_data[2:3]], ignore_index=True)
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep=',')
   # Clear the memory
