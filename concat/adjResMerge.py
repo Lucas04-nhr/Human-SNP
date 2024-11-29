@@ -27,6 +27,15 @@ def adj_merge (input_directory, output_file, nrows_threshold, sort):
   # Sort the data
   if sort is not None:
     merged_data = merged_data.sort_values(by=sort)
+  # Delete the empty rows
+  merged_data = merged_data.dropna(axis=1, how='all')
+  # Reset the index
+  merged_data.reset_index(drop=True, inplace=True)
+  # Move the Cov column to the end
+  if 'Cov' in merged_data.columns:
+    cov = merged_data.pop('Cov')
+    merged_data.drop('Cov', axis=1, inplace=True)
+    merged_data['Cov'] = cov
   # Save the merged data
   merged_data.to_csv(output_file, index=False, sep=',')
   # Clear the memory
