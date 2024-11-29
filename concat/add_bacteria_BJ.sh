@@ -3,7 +3,7 @@
 #SBATCH --output=./log/Beijing/BJ_log.%j.out
 #SBATCH --error=./log/Beijing/BJ_log.%j.err
 #SBATCH --cpus-per-task=2
-#SBATCH --array=1-72%4
+#SBATCH --array=1-21%4
 #SBATCH --mem=24G
 
 # Initialize the environment
