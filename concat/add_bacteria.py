@@ -12,7 +12,7 @@ def add_bacteria_col (input_file, output_file):
   column_number = int(''.join(filter(str.isdigit, base_name)))
   print('Column number: ', column_number)
   # Add the bacteria column
-  data['Bacteria'] = column_number
+  data['Cov'] = column_number
   # Write the output file
   data.to_csv(output_file, sep='\t', index=False)
   # Clear the memory
