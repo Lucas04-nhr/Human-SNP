@@ -1,4 +1,5 @@
 library(base)
+library(optparse)
 library(tidyverse)
 library(ggforce)
 library(ggprism)
@@ -8,6 +9,13 @@ library(grid)
 library(gridExtra)
 library(ggrepel)
 library(optparse)
+
+# List the libraries that the script depends on
+
+print("Loaded libraries:")
+print(sessionInfo()$otherPkgs)
+
+# List the list of options that the script can accept
 
 option_list <- list(
   make_option(c("--input-directory"), type = "character", default = ".", 
