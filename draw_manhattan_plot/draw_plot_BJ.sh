@@ -18,8 +18,8 @@ echo "The conda environment has been activated."
 echo "=============================="
 
 echo "Processing the Manhattan plot of Beijing..."
-INPUT_DIR = "/mnt/raid6/bacphagenetwork/data/12_plink/Beijing/replaced/bac_age"
-OUTPUT_DIR = "/mnt/raid6/bacphagenetwork/data/12_plink/Beijing/merged/manhattan_plot"
+export INPUT_DIR = "/mnt/raid6/bacphagenetwork/data/12_plink/Beijing/replaced/bac_age"
+export OUTPUT_DIR = "/mnt/raid6/bacphagenetwork/data/12_plink/Beijing/merged/manhattan_plot"
 
 echo "The input directory is $INPUT_DIR."
 echo "The output directory is $OUTPUT_DIR."
