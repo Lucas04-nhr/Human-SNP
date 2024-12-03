@@ -1,5 +1,4 @@
 library(base)
-library(optparse)
 library(tidyverse)
 library(ggforce)
 library(ggprism)
