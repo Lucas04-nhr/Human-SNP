@@ -22,6 +22,9 @@ option_list <- list(
 opt_parser <- OptionParser(option_list = option_list)
 opt <- parse_args(opt_parser)
 
+print("Options:")
+print(opt)
+
 input_directory <- opt$`input_directory`
 output_directory <- opt$`output_directory`
 
