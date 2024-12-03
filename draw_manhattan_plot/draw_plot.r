@@ -25,8 +25,8 @@ opt <- parse_args(opt_parser)
 print("Options:")
 print(opt)
 
-input_directory <- opt$`input_directory`
-output_directory <- opt$`output_directory`
+input_directory <- opt$`input-directory`
+output_directory <- opt$`output-directory`
 
 print("Input directory:")
 print(input_directory)
