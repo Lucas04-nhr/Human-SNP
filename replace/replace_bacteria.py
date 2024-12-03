@@ -96,11 +96,3 @@ if replace_bacteria:
   print('Output file: ', output_file_replaced)
   replace_bacteria_col(input_file, output_file_replaced, bacteria_dict)
   print('Done!')
-
-
-# Call the function
-print('Adding bacteria column to the file: ', input_file)
-print('Output file: ', output_file_modified)
-add_bacteria_col(input_file, output_file_modified)
-print('Done!')
-print('')
