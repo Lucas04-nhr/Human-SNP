@@ -22,6 +22,21 @@ opt <- parse_args(opt_parser)
 input_directory <- opt$input_directory
 output_directory <- opt$output_directory
 
+print("Input directory:")
+print(input_directory)
+
+print("Output directory:")
+print(output_directory)
+
+if (!file.exists(input_directory)) {
+  stop("Input directory does not exist.")
+}
+
+if (!file.exists(output_directory)) {
+  print("Output directory does not exist. Creating it.")
+  dir.create(output_directory, showWarnings = FALSE, recursive = TRUE)
+}
+
 if (grepl("Beijing", input_directory, ignore.case = TRUE)) {
   region <- "Beijing"
 } else if (grepl("Guangzhou", input_directory, ignore.case = TRUE)) {
@@ -30,12 +45,21 @@ if (grepl("Beijing", input_directory, ignore.case = TRUE)) {
   region <- "Unknown"
 }
 
+print("Region:")
+print(region)
+
 input_files <- list.files(input_directory, pattern = "adjusted$", full.names = TRUE)
 output_file <- ifelse(region == "Beijing", 
-            file.path(output_directory, "manhattan_all_BJ.pdf"), 
+            file.path(output_directory, "bac_age_BJ.pdf"), 
             ifelse(region == "Guangzhou", 
-               file.path(output_directory, "manhattan_all_GZ.pdf"), 
-               file.path(output_directory, "manhattan_all.pdf")))
+               file.path(output_directory, "bac_age_GZ.pdf"), 
+               file.path(output_directory, "bac_age.pdf")))
+
+print("Input files:")
+print(input_files)
+
+print("Output file:")
+print(output_file)
 
 known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Bacteria")
 
@@ -45,12 +69,19 @@ df_list <- lapply(input_files, function(file) {
   return(df)
 })
 
+print("Head of the processed data:")
+print(head(df_list[[1]]))
+
+print("Processing data...")
+
 df_all <- bind_rows(df_list)
 
 df_all$BP <- sapply(df_all$SNP, function(x) {
   parts <- strsplit(x, ":")
   return(parts[[1]][2])  # 返回分割后的第二部分
 })
+
+print("Sorting data...")
 
 sorted_df_all <- df_all %>%
   arrange(CHR, BP)
@@ -124,6 +155,8 @@ df <- df %>%
 #修改CHR的levels
 df$CHR<-factor(df$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","Other"))
 
+print("Drawing plot...")
+
 p<-ggplot(df, aes(x = x, y = logP, color = as.factor(CHR))) +
   geom_point(alpha = 0.7, size = 1.5) +  # 绘制点图
   scale_color_manual(values = chromosome_colors) +  # 自定义颜色
@@ -144,7 +177,22 @@ p<-ggplot(df, aes(x = x, y = logP, color = as.factor(CHR))) +
     point.padding = 5)+scale_x_continuous(breaks =v1,labels =c(1:22,"X","Y","Other"))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
+print("Saving plot...")
+
 ggsave(output_file, plot = p, width = 20, height = 7, units = "in", dpi = 300)
+
+print("Done.")
+
+print("Session info:")
+
+sessionInfo()
+
+print("Objects in the environment:")
+
+print(ls())
+
+print("Removing objects...")
 
 rm(list = ls())
 
+print("Done.")
