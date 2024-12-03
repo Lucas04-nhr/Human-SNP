@@ -71,6 +71,7 @@ known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SID
 df_list <- lapply(input_files, function(file) {
   df <- read.table(file, header = TRUE, row.names = NULL)
   df <- df[, known_columns[known_columns %in% colnames(df)]]
+  df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
   return(df)
 })
 
