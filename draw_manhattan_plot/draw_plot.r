@@ -10,11 +10,6 @@ library(gridExtra)
 library(ggrepel)
 library(optparse)
 
-# List the libraries that the script depends on
-
-print("Loaded libraries:")
-print(sessionInfo()$otherPkgs)
-
 # List the list of options that the script can accept
 
 option_list <- list(
@@ -27,8 +22,8 @@ option_list <- list(
 opt_parser <- OptionParser(option_list = option_list)
 opt <- parse_args(opt_parser)
 
-input_directory <- opt$input_directory
-output_directory <- opt$output_directory
+input_directory <- opt$`input_directory`
+output_directory <- opt$`output_directory`
 
 print("Input directory:")
 print(input_directory)
