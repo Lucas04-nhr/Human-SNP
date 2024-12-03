@@ -70,7 +70,7 @@ print(output_file)
 known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Bacteria")
 
 df_list <- lapply(input_files, function(file) {
-  df <- read.table(file, header = TRUE)
+  df <- read.table(file, header = TRUE, row.names = NULL)
   df <- df[, known_columns[known_columns %in% colnames(df)]]
   return(df)
 })
