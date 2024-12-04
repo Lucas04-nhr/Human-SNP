@@ -60,6 +60,12 @@ output_file <- ifelse(region == "Beijing",
                file.path(output_directory, "bac_age_GZ.pdf"), 
                file.path(output_directory, "bac_age.pdf")))
 
+output_file_png <- ifelse(region == "Beijing", 
+            file.path(output_directory, "bac_age_BJ.png"), 
+            ifelse(region == "Guangzhou", 
+               file.path(output_directory, "bac_age_GZ.png"), 
+               file.path(output_directory, "bac_age.png")))
+
 print("Input files:")
 print(input_files)
 
@@ -196,6 +202,7 @@ p<-ggplot(df, aes(x = x, y = logP, color = as.factor(CHR))) +
 
 print("Saving plot...")
 
+ggsave(output_file_png, plot = p, width = 20, height = 7, units = "in", dpi = 300)
 ggsave(output_file, plot = p, width = 20, height = 7, units = "in", dpi = 300)
 
 print("Done.")
