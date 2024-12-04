@@ -14,7 +14,7 @@ def add_bacteria_col (input_file, output_file):
   # Add the bacteria column
   data['Bacteria'] = column_number
   # Write the output file
-  data.to_csv(output_file, sep=',', index=False)
+  data.to_csv(output_file, sep='\t', index=False)
   # Clear the memory
   del data
 
@@ -24,7 +24,7 @@ def set_bacteria_dict (bacteria_file):
 
 def replace_bacteria_col (input_file, output_file, bacteria_dict):
   # Read the input file
-  data = pd.read_csv(input_file, sep=',')
+  data = pd.read_csv(input_file, sep='\t')
   # Get the number of columns
   base_name = os.path.basename(input_file)
   column_number = int(''.join(filter(str.isdigit, base_name)))
@@ -40,8 +40,8 @@ def replace_bacteria_col (input_file, output_file, bacteria_dict):
 
 # Set the arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('-a', '--add-bacteria', action='store_true', default=False)
-parser.add_argument('-r', '--replace-bacteria', action='store_true', default=False)
+parser.add_argument('-a', '--add-bacteria', default=False)
+parser.add_argument('-r', '--replace-bacteria', default=False)
 parser.add_argument('--input-file', type=str, required=True)
 parser.add_argument('--bacteria-file', type=str, required=False)
 
