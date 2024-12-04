@@ -69,9 +69,12 @@ print(output_file)
 known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Bacteria")
 
 df_list <- lapply(input_files, function(file) {
+  print(paste("Processing file", file))
   df <- read.table(file, header = TRUE, row.names = NULL)
   df <- df[, known_columns[known_columns %in% colnames(df)]]
   df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
+  print(paste(file, "has", nrow(df), "rows and", ncol(df), "columns"))
+  print(paste("The", file, "has been processed.\n"))
   return(df)
 })
 
