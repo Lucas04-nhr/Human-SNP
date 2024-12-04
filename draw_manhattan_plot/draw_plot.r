@@ -74,7 +74,8 @@ df_list <- lapply(input_files, function(file) {
   df <- df[, known_columns[known_columns %in% colnames(df)]]
   df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
   print(paste(file, "has", nrow(df), "rows and", ncol(df), "columns"))
-  print(paste("The", file, "has been processed.", \n))
+  print(paste("The", file, "has been processed."))
+  print(" ")
   return(df)
 })
 
