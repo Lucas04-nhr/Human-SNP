@@ -190,8 +190,9 @@ p<-ggplot(df, aes(x = x, y = logP, color = as.factor(CHR))) +
   labs(x="CHR",y = "-log10(P-value)", 
        title = "Manhattan Plot")+
     geom_text_repel(aes(label = df$Bacteria_new), color = "black", size = 3,force = 20, # 增加排斥力
-    point.padding = 5)+scale_x_continuous(breaks =v1,labels =c(1:22,"X","Y","Others"))+
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+    point.padding = 5)+
+    # scale_x_continuous(breaks =v1,labels =c(1:22,"X","Y","Others"))+
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 print("Saving plot...")
 
