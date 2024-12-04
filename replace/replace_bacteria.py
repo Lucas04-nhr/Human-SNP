@@ -24,7 +24,7 @@ def set_bacteria_dict (bacteria_file):
 
 def replace_bacteria_col (input_file, output_file, bacteria_dict):
   # Read the input file
-  data = pd.read_csv(input_file, sep='\t')
+  data = pd.read_csv(input_file, sep='\s+', engine='python')
   # Get the number of columns
   base_name = os.path.basename(input_file)
   column_number = int(''.join(filter(str.isdigit, base_name)))
@@ -33,6 +33,9 @@ def replace_bacteria_col (input_file, output_file, bacteria_dict):
   data['Bacteria'] = column_number
   # Replace the bacteria names
   data['Bacteria'] = data['Bacteria'].replace(bacteria_dict)
+  # Get the number of columns in output file
+  column_number = len(data.columns)
+  print('Number of columns in output file: ', column_number)
   # Write the output file
   data.to_csv(output_file, sep=',', index=False)
   # Clear the memory
