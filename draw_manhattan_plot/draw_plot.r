@@ -202,8 +202,8 @@ p<-ggplot(df, aes(x = x, y = logP, color = as.factor(CHR))) +
 
 print("Saving plot...")
 
-ggsave(output_file_png, plot = p, width = 20, height = 7, units = "in", dpi = 300)
-ggsave(output_file, plot = p, width = 20, height = 7, units = "in", dpi = 300)
+ggsave(output_file_png, plot = p, width = 20, height = 7, units = "in", dpi = 100)
+ggsave(output_file, plot = p, width = 20, height = 7, units = "in", dpi = 100)
 
 print("Done.")
 
