@@ -40,8 +40,8 @@ def replace_bacteria_col (input_file, output_file, bacteria_dict):
 
 # Set the arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('-a', '--add-bacteria', default=False)
-parser.add_argument('-r', '--replace-bacteria', default=False)
+parser.add_argument('-a', '--add-bacteria', default=False, required=False)
+parser.add_argument('-r', '--replace-bacteria', default=False, required=False)
 parser.add_argument('--input-file', type=str, required=True)
 parser.add_argument('--bacteria-file', type=str, required=False)
 
