@@ -136,14 +136,14 @@ new_elements <- c("X", "Y")
 df$CHR <- ifelse(df$CHR %in% old_elements, new_elements, df$CHR)
 
 old_elements <- name[25:length(name)]
-new_element <- "Other"
+new_element <- "Others"
  
 # 使用基本的R语法进行替换
 df$CHR <- ifelse(df$CHR %in% old_elements, new_element, df$CHR)
 
 chromosome_colors <- c(
   rep(c('#ff461f','#5086C4','#4C6C43','#F0A19A','#7C7CBA','#00A664','#3FA0C0','#E53A40','#8A2BE2', '#FFD700', '#1E90FF'),3))
-df_CHR<-df %>% filter(CHR%in% c(1:23,26))
+df_CHR<-df %>% filter(CHR%in% c(1:22,"X","Y","Others"))
 v0<-sort(unique(df_CHR$Sum))
 v1<-v0
 v0<-c(v0,v0[length(v0)]+len[nrow(len),"length_approx"])
@@ -163,7 +163,7 @@ df <- df %>%
   select(-rank_p)
 
 #修改CHR的levels
-df$CHR<-factor(df$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","Other"))
+df$CHR<-factor(df$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","Others"))
 
 print("Drawing plot...")
 
@@ -184,7 +184,7 @@ p<-ggplot(df, aes(x = x, y = logP, color = as.factor(CHR))) +
   labs(x="CHR",y = "-log10(P-value)", 
        title = "Manhattan Plot")+
     geom_text_repel(aes(label = df$Bacteria_new), color = "black", size = 3,force = 20, # 增加排斥力
-    point.padding = 5)+scale_x_continuous(breaks =v1,labels =c(1:22,"X","Y","Other"))+
+    point.padding = 5)+scale_x_continuous(breaks =v1,labels =c(1:22,"X","Y","Others"))+
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 print("Saving plot...")
