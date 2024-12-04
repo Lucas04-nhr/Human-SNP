@@ -154,6 +154,12 @@ a<-len[nrow(len),"length_approx"]
 a<-as.numeric(a)
 v1<-c(v1,(v1[length(v1)]+max(len$Sum)+a)/2)
 
+print("v1:")
+
+print(v1)
+
+print("Calculating rank...")
+
 df$Bacteria<-as.character(df$Bacteria)
 df <- df %>%
   group_by(Bacteria) %>%
