@@ -23,7 +23,7 @@ infile=($( cat GZ_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==lin
 # Extract the Phenotype Col Number
 pheno_col=$(echo $infile | grep -o -E '[0-9]+' | tail -n 1)
 echo "The phenotype column number is $pheno_col."
-python3 ./replace_bacteria.py -a -r --input-file=${infile} --bacteria-file="/mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/bacteria_GZ.csv" \
+python3 ./replace_bacteria.py -r --input-file=${infile} --bacteria-file="/mnt/raid6/bacphagenetwork/data/12_plink/Guangzhou/bacteria_GZ.csv" \
 || { echo "Error in replace_bacteria.py"; exit 1; }
 echo "The bacteria have been added to the file."
 echo "=============================="

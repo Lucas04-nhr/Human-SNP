@@ -85,6 +85,18 @@ if replace_bacteria:
   if not bacteria_file:
     print('Error: bacteria file is not provided.')
     exit()
+  if not os.path.exists(bacteria_file):
+    print('Error: bacteria file does not exist.')
+    exit()
+  if not os.path.isfile(bacteria_file):
+    print('Error: bacteria file is not a file.')
+    exit()
+  if not os.path.exists(output_path_modified):
+    print('Error: modified file does not exist.')
+    exit()
+  if not os.path.isfile(output_file_modified):
+    print('Error: modified file does not exist.')
+    exit
   # Read the bacteria file
   print('Reading bacteria file: ', bacteria_file)
   bacteria_file = pd.read_csv(bacteria_file)
@@ -94,5 +106,5 @@ if replace_bacteria:
   # Replace the bacteria column
   print('Replacing bacteria column in the file: ', input_file)
   print('Output file: ', output_file_replaced)
-  replace_bacteria_col(input_file, output_file_replaced, bacteria_dict)
+  replace_bacteria_col(output_file_modified, output_file_replaced, bacteria_dict)
   print('Done!')
