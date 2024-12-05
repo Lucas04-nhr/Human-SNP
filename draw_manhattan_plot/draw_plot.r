@@ -148,17 +148,18 @@ new_element <- "Others"
 df$CHR <- ifelse(df$CHR %in% old_elements, new_element, df$CHR)
 
 chromosome_colors <- c(
-  rep(c('#ff461f','#5086C4','#4C6C43','#F0A19A','#7C7CBA','#00A664','#3FA0C0','#E53A40','#8A2BE2', '#FFD700', '#1E90FF'),3))
-df_CHR<-df %>% filter(CHR%in% c(1:22,"X","Y","Others"))
+  rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3))
+df_CHR<-df %>% filter(CHR%in% c(1:23,26))
 v0<-sort(unique(df_CHR$Sum))
+v0<-c(v0,0)
+v0[length(v0)]<-(v0[length(v0)-1]+as.numeric(lengths_chr[nrow(lengths_chr),4]))
 v1<-v0
-v0<-c(v0,v0[length(v0)]+len[nrow(len),"length_approx"])
 for (i in 1:length(v1)) {
   v1[i]<-(as.numeric(v0[i])+as.numeric(v0[i+1]))/2}
 
 a<-len[nrow(len),"length_approx"]
 a<-as.numeric(a)
-v1<-c(v1,(v1[length(v1)]+max(len$Sum)+a)/2)
+v1[length(v1)]<-(v1[length(v1)-1]+max(len$Sum)+a)/2
 
 print("v1:")
 
