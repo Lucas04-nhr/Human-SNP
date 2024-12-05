@@ -109,9 +109,10 @@ df_all$CHR[!df_all$CHR %in% c(1:22, 23, 26)] <- 30
 
 sorted_df_all <- df_all %>%
   arrange(CHR, BP)
-sorted_df <- sorted_df_all[, c("CHR", "BP", "BONF", "Bacteria")]
+sorted_df <- sorted_df_all[, c("CHR", "BP", "SNP", "BONF", "Bacteria")]
 
 sorted_df$BP <- as.numeric(sorted_df$BP)
+sorted_df$CHR <- as.numeric(sorted_df$CHR)
 name <- unique(sorted_df_all$CHR)
 sorted_df_all$CHR <- factor(sorted_df_all$CHR, levels = c(1:23, 26, 30))
 
