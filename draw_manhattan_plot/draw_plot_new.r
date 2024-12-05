@@ -112,6 +112,9 @@ sorted_df_all$CHR<-factor(sorted_df_all$CHR, levels =c("1","2","3","4","5","6","
 old_elements <- c("23", "26")
 new_elements <- c("X", "Y")
 
+#定义df
+df<-sorted_df_all
+
 df$CHR <- ifelse(df$CHR %in% old_elements, new_elements, df$CHR)
 
 old_elements <- name[25:length(name)]
