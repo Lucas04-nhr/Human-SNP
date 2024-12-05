@@ -54,7 +54,7 @@ if (grepl("Beijing", input_directory, ignore.case = TRUE)) {
 print("Region:")
 print(region)
 
-input_files <- list.files(input_directory, pattern = "adjusted$", full.names = TRUE)
+input_files <- list.files(input_directory, pattern = "adjusted$", full.names = TRUE) # nolint
 output_file <- ifelse(region == "Beijing", 
             file.path(output_directory, "bac_age_BJ.pdf"), 
             ifelse(region == "Guangzhou", 
@@ -73,7 +73,7 @@ print(input_files)
 print("Output file:")
 print(output_file)
 
-known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Bacteria")
+known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Bacteria") # nolint
 
 df_list <- lapply(input_files, function(file) {
   print(paste("Processing file", file))
@@ -106,7 +106,7 @@ sorted_df<-sorted_df_all[,c("CHR","BP","BONF","Bacteria")]
 
 sorted_df$BP<-as.numeric(sorted_df$BP)
 name<-unique(sorted_df_all$CHR)
-sorted_df_all$CHR<-factor(sorted_df_all$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","26",name[25:length(name)]))
+sorted_df_all$CHR<-factor(sorted_df_all$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","26",name[25:length(name)])) # nolint
 
 # 将CHR中的23替换为X, 26替换为Y, 其他替换为Others
 old_elements <- c("23", "26")
@@ -130,19 +130,19 @@ df$Bacteria<-as.character(df$Bacteria)
 df <- df %>%
   group_by(Bacteria) %>%
   mutate(rank_p = rank(BONF, ties.method = "first")) %>% # 对P进行排名
-  mutate(Bacteria_new = if_else(rank_p == 1, Bacteria, NA_character_)) %>% # 保留P最小的行的Bacteria值，其他变成NA
+  mutate(Bacteria_new = if_else(rank_p == 1, Bacteria, NA_character_)) %>% # 保留P最小的行的Bacteria值，其他变成NA # nolint
   ungroup() %>%
   select(-rank_p)
 
 #修改CHR的levels
-df$CHR<-factor(df$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","Others"))
+df$CHR<-factor(df$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","Others")) # nolint
 
 print("Drawing plot...")
 
 # Manhattan Plot的绘制
 
 chromosome_colors <- c(
-  rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3))
+  rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3)) # nolint
 
 p <- manhattan(df, 
                chr = "CHR", 
@@ -152,7 +152,7 @@ p <- manhattan(df,
                col = chromosome_colors,
                chrlabs = c(1:22, "X", "Y"),  # 显示染色体标签（可以根据需要调整）
                logp = TRUE) +  # 默认-log10(p)的转换
-  geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线
+  geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线 # nolint
   theme_minimal() +  # 使用简洁主题
   theme(
     legend.position = "none", 
@@ -176,20 +176,20 @@ significant_snps <- df %>%
   filter(!is.na(Bacteria_new)) %>%
   select(CHR, BP, Bacteria_new)
 
-p <- p + 
-      geom_text_repel
-        (data = significant_snps,
-          aes(x = BP, y = BONF, label = SNP), 
-          size = 3, 
-          color = "black", 
-          force = 20, 
-          point.padding = 5
-        )
+p <- p +
+  geom_text_repel(
+    data = significant_snps,
+    aes(x = BP, y = BONF, label = SNP),
+    size = 3,
+    color = "black",
+    force = 20,
+    point.padding = 5
+  )
 
 
 print("Saving plot...")
 
-ggsave(output_file_png, plot = p, width = 20, height = 7, units = "in", dpi = 100)
+ggsave(output_file_png, plot = p, width = 20, height = 7, units = "in", dpi = 100) # nolint
 ggsave(output_file, plot = p, width = 20, height = 7, units = "in", dpi = 100)
 
 print("Done.")
