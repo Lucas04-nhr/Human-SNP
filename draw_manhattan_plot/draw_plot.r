@@ -130,11 +130,6 @@ df <- sorted_df_len %>% mutate(.,x=as.numeric(BP)+Sum)
 df <- df%>%
   mutate(.,logP=-log10(BONF))
 
-sorted_df_len <- full_join(sorted_df, len[,c("CHR","Sum")], by = "CHR")
-df <- sorted_df_len %>% mutate(.,x=as.numeric(BP)+Sum)
-df <- df%>%
-  mutate(.,logP=-log10(BONF))
-
 # 将CHR中的23替换为X, 26替换为Y, 其他替换为Others
 old_elements <- c("23", "26")
 new_elements <- c("X", "Y")
@@ -149,9 +144,9 @@ df$CHR <- ifelse(df$CHR %in% old_elements, new_element, df$CHR)
 
 chromosome_colors <- c(
   rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3))
-df_CHR<-df %>% filter(CHR%in% c(1:23,26))
+df_CHR<-df %>% filter(CHR%in% c(1:22,"X","Y","Others"))
 v0<-sort(unique(df_CHR$Sum))
-v0<-c(v0,0)
+v0<-c(0,v0)
 v0[length(v0)]<-(v0[length(v0)-1]+as.numeric(lengths_chr[nrow(lengths_chr),4]))
 v1<-v0
 for (i in 1:length(v1)) {
