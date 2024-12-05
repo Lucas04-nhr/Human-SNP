@@ -27,7 +27,7 @@ echo "-----------------------------"
 
 echo "Drawing the Manhattan plot..."
 
-Rscript ./draw_plot.r --input-directory=$INPUT_DIR --output-directory=$OUTPUT_DIR \
+Rscript ./draw_plot_new.r --input-directory=$INPUT_DIR --output-directory=$OUTPUT_DIR \
 || { echo "Error in draw_plot.r"; exit 1; }
 
 
