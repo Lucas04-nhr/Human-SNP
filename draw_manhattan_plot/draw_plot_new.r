@@ -1,4 +1,3 @@
-library(base)
 library(tidyverse)
 library(ggforce)
 library(ggprism)
@@ -117,19 +116,13 @@ name <- unique(sorted_df_all$CHR)
 sorted_df_all$CHR <- factor(sorted_df_all$CHR, levels = c(1:23, 26, 30))
 
 # 将CHR中的23替换为X, 26替换为Y, 其他替换为Others
-old_elements <- c("23", "26", "30")
-new_elements <- c("X", "Y", "Others")
+# old_elements <- c("23", "26", "30") # nolint
+# new_elements <- c("X", "Y", "Others") # nolint
 
 #定义df
 df <- sorted_df_all
 
-df$CHR <- ifelse(df$CHR %in% old_elements, new_elements, df$CHR)
-
-old_elements <- name[25:length(name)]
-new_element <- "Others"
-
-# 使用基本的R语法进行替换
-df$CHR <- ifelse(df$CHR %in% old_elements, new_element, df$CHR)
+# df$CHR <- ifelse(df$CHR %in% old_elements, new_elements, df$CHR) # nolint
 
 print("Calculating rank...")
 
@@ -143,7 +136,7 @@ df <- df %>%
   select(-rank_p)
 
 #修改CHR的levels
-df$CHR<-factor(df$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","X","Y","Others")) # nolint
+df$CHR <- factor(df$CHR, levels = c(1:23, 26, 30))
 
 print("Drawing plot...")
 
@@ -160,9 +153,9 @@ p <- manhattan(df,
   col = chromosome_colors,
   chrlabs = c(1:22, "X", "Y", "Others"),  # 显示染色体标签（可以根据需要调整）
 ) +
-  geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线 # nolint
-  theme_minimal() +  # 使用简洁主题
-  theme(
+geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线 # nolint
+theme_minimal() +  # 使用简洁主题
+theme(
     legend.position = "none",
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
