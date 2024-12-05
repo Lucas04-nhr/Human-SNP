@@ -107,14 +107,14 @@ print("Sorting data...")
 
 df_all$CHR[!df_all$CHR %in% c(1:22, 23, 26)] <- 30
 
+df_all$CHR<-as.numeric(df_all$CHR)
+df_all$BP<-as.numeric(df_all$BP)
+
 sorted_df_all <- df_all %>%
   arrange(CHR, BP)
 sorted_df <- sorted_df_all[, c("CHR", "BP", "SNP", "BONF", "Bacteria")]
 
-sorted_df$BP <- as.numeric(sorted_df$BP)
-sorted_df$CHR <- as.numeric(sorted_df$CHR)
 name <- unique(sorted_df_all$CHR)
-sorted_df_all$CHR <- factor(sorted_df_all$CHR, levels = c(1:23, 26, 30))
 
 # 将CHR中的23替换为X, 26替换为Y, 其他替换为Others
 # old_elements <- c("23", "26", "30") # nolint
@@ -136,9 +136,6 @@ df <- df %>%
   ungroup() %>%
   select(-rank_p)
 
-#修改CHR的levels
-df$CHR <- factor(df$CHR, levels = c(1:23, 26, 30))
-
 print("Drawing plot...")
 
 # Manhattan Plot的绘制
@@ -146,13 +143,19 @@ print("Drawing plot...")
 chromosome_colors <- c(
   rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3)) # nolint
 
+significant_snps <- df %>%
+  filter(!is.na(Bacteria_new)) %>%
+  select(CHR, SNP ,BP, Bacteria_new)
+
+snpsOfInterest<-significant_snps$SNP
+
 p <- manhattan(df,
   chr = "CHR",
   bp = "BP",
   p = "BONF",
   snp = "SNP",
   col = chromosome_colors,
-  chrlabs = c(1:22, "X", "Y", "Others"),  # 显示染色体标签（可以根据需要调整）
+  highlight = snpsOfInterest
 ) +
 geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线 # nolint
 theme_minimal() +  # 使用简洁主题
@@ -173,10 +176,6 @@ theme(
 # 增加显著点的标签
 
 print("Adding significant SNPs...")
-
-significant_snps <- df %>%
-  filter(!is.na(Bacteria_new)) %>%
-  select(CHR, BP, Bacteria_new)
 
 p <- p +
   geom_text_repel(
