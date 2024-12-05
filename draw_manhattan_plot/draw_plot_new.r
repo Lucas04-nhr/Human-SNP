@@ -98,7 +98,15 @@ df_all$BP <- sapply(df_all$SNP, function(x) {
   return(parts[[1]][2])  # 返回分割后的第二部分
 })
 
+print("Filtering data...")
+
+# Filter out SNPs with -log10(BONF) > 10, as BONF < 1e-10
+df_all <- df_all %>%
+  filter(df_all$BONF < 1e-10)
+
 print("Sorting data...")
+
+df_all$CHR[!df_all$CHR %in% c(1:22, 23, 26)] <- 30
 
 sorted_df_all <- df_all %>%
   arrange(CHR, BP)
@@ -106,11 +114,11 @@ sorted_df <- sorted_df_all[, c("CHR", "BP", "BONF", "Bacteria")]
 
 sorted_df$BP <- as.numeric(sorted_df$BP)
 name <- unique(sorted_df_all$CHR)
-sorted_df_all$CHR<-factor(sorted_df_all$CHR, levels =c("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","26",name[25:length(name)])) # nolint
+sorted_df_all$CHR <- factor(sorted_df_all$CHR, levels = c(1:23, 26, 30))
 
 # 将CHR中的23替换为X, 26替换为Y, 其他替换为Others
-old_elements <- c("23", "26")
-new_elements <- c("X", "Y")
+old_elements <- c("23", "26", "30")
+new_elements <- c("X", "Y", "Others")
 
 #定义df
 df <- sorted_df_all
@@ -145,13 +153,13 @@ chromosome_colors <- c(
   rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3)) # nolint
 
 p <- manhattan(df,
-               chr = "CHR",
-               bp = "BP",
-               p = "BONF",
-               snp = "SNP",
-               col = chromosome_colors,
-               chrlabs = c(1:22, "X", "Y"),  # 显示染色体标签（可以根据需要调整）
-               logp = TRUE) +  # 默认-log10(p)的转换
+  chr = "CHR",
+  bp = "BP",
+  p = "BONF",
+  snp = "SNP",
+  col = chromosome_colors,
+  chrlabs = c(1:22, "X", "Y", "Others"),  # 显示染色体标签（可以根据需要调整）
+) +
   geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线 # nolint
   theme_minimal() +  # 使用简洁主题
   theme(
