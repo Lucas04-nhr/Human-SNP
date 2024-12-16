@@ -66,6 +66,12 @@ output_file_png <- ifelse(region == "Beijing",
                                  file.path(output_directory, "bac_age_GZ.png"),
                                  file.path(output_directory, "bac_age.png")))
 
+output_significant_csv <- ifelse(region == "Beijing",
+                                 file.path(output_directory, "significant_snps_BJ.csv"),
+                                 ifelse(region == "Guangzhou",
+                                        file.path(output_directory, "significant_snps_GZ.csv"),
+                                        file.path(output_directory, "significant_snps.csv")))
+
 print("Input files:")
 print(input_files)
 
@@ -148,13 +154,13 @@ significant_snps <- df %>%
   select(CHR, SNP ,BP, Bacteria_new)
 
 #Saving csv
-csv_path<-file.path("significant_snps.csv")
+csv_path <- output_significant_csv
 write.csv(significant_snps, file = csv_path, row.names = TRUE)
 cat("Saving csv to",csv_path)
 
-snpsOfInterest<-significant_snps$SNP
+snpsOfInterest <- significant_snps$SNP
 
-yRange<-range(-log10(df$BONF))
+yRange <- range(-log10(df$BONF))
 
 p <- manhattan(df,
   chr = "CHR",
@@ -167,20 +173,17 @@ p <- manhattan(df,
 ) 
 
 myplot <- recordPlot()
+# replayPlot(myplot)
+
+# Saving the plot
+pdf(file = output_file, width = 10, height = 6)
 replayPlot(myplot)
+dev.off()
 
-#保存图像
-save_manhattan_plot<-function(output_file_pdf,output_file_png){
-  pdf(file = output_file_pdf,width = 10,height = 6)
-  replayPlot(myplot)
-  dev.off()
-  png(filename = output_file_png,width = 10*300,height = 6*300,units="in",res = 300)
-  replayPlot(myplot)
-  dev.off()
-  cat("Plots saved to:\n",output_file_pdf,"\n",output_file_png,"\n")
-}
+png(filename = output_file_png, width = 10*300, height = 6*300, units = "in", res = 300)
+replayPlot(myplot)
+dev.off()
 
-save_manhattan_plot(output_file,output_file_png)
-
+cat("Plots saved to:\n", output_file, "\n", output_file_png, "\n")
 
 print("Done.")
