@@ -55,6 +55,22 @@ data
 ├── 10_ApplyVQSR                  # VQSR results, joint_genotyped.filtered.vcf.gz
 │   ├── Beijing
 │   └── Guangzhou
+├── 11_Known_SNPs                 # Known SNPs, end with *.vcf
+│   └── gz                        # Archived original files of known SNPs
+├── 12_plink                      # PLINK-related files, end with *.bed, *.bim, *.fam
+│   ├── Beijing
+│   │   ├── merged                # Merged result of the original file and the phenotype, 
+│   │   │                           # containing Manhattan plot and the table of top SNPs
+│   │   ├── modified              # Modified of the merged file, with the delimiter changed to comma
+│   │   ├── output                # Medium files of the output files, end with *.output
+│   │   ├── replaced              # Replaced files of the output files, end with *.replaced
+│   │   └── results               # Results of the PLINK pipeline
+│   └── Guangzhou
+│       ├── merged
+│       ├── modified
+│       ├── output
+│       ├── replaced
+│       └── results
 ├── skin_metagenome               # Skin metagenome original data, end with *.fastq.gz
 ├── skin_microbiome_2022          # Compressed skin metagenome original data, end with *.fastq.gz
 └── test                          # Simlink files to sample BJ001, used for testing the pipeline
@@ -64,6 +80,9 @@ data
 
 ``` bash
 Human-SNP
+├── concat
+│   └── log
+├── draw_manhattan_plot
 ├── filter                        # Filter out unmapped reads
 │   ├── filter
 │   └── mapq_analysis
@@ -82,5 +101,9 @@ Human-SNP
 │   ├── files
 │   ├── other
 │   └── samtools
+├── plink
+│   └── fig
+├── prepare
+│   └── Beijing
 └── prepare                       # Preparation of SNP calling pipeline
 ```
