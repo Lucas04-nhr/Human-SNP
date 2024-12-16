@@ -101,7 +101,7 @@ print("Filtering data...")
 
 # Filter out SNPs with -log10(BONF) > 10, as BONF < 1e-10
 df_all <- df_all %>%
-  filter(df_all$BONF < 1e-10)
+  filter(df_all$BONF < 5e-8)
 
 print("Sorting data...")
 
@@ -147,7 +147,14 @@ significant_snps <- df %>%
   filter(!is.na(Bacteria_new)) %>%
   select(CHR, SNP ,BP, Bacteria_new)
 
+#Saving csv
+csv_path<-file.path("significant_snps.csv")
+write.csv(significant_snps, file = csv_path, row.names = TRUE)
+cat("Saving csv to",csv_path)
+
 snpsOfInterest<-significant_snps$SNP
+
+yRange<-range(-log10(df$BONF))
 
 p <- manhattan(df,
   chr = "CHR",
@@ -155,7 +162,8 @@ p <- manhattan(df,
   p = "BONF",
   snp = "SNP",
   col = chromosome_colors,
-  highlight = snpsOfInterest
+  highlight = snpsOfInterest,
+  ylim=c(5,yRange[2]),
 ) 
 
 myplot<-recordPlot()
@@ -166,7 +174,7 @@ save_manhattan_plot<-function(output_file_pdf,output_file_png){
   pdf(file = output_file_pdf,width = 10,height = 6)
   replayPlot(myplot)
   dev.off()
-  png(filename = output_file_png,width = 10*300,height = 6*300,res = 300)
+  png(filename = output_file_png,width = 10*300,height = 6*300,units="in",res = 300)
   replayPlot(myplot)
   dev.off()
   cat("Plots saved to:\n",output_file_pdf,"\n",output_file_png,"\n")
