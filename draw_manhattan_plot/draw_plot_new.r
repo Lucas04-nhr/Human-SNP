@@ -166,7 +166,7 @@ p <- manhattan(df,
   ylim=c(5,yRange[2]),
 ) 
 
-myplot<-recordPlot()
+myplot <- recordPlot()
 replayPlot(myplot)
 
 #保存图像
