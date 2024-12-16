@@ -88,8 +88,10 @@ if (file.exists(df_file) && opt$use_saved_data) {
   print("Loading existing df.RData...")
   load(df_file)
 } else {
-  if (!file.exists(df_file) && opt$use_saved_data) {
-    print("df.RData does not exist. Processing data.")
+  if (opt$use_saved_data) {
+    if (!file.exists(df_file)) {
+      print("df.RData does not exist. Processing data.")
+    }
   }
   df_list <- lapply(input_files, function(file) {
     print(paste("Processing file", file))
