@@ -88,7 +88,7 @@ if (file.exists(df_file) && opt$use_saved_data) {
   print("Loading existing df.RData...")
   load(df_file)
 } else {
-  if (opt$use_saved_data) {
+  if (opt$use_saved_data == TRUE) {
     if (!file.exists(df_file)) {
       print("df.RData does not exist. Processing data.")
     }
