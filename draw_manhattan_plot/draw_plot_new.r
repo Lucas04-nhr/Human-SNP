@@ -162,7 +162,7 @@ significant_snps <- df %>%
 #Saving csv
 csv_path <- output_significant_csv
 write.csv(significant_snps, file = csv_path, row.names = TRUE)
-cat("Saving csv to",csv_path)
+cat("Saving csv to", csv_path, ".\n")
 
 snpsOfInterest <- significant_snps$SNP
 
@@ -186,7 +186,7 @@ pdf(file = output_file, width = 10, height = 6)
 replayPlot(myplot)
 dev.off()
 
-png(filename = output_file_png, width = 10*300, height = 6*300, units = "in", res = 300)
+png(filename = output_file_png, width = 10, height = 6, units = "in", res = 300)
 replayPlot(myplot)
 dev.off()
 
