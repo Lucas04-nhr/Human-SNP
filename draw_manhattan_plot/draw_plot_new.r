@@ -141,7 +141,7 @@ print("Drawing plot...")
 # Manhattan Plot的绘制
 
 chromosome_colors <- c(
-  rep(c('#1F77B4','#FF7F0C','#2BA02B','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3)) # nolint
+  rep(c('#1F77B4','#FF7F0C','#2BA099','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3)) # nolint
 
 significant_snps <- df %>%
   filter(!is.na(Bacteria_new)) %>%
@@ -156,55 +156,23 @@ p <- manhattan(df,
   snp = "SNP",
   col = chromosome_colors,
   highlight = snpsOfInterest
-) +
-geom_hline(yintercept = c(5, 6), color = c('blue', 'red'), linetype = c('dashed', 'dotted')) +  # 添加阈值线 # nolint
-theme_minimal() +  # 使用简洁主题
-theme(
-    legend.position = "none",
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(size = 1),  # 设置轴线粗细
-    axis.ticks = element_line(size = 0.5),
-    axis.ticks.length.y = unit(0.3, "cm"),
-    axis.ticks.length.x = unit(0, "cm"),
-    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
-  ) +
-  ggtitle(paste("Manhattan Plot -", region)) +  # 添加标题
-  labs(x = "Chromosome", y = "-log10(p-value)")  # x、y轴标签
+) 
 
+myplot<-recordPlot()
+replayPlot(myplot)
 
-# 增加显著点的标签
+#保存图像
+save_manhattan_plot<-function(output_file_pdf,output_file_png){
+  pdf(file = output_file_pdf,width = 10,height = 6)
+  replayPlot(myplot)
+  dev.off()
+  png(filename = output_file_png,width = 10*300,height = 6*300,res = 300)
+  replayPlot(myplot)
+  dev.off()
+  cat("Plots saved to:\n",output_file_pdf,"\n",output_file_png,"\n")
+}
 
-print("Adding significant SNPs...")
+save_manhattan_plot(output_file,output_file_png)
 
-p <- p +
-  geom_text_repel(
-    data = significant_snps,
-    aes(x = BP, y = BONF, label = SNP),
-    size = 3,
-    color = "black",
-    force = 20,
-    point.padding = 5
-  )
-
-
-print("Saving plot...")
-
-ggsave(output_file_png, plot = p, width = 20, height = 7, units = "in", dpi = 100) # nolint
-ggsave(output_file, plot = p, width = 20, height = 7, units = "in", dpi = 100)
-
-print("Done.")
-
-print("Session info:")
-
-sessionInfo()
-
-print("Objects in the environment:")
-
-print(ls())
-
-print("Removing objects...")
-
-rm(list = ls())
 
 print("Done.")
