@@ -157,7 +157,7 @@ chromosome_colors <- c(
 
 significant_snps <- df %>%
   filter(!is.na(Bacteria_new)) %>%
-  select(CHR, SNP ,BP, Bacteria_new)
+  select(CHR, SNP ,BP, BONF,Bacteria_new)
 
 #Saving csv
 csv_path <- output_significant_csv
