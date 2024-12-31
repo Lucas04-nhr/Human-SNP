@@ -2,8 +2,8 @@
 
 # List the path value
 PLINK_BASE_PATH="/mnt/raid6/bacphagenetwork/data/12_plink"
-PLINK_BJ_RESULT="${PLINK_BASE_PATH}/Beijing/results/cov-as-phe_numeric_age"
-PLINK_GZ_RESULT="${PLINK_BASE_PATH}/Guangzhou/results/cov-as-phe_numeric_age"
+PLINK_BJ_RESULT="${PLINK_BASE_PATH}/Beijing/results/bac_age"
+PLINK_GZ_RESULT="${PLINK_BASE_PATH}/Guangzhou/results/bac_age"
 CURRENT_PATH=$(pwd)
 
 echo "Initializing..."
