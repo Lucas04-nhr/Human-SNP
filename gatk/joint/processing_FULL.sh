@@ -60,7 +60,7 @@ echo "The indexing genome data is $INDEXING_FILE_BJ and $INDEXING_FILE_GZ."
 echo "The recalibrated *.bam files is located in $RECALIBRATED_DATA_PATH_BJ and $RECALIBRATED_DATA_PATH_GZ."
 echo "The ApplyBQSR results is located in $APPLYBQSR_DATA_PATH_BJ and $APPLYBQSR_DATA_PATH_GZ."
 echo "The HaplotypeCaller results is located in $HAPLOTYPECALLER_DATA_PATH_BJ and $HAPLOTYPECALLER_DATA_PATH_GZ."
-echo "The GenotypeGVCF results will be located in $GENOTYPE_GVCF_PATH_BJ and $GENOTYPE_GVCF_PATH_GZ."
+echo "The GenotypeGVCF results will be located in $GENOTYPE_GVCF_PATH_FULL."
 echo "The VariantRecalibrator results will be located in $VARIANTRECALIBRATOR_DATA_PATH_FULL."
 echo "The ApplyVQSR results will be located in $APPLYVQSR_DATA_PATH_FULL."
 
