@@ -1,0 +1,165 @@
+---
+title: "annotationSNP"
+author: "r"
+date: "2025-01-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+由于没有找到关于皮肤菌与SNP的已知数据，尝试使用其他方式进行阈值的确定。
+
+由于数据量过大，需要先确认一个初始阈值筛选一遍，如`p<5e-8`
+
+## ANNOVAR
+
+利用功能注释信息 ，进一步对候选 SNP 加权筛选 。
+
+使用工具 ANNOVAR 注释 SNP 筛选那些位于功能区域（如启动子、非同义突变、调控区域）的 SNP ，优先保留落在皮肤相关基因或通路的 SNP。
+
+### 整理plink数据格式
+
+``` python
+import pandas as pd
+
+# 读取数据
+data = pd.read_csv("input_data.assoc.linear.adjusted", delim_whitespace=True)
+
+# 分解 SNP 列为 chr, start 和 end
+data[['chr', 'pos']] = data['SNP'].str.split(':', expand=True)
+data['start'] = data['pos'].astype(int)
+data['end'] = data['start']  # SNP为单点突变，start = end
+
+# 创建ANNOVAR格式
+annovar_data = data[['chr', 'start', 'end']]
+annovar_data['ref'] = 'N'  # 暂时用占位符（N）
+annovar_data['alt'] = 'N'  # 同上
+
+# 保存成ANNOVAR输入文件
+annovar_data.to_csv("gwas_for_annovar.txt", sep='\t', index=False, header=False)
+
+# 另存一份带 Bacteria 列的原始数据
+data[['chr', 'start', 'end', 'Bacteria','FDR_BH']].to_csv("bacteria_info.txt", sep='\t', index=False)
+```
+
+### 使用ANNOVAR进行注释
+
+``` bash
+table_annovar.pl gwas_for_annovar.txt humandb/ \
+    -buildver hg38 \
+    -out annotated_results \
+    -remove \
+    -protocol refGene,clinvar,avsnp150 \
+    -operation g,f,f \
+    -nastring . \
+    -csvout
+```
+
+生成annotated_results.hg38_multianno.csv 其中包含注释结果，基因名、功能类别、群体频率等信息 参数说明
+
+-   `-buildver`：基因组版本
+-   `-protocol`：选择注释数据库
+    -   RefGene (`refGene`)
+    -   ClinVar (`clinvar`)
+    -   dbSNP (`avsnp150`)
+    -   1000 Genomes (`1000g2015aug`)
+-   `-operation`：数据库类型（`g` 表示基因注释，`f` 表示注释文件）
+-   `-csvout`：输出CSV格式
+
+### 合并注释结果与原始信息
+
+``` python
+# 读取注释结果和Bacteria信息
+annovar_results = pd.read_csv("annotated_results.hg38_multianno.csv")
+bacteria_info = pd.read_csv("bacteria_info.txt", sep='\t')
+
+# 合并注释结果和Bacteria列
+final_results = pd.merge(annovar_results, bacteria_info, on=['chr', 'start', 'end'], how='left')
+
+# 保存合并结果
+final_results.to_csv("annotated_results_with_bacteria.csv", index=False)
+```
+
+### 标记与皮肤和免疫相关基因
+
+在数据库中下载相关基因列表保存为"immune_skin_genes.txt"
+
+#### 标记注释结果中的相关基因
+
+``` python
+# 读取免疫/皮肤相关基因列表
+immune_skin_genes = pd.read_csv("immune_skin_genes.txt", header=None, names=["Gene"])
+
+# 标记与免疫/皮肤相关的基因
+final_results['Is_Immune_Skin'] = final_results['Gene.refGene'].isin(immune_skin_genes['Gene'])
+
+# 筛选相关基因
+immune_skin_related = final_results[final_results['Is_Immune_Skin']]
+
+# 保存结果
+immune_skin_related.to_csv("immune_skin_related_genes.csv", index=False)
+```
+
+#### 扩展筛选
+
+基于关键词进一步筛选可能相关的基因
+
+``` python
+keywords = ["immune", "skin", "microbiota", "barrier", "inflammatory"]
+mask = final_results['Func.refGene'].str.contains('|'.join(keywords), case=False, na=False) | \
+       final_results['GeneDetail.refGene'].str.contains('|'.join(keywords), case=False, na=False)
+
+final_results['Keyword_Related'] = mask
+keyword_related = final_results[mask]
+keyword_related.to_csv("keyword_related_genes.csv", index=False)
+```
+
+## 获得p-value阈值
+
+目标是确定一个p-value的阈值，使得80%（按情况确定）与皮肤或免疫相关的基因包含在研究对象内
+
+### 提取标记基因的p值分布
+
+``` python
+import pandas as pd
+import numpy as np
+
+# 读取注释结果
+final_results = pd.read_csv("annotated_results_with_bacteria.csv")
+
+# 筛选标记相关基因的行
+marked_genes = final_results[final_results['Is_Immune_Skin'] | final_results['Keyword_Related']]
+
+# 提取相关基因的P值
+p_values = marked_genes['FDR_BH']
+
+# 查看P值的基本统计信息
+print(p_values.describe())
+```
+
+### 计算80%分位数对应的p-value
+
+``` python
+# 计算P值的80%分位数
+p_value_threshold = np.percentile(p_values, 80)
+
+print(f"80% 的相关基因（SNP）的 P-value 阈值是: {p_value_threshold}")
+
+# 计算筛选出的显著SNP占比
+proportion = len(significant_snps) / len(marked_genes)
+print(f"标记相关基因中，{proportion*100:.2f}% 的 SNP 满足 P-value 小于 {p_value_threshold}")
+```
+
+### 应用所得的阈值
+
+``` python
+# 筛选所有SNP中 P-value 小于阈值的结果
+all_significant_snps = final_results[final_results['FDR_BH'] <= p_value_threshold]
+
+# 保存最终显著SNP结果
+all_significant_snps.to_csv("final_significant_snps.csv", index=False)
+
+print(f"符合最终 P-value 阈值 {p_value_threshold} 的总 SNP 数量: {len(all_significant_snps)}")
+```
