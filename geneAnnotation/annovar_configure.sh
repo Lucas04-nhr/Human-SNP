@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 设置环境变量
-ANNOVAR_DIR="/mnt/raid6/bacphagenetwork/tools//annovar"
+ANNOVAR_DIR="/mnt/raid6/bacphagenetwork/tools/annovar"
 DB_DIR="${ANNOVAR_DIR}/humandb"  # 数据库目录
 BUILD="hg38"  # 基因组版本
 
