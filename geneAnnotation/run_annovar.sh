@@ -27,7 +27,7 @@ BUILD="hg38"                            # 基因组版本
 echo ">>> Start annotating mutations..."
 perl "${ANNOVAR_DIR}/table_annovar.pl" "${INPUT_FILE}" "${DB_DIR}" -buildver "${BUILD}" \
     -out "${OUTPUT_PREFIX}" -remove \
-    -protocol refGene,clinvar_20240917,avsnp150,ALL \
+    -protocol refGene,clinvar_20240917,avsnp150,ALL.sites.2015_08 \
     -operation g,f,f,f -nastring . -csvout
 
 echo ">>> Annotation completes!The result is saved at ${OUTPUT_PREFIX}.${BUILD}_multianno.csv"
