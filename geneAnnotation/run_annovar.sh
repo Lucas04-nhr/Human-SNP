@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=annovar_job          # 任务名称
-#SBATCH --ntasks=1                      # 总任务数
-#SBATCH --cpus-per-task=4               # 每个任务分配的 CPU 核心数
+#SBATCH --cpus-per-task=8               # 每个任务分配的 CPU 核心数
 #SBATCH --mem=16G                       # 分配的内存大小（如16G）
 #SBATCH --output=annovar_%j.out         # 标准输出文件（%j为任务ID）
 #SBATCH --error=annovar_%j.err          # 错误输出文件
