@@ -23,7 +23,7 @@ INPUT_FILE="/mnt/raid6/bacphagenetwork/data/13_ANNOVAR/full_input.txt"          
 OUTPUT_PREFIX="/mnt/raid6/bacphagenetwork/data/13_ANNOVAR/result/full_annotated_results"       # 输出文件前缀
 BUILD="hg38"   
 
-perl "${ANNOVAR_DIR}/convert2annovar.pl" -format vcf4 "${VCF_FILE}" > "${INPUT_FILE}"
+perl "${ANNOVAR_DIR}/convert2annovar.pl" -format vcf4 -allsample -withfreq "${VCF_FILE}" > "${INPUT_FILE}"
 
 # 运行注释命令
 echo ">>> Start annotating mutations..."
@@ -32,4 +32,4 @@ perl "${ANNOVAR_DIR}/table_annovar.pl" "${INPUT_FILE}" "${DB_DIR}" -buildver "${
     -protocol refGene,clinvar_20240917,avsnp150,ALL.sites.2015_08 \
     -operation g,f,f,f -nastring . -csvout
 
-echo ">>> Annotation completes!The result is saved at ${OUTPUT_PREFIX}.${BUILD}_multianno.csv"
+echo ">>> Annotation completes! The result is saved at ${OUTPUT_PREFIX}.${BUILD}_multianno.csv"
