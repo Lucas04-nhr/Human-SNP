@@ -3,7 +3,7 @@
 #SBATCH --output=./full_log.%j.out
 #SBATCH --error=./full_log.%j.err
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=64G
+#SBATCH --mem=256G
 
 # Initialize the environment
 echo "Initializing the environment..."
