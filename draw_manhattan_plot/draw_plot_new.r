@@ -48,6 +48,8 @@ if (grepl("Beijing", input_directory, ignore.case = TRUE)) {
   region <- "Beijing"
 } else if (grepl("Guangzhou", input_directory, ignore.case = TRUE)) {
   region <- "Guangzhou"
+} else if (grepl("Full", input_directory, ignore.case = TRUE)) {
+  region <- "Full"
 } else {
   region <- "Unknown"
 }
@@ -60,19 +62,25 @@ output_file <- ifelse(region == "Beijing",
                       file.path(output_directory, "bac_age_BJ.pdf"),
                       ifelse(region == "Guangzhou",
                              file.path(output_directory, "bac_age_GZ.pdf"),
-                             file.path(output_directory, "bac_age.pdf")))
+                             ifelse(region == "Full",
+                                    file.path(output_directory, "bac_age_Full.pdf"),
+                                    file.path(output_directory, "bac_age.pdf"))))
 
 output_file_png <- ifelse(region == "Beijing",
                           file.path(output_directory, "bac_age_BJ.png"),
                           ifelse(region == "Guangzhou",
                                  file.path(output_directory, "bac_age_GZ.png"),
-                                 file.path(output_directory, "bac_age.png")))
+                                 ifelse(region == "Full",
+                                        file.path(output_directory, "bac_age_Full.png"),
+                                        file.path(output_directory, "bac_age.png"))))
 
 output_significant_csv <- ifelse(region == "Beijing",
                                  file.path(output_directory, "significant_snps_BJ.csv"),
                                  ifelse(region == "Guangzhou",
                                         file.path(output_directory, "significant_snps_GZ.csv"),
-                                        file.path(output_directory, "significant_snps.csv")))
+                                        ifelse(region == "Full",
+                                               file.path(output_directory, "significant_snps_Full.csv"),
+                                               file.path(output_directory, "significant_snps.csv"))))
 
 print("Input files:")
 print(input_files)
