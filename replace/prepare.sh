@@ -4,11 +4,13 @@
 PLINK_BASE_PATH="/mnt/raid6/bacphagenetwork/data/12_plink"
 PLINK_BJ_RESULT="${PLINK_BASE_PATH}/Beijing/results/bac_age"
 PLINK_GZ_RESULT="${PLINK_BASE_PATH}/Guangzhou/results/bac_age"
+PLINK_FULL_RESULT="${PLINK_BASE_PATH}/Full/results/bac_age"
 CURRENT_PATH=$(pwd)
 
 echo "Initializing..."
 echo "PLINK_BJ_RESULT: \t ${PLINK_BJ_RESULT}"
 echo "PLINK_GZ_RESULT: \t ${PLINK_GZ_RESULT}"
+echo "PLINK_FULL_RESULT: \t ${PLINK_FULL_RESULT}"
 echo "CURRENT_PATH: \t ${CURRENT_PATH}"
 
 echo "Done."
@@ -32,5 +34,13 @@ find "${PLINK_GZ_RESULT}" -type f | while read -r file; do
     fi
 done
 echo "Done."
+echo "----------------------------------------"
+echo "Processing combined files..."
+find "${PLINK_FULL_RESULT}" -type f | while read -r file; do
+    if [[ $file == *".linear.adjusted" ]]; then
+        echo "$file" >> FULL_sbatch.list
+    fi
+done
+echo "Done."
 echo "========================================"
-echo "All files have been written to BJ_sbatch.list and GZ_sbatch.list"
+echo "All files have been written to BJ_sbatch.list, GZ_sbatch.list, and FULL_sbatch.list."
