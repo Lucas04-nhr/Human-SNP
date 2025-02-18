@@ -45,8 +45,8 @@ export KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/hg38_v0_1000G_omni2.5.hg38.
 export UNFILTERED_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF/Full"
 export FILTERED_GVCF_PATH="$BASE_PATH/10_ApplyVQSR/Full"
 export PLINK_PATH="$BASE_PATH/12_plink/Full"
-export PLINK_OUTPUT_PATH="$PLINK_PATH/output/cov-as-phe_bool_age"
-export PLINK_RESULT_PATH="$PLINK_PATH/results/cov-as-phe_bool_age"
+export PLINK_OUTPUT_PATH="$PLINK_PATH/output/bac_age"
+export PLINK_RESULT_PATH="$PLINK_PATH/results/bac_age"
 
 echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
 echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCF_PATH."
@@ -72,7 +72,7 @@ plink_execute=false
 plink_draw_fig=false
 covar_number=""
 
-# sbatch plink_full_bool_full.sh -c -p -e --covar-number=4
+# sbatch plink_full.sh -c -p -e --covar-number=4
 
 while getopts "cpe-:" opt; do
   case $opt in
@@ -131,7 +131,7 @@ if $plink_execute; then
     exit 1
   fi
   echo "Performing plink execution..."
-  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --logistic --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number --out $PLINK_RESULT_PATH/result --noweb --allow-extra-chr --allow-no-sex \
+  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number --out $PLINK_RESULT_PATH/result --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
   echo "The plink execution has been completed."
   echo "=============================="
