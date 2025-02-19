@@ -46,16 +46,20 @@ export UNFILTERED_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF/Full"
 export FILTERED_GVCF_PATH="$BASE_PATH/10_ApplyVQSR/Full"
 export PLINK_PATH="$BASE_PATH/12_plink/Full"
 export PLINK_OUTPUT_PATH="$PLINK_PATH/output/bac_age"
+export PLINK_CORRECTION_PATH="$PLINK_PATH/correction"
 export PLINK_RESULT_PATH="$PLINK_PATH/results/bac_age"
 
 echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
 echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCF_PATH."
 echo "The plink output files will be located in $PLINK_OUTPUT_PATH."
+echo "The plink correction files will be located in $PLINK_CORRECTION_PATH."
 echo "The plink result files will be located in $PLINK_RESULT_PATH."
 # Add prompts of more sub-folders of plink here...
 
 mkdir -p $PLINK_OUTPUT_PATH
 mkdir -p $PLINK_RESULT_PATH
+mkdir -p $PLINK_CORRECTION_PATH
+# Add more sub-folders of plink here...
 
 echo "Setting completed."
 
@@ -69,21 +73,25 @@ echo "=============================="
 plink_convert=false
 plink_preprocess=false
 plink_execute=false
-plink_draw_fig=false
+plink_correction=false
 covar_number=""
-pca_number=10
+pca_number=""
 
-# sbatch plink_full.sh -c -p -e --covar-number=4
+# sbatch plink_full.sh -c -p -e -c --pca_number=10 --covar-number=4
 
-while getopts "cpe-:" opt; do
+while getopts "cpre-:" opt; do
   case $opt in
     c) plink_convert=true ;;
     p) plink_preprocess=true ;;
+    r) plink_correction=true ;;
     e) plink_execute=true ;;
     -)
       case "${OPTARG}" in
         covar-number=*)
           covar_number=${OPTARG#*=}
+          ;;
+        pca-number=*)
+          pca_number=${OPTARG#*=}
           ;;
         *)
           echo "Invalid option: --${OPTARG}" ;;
@@ -95,16 +103,19 @@ done
 
 # If no options were provided, set all to true
 
-if ! $plink_convert && ! $plink_preprocess && ! $plink_execute; then
+if ! $plink_convert && ! $plink_preprocess && ! $plink_execute && ! $plink_correction; then
   plink_convert=true
   plink_preprocess=true
   plink_execute=true
+  plink_correction=true
 fi
 
 # Performing plink converting
 if $plink_convert; then
   echo "Converting the VCF files to plink format..."
-  $PLINK_NEW_BIN --noweb --vcf $FILTERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz --recode --allow-extra-chr --out $PLINK_OUTPUT_PATH/converted_genotyped \
+  $PLINK_NEW_BIN --noweb \
+  --vcf $FILTERED_GVCF_PATH/joint_genotyped.filtered.vcf.gz \
+  --recode --allow-extra-chr --out $PLINK_OUTPUT_PATH/converted_genotyped \
   || { echo "Error: plink converting failed."; exit 1; }
   echo "The plink converting has been completed."
   echo "=============================="
@@ -116,7 +127,10 @@ fi
 # Performing plink preprocessing
 if $plink_preprocess; then
   echo "Performing plink preprocessing..."
-  $PLINK_NEW_BIN --noweb --file $PLINK_OUTPUT_PATH/converted_genotyped --set-missing-var-ids @:# --recode --out $PLINK_OUTPUT_PATH/converted_genotyped --allow-extra-chr --make-bed \
+  $PLINK_NEW_BIN --noweb --file $PLINK_OUTPUT_PATH/converted_genotyped \
+   --set-missing-var-ids @:# \
+   --recode --out $PLINK_OUTPUT_PATH/converted_genotyped \
+   --allow-extra-chr --make-bed \
   || { echo "Error: plink preprocessing failed."; exit 1; }
   echo "The plink preprocessing has been completed."
   echo "=============================="
@@ -126,9 +140,14 @@ else
 fi
 
 # Performing PCA calculation
-if $plink_convert; then
+if $plink_correction; then
+  if ! $pca_number; then
+    echo "Error: pca_number must be provided, set to 10 by default."
+    pca_number=10
+  fi
   echo "Calculating PCA ..."
-  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --pca $pca_number --out $PLINK_OUTPUT_PATH/pca_results \
+  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
+  --pca $pca_number --out $PLINK_CORRECTION_PATH/pca_results \
   || { echo "Error: PCA calculation failed."; exit 1; }
   echo "PCA calculation completed."
   echo "=============================="
@@ -145,9 +164,13 @@ if $plink_execute; then
   fi
   echo "Performing plink execution..."
   covar_names=$(seq -s, -f "PC%.0f" 1 $pca_number)
- $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
-  --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number\
-  --covar $PLINK_OUTPUT_PATH/pca_results.eigenvec --covar-name $covar_names --missing --out $PLINK_RESULT_PATH/result --noweb --allow-extra-chr --allow-no-sex \
+ $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
+  --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
+  --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number \
+  --covar $PLINK_CORRECTION_PATH/pca_results.eigenvec \
+  --covar-name $covar_names --missing \
+  --out $PLINK_RESULT_PATH/result \
+  --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
   echo "The plink execution has been completed."
   echo "=============================="
