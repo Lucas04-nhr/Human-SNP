@@ -1,7 +1,7 @@
 #! /bin/bash
 #SBATCH --job-name=BJ_merge
-#SBATCH --output=./log/BJ_merge_log.%j.out
-#SBATCH --error=./log/BJ_merge_log.%j.err
+#SBATCH --output=./log/Full_merge_log.%j.out
+#SBATCH --error=./log/Full_merge_log.%j.err
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 
