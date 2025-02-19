@@ -3,7 +3,7 @@
 #SBATCH --output=./log/Full/Full_log.%j.out
 #SBATCH --error=./log/Full/Full_log.%j.err
 #SBATCH --cpus-per-task=2
-#SBATCH --array=1-21%4
+#SBATCH --array=1-58%4
 #SBATCH --mem=24G
 
 # Initialize the environment
@@ -18,7 +18,7 @@ conda activate snp_analysis
 echo "The conda environment has been activated."
 echo "=============================="
 
-infile=($( cat Full_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat FULL_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 
 # Extract the Phenotype Col Number
 pheno_col=$(echo $infile | grep -o -E '[0-9]+' | tail -n 1)

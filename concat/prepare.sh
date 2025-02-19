@@ -21,23 +21,23 @@ echo "Writing all the file names to a file..."
 echo " "
 echo "Processing Beijing files..."
 find "${PLINK_BJ_RESULT}" -type f | while read -r file; do
-    if [[ $file != *".log" && $file != *".nosex" ]]; then
+    if [[ $file = *".adjusted" ]]; then
         echo "$file" >> BJ_sbatch.list
     fi
 done
 echo "Done."
-echo "----------------------------------------"
+echo "========================================"
 echo "Processing Guangzhou files..."
 find "${PLINK_GZ_RESULT}" -type f | while read -r file; do
-    if [[ $file != *".log" && $file != *".nosex" ]]; then
+    if [[ $file = *".adjusted" ]]; then
         echo "$file" >> GZ_sbatch.list
     fi
 done
 echo "Done."
-echo "----------------------------------------"
-echo "Processing Full files..."
+echo "========================================"
+echo "Processing Full files again..."
 find "${PLINK_FULL_RESULT}" -type f | while read -r file; do
-    if [[ $file != *".log" && $file != *".nosex" ]]; then
+    if [[ $file = *".adjusted" ]]; then
         echo "$file" >> FULL_sbatch.list
     fi
 done
