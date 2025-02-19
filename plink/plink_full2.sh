@@ -72,7 +72,7 @@ plink_execute=false
 plink_draw_fig=false
 covar_number=""
 
-# sbatch plink_full.sh -c -p -e --covar-number=4
+# sbatch plink_full2.sh -e --covar-number=4
 
 while getopts "cpe-:" opt; do
   case $opt in
