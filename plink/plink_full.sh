@@ -71,6 +71,7 @@ plink_preprocess=false
 plink_execute=false
 plink_draw_fig=false
 covar_number=""
+pca_number=10
 
 # sbatch plink_full.sh -c -p -e --covar-number=4
 
@@ -124,6 +125,18 @@ else
   echo "=============================="
 fi
 
+# Performing PCA calculation
+if $plink_convert; then
+  echo "Calculating PCA ..."
+  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --pca $pca_number --out $PLINK_OUTPUT_PATH/pca_results \
+  || { echo "Error: PCA calculation failed."; exit 1; }
+  echo "PCA calculation completed."
+  echo "=============================="
+else
+  echo "PCA calculation has been skipped."
+  echo "=============================="
+fi
+
 # Performing plink execution
 if $plink_execute; then
   if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 3 ]; then
@@ -131,7 +144,10 @@ if $plink_execute; then
     exit 1
   fi
   echo "Performing plink execution..."
-  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number --missing --out $PLINK_RESULT_PATH/result --noweb --allow-extra-chr --allow-no-sex \
+  covar_names=$(seq -s, -f "PC%.0f" 1 $pca_number)
+ $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
+  --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number\
+  --covar $PLINK_OUTPUT_PATH/pca_results.eigenvec --covar-name $covar_names --missing --out $PLINK_RESULT_PATH/result --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
   echo "The plink execution has been completed."
   echo "=============================="
