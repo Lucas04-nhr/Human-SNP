@@ -76,7 +76,7 @@ plink_execute=false
 plink_correction=false
 covar_number="4"
 pca_number="10"
-covar_names=("Family ID" "Individual ID" "Sex" "Age" "Moisture" "Gloss" "Sebum" "R2" "R5" "R7" "pH" "Tivi" "Stay Up late" "MakeUp" "Diet" "MoodSwings" "Constipation" "FacialCleaning" "MakeUpRemover" "Region" "Assembly Method" "Shannon" "FAI" "Driver" "FAI.res")
+covar_names=("Family ID" "Individual ID" "Age" "Moisture" "Gloss" "Sebum" "R2" "R5" "R7" "pH" "Tivi" "Stay Up late" "MakeUp" "Diet" "MoodSwings" "Constipation" "FacialCleaning" "MakeUpRemover" "Region" "Assembly Method" "Shannon" "FAI" "Driver" "FAI.res")
 
 # sbatch plink_full.sh -c -p -r -e --pca-number=10 --covar-number=4
 
