@@ -168,7 +168,7 @@ if $plink_execute; then
  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
   --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
   --covar $PLINK_CORRECTION_PATH/pca_results.eigenvec \
-  --covar-number 1-$covar_number --missing \
+  --covar-number 1-$pca_number --missing \
   --out $PLINK_RESULT_PATH/result \
   --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
