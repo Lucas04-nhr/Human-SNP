@@ -77,7 +77,7 @@ plink_correction=false
 covar_number=""
 pca_number=""
 
-# sbatch plink_full.sh -c -p -r -e --pca_number=10 --covar-number=4
+# sbatch plink_full.sh -c -p -r -e --pca-number=10 --covar-number=4
 
 while getopts "cpre-:" opt; do
   case $opt in
