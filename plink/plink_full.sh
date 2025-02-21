@@ -76,7 +76,6 @@ plink_execute=false
 plink_correction=false
 covar_number="4"
 pca_number="10"
-covar_names=("Family ID" "Individual ID" "Age" "Moisture" "Gloss" "Sebum" "R2" "R5" "R7" "pH" "Tivi" "Stay Up late" "MakeUp" "Diet" "MoodSwings" "Constipation" "FacialCleaning" "MakeUpRemover" "Region" "Assembly Method" "Shannon" "FAI" "Driver" "FAI.res")
 
 # sbatch plink_full.sh -c -p -r -e --pca-number=10 --covar-number=4
 
@@ -146,8 +145,8 @@ if $plink_correction; then
     echo "Error: pca_number must be provided, set to 10 by default."
     pca_number=10
   fi
-  if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 3 ]; then
-    echo "Error: covar_number must be a number between 3 and 483, set to 4(age) by default"
+  if [ "$covar_number" -gt 24 ] || [ "$covar_number" -lt 3 ]; then
+    echo "Error: covar_number must be a number between 3 and 24, set to 4(age) by default"
     covar_number=4
   fi
   echo "Calculating PCA ..."
@@ -169,7 +168,7 @@ if $plink_execute; then
  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
   --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
   --covar $PLINK_CORRECTION_PATH/pca_results.eigenvec \
-  --covar-name $covar_names --missing \
+  --covar-number 1-$covar_number --missing \
   --out $PLINK_RESULT_PATH/result \
   --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
