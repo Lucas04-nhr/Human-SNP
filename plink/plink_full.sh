@@ -145,9 +145,14 @@ if $plink_correction; then
     echo "Error: pca_number must be provided, set to 10 by default."
     pca_number=10
   fi
+  if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 3 ]; then
+    echo "Error: covar_number must be a number between 3 and 483, set to 4(age) by default"
+    covar_number=4
+  fi
   echo "Calculating PCA ..."
   $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
-  --pca $pca_number --out $PLINK_CORRECTION_PATH/pca_results \
+  --pca $pca_number tabs --out $PLINK_CORRECTION_PATH/pca_results \
+  --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number \
   --allow-extra-chr --noweb \
   || { echo "Error: PCA calculation failed."; exit 1; }
   echo "PCA calculation completed."
@@ -159,15 +164,10 @@ fi
 
 # Performing plink execution
 if $plink_execute; then
-  if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 3 ]; then
-    echo "Error: covar_number must be a number between 3 and 483."
-    exit 1
-  fi
   echo "Performing plink execution..."
   covar_names=$(seq -s, -f "PC%.0f" 1 $pca_number)
  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
   --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
-  --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number \
   --covar $PLINK_CORRECTION_PATH/pca_results.eigenvec \
   --covar-name $covar_names --missing \
   --out $PLINK_RESULT_PATH/result \
