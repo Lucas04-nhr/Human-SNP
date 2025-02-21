@@ -75,12 +75,11 @@ plink_preprocess=false
 plink_execute=false
 plink_correction=false
 covar_number="4"
-pca_number="10"
-covar_names=("Family ID" "Individual ID" "Age" "Moisture" "Gloss" "Sebum" "R2" "R5" "R7" "pH" "Tivi" "Stay Up late" "MakeUp" "Diet" "MoodSwings" "Constipation" "FacialCleaning" "MakeUpRemover" "Region" "Assembly Method" "Shannon" "FAI" "Driver" "FAI.res")
+covar_names=("Age" "Moisture" "Gloss" "Sebum" "R2" "R5" "R7" "pH" "Tivi" "Stay Up late" "MakeUp" "Diet" "MoodSwings" "Constipation" "FacialCleaning" "MakeUpRemover" "Region" "Assembly Method" "Shannon" "FAI" "Driver" "FAI.res")
 
-# sbatch plink_full.sh -c -p -r -e --pca-number=10 --covar-number=4
+# sbatch plink_full.sh -c -p -r -e --covar-number=4
 
-while getopts "cpre-:" opt; do
+while getopts "cpre-" opt; do
   case $opt in
     c) plink_convert=true ;;
     p) plink_preprocess=true ;;
@@ -90,9 +89,6 @@ while getopts "cpre-:" opt; do
       case "${OPTARG}" in
         covar-number=*)
           covar_number=${OPTARG#*=}
-          ;;
-        pca-number=*)
-          pca_number=${OPTARG#*=}
           ;;
         *)
           echo "Invalid option: --${OPTARG}" ;;
@@ -142,18 +138,10 @@ fi
 
 # Performing PCA calculation
 if $plink_correction; then
-  if ! $pca_number; then
-    echo "Error: pca_number must be provided, set to 10 by default."
-    pca_number=10
-  fi
-  if [ "$covar_number" -gt 483 ] || [ "$covar_number" -lt 3 ]; then
-    echo "Error: covar_number must be a number between 3 and 483, set to 4(age) by default"
-    covar_number=4
-  fi
   echo "Calculating PCA ..."
   $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
-  --pca $pca_number tabs header --out $PLINK_CORRECTION_PATH/pca_results \
-  --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number \
+  --pca tabs header --out $PLINK_CORRECTION_PATH/pca_results \
+  --covar $PLINK_PATH/covariate_full.tsv  \
   --allow-extra-chr --noweb \
   || { echo "Error: PCA calculation failed."; exit 1; }
   echo "PCA calculation completed."
@@ -165,11 +153,15 @@ fi
 
 # Performing plink execution
 if $plink_execute; then
+  if [ "$covar_number" -gt 22 ] || [ "$covar_number" -lt 1 ]; then
+    echo "Error: covar_number must be a number between 1 and 22, set to 1(Age) by default"
+    covar_number=1
+  fi
   echo "Performing plink execution..."
  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
   --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
   --covar $PLINK_CORRECTION_PATH/pca_results.eigenvec \
-  --covar-name $covar_names --missing \
+  --covar-number $covar_number --missing \
   --out $PLINK_RESULT_PATH/result \
   --noweb --allow-extra-chr --allow-no-sex \
   || { echo "Error: plink execution failed."; exit 1; }
