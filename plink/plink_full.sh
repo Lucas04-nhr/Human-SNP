@@ -74,8 +74,9 @@ plink_convert=false
 plink_preprocess=false
 plink_execute=false
 plink_correction=false
-covar_number=""
-pca_number=""
+covar_number="4"
+pca_number="10"
+covar_names=("Family ID" "Individual ID" "Sex" "Age" "Moisture" "Gloss" "Sebum" "R2" "R5" "R7" "pH" "Tivi" "Stay Up late" "MakeUp" "Diet" "MoodSwings" "Constipation" "FacialCleaning" "MakeUpRemover" "Region" "Assembly Method" "Shannon" "FAI" "Driver" "FAI.res")
 
 # sbatch plink_full.sh -c -p -r -e --pca-number=10 --covar-number=4
 
@@ -151,7 +152,7 @@ if $plink_correction; then
   fi
   echo "Calculating PCA ..."
   $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
-  --pca $pca_number tabs --out $PLINK_CORRECTION_PATH/pca_results \
+  --pca $pca_number tabs header --out $PLINK_CORRECTION_PATH/pca_results \
   --covar $PLINK_PATH/covariate_full.tsv --covar-number $covar_number \
   --allow-extra-chr --noweb \
   || { echo "Error: PCA calculation failed."; exit 1; }
@@ -165,7 +166,6 @@ fi
 # Performing plink execution
 if $plink_execute; then
   echo "Performing plink execution..."
-  covar_names=$(seq -s, -f "PC%.0f" 1 $pca_number)
  $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
   --linear --adjust --pheno $PLINK_PATH/phenotype_full.tsv --all-pheno \
   --covar $PLINK_CORRECTION_PATH/pca_results.eigenvec \
