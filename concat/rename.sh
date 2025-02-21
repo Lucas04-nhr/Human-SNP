@@ -1,7 +1,9 @@
 #!/bin/bash
 
+FILE_PATH="/mnt/raid6/bacphagenetwork/data/12_plink/Full/results/bac_age/"
+
 # 遍历当前目录下的所有文件
-for file in *; do
+for file in "$FILE_PATH"*; do
     # 检查文件是否存在
     if [ -f "$file" ]; then
         # 使用正则表达式匹配文件名中的模式
