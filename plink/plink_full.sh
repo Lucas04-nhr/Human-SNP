@@ -148,6 +148,7 @@ if $plink_correction; then
   echo "Calculating PCA ..."
   $PLINK_NEW_BIN --bfile $PLINK_OUTPUT_PATH/converted_genotyped \
   --pca $pca_number --out $PLINK_CORRECTION_PATH/pca_results \
+  --allow-extra-chr --noweb \
   || { echo "Error: PCA calculation failed."; exit 1; }
   echo "PCA calculation completed."
   echo "=============================="
