@@ -3,7 +3,7 @@
 #SBATCH --output=./log/Full/Full_log.%j.out
 #SBATCH --error=./log/Full/Full_log.%j.err
 #SBATCH --cpus-per-task=2
-#SBATCH --array=1-29%4
+#SBATCH --array=1-51%5
 #SBATCH --mem=24G
 
 # Initialize the environment
