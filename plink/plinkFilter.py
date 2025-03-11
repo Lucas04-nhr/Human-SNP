@@ -5,8 +5,8 @@ import sys
 
 # 设置命令行参数解析
 parser = argparse.ArgumentParser(description='Merge and filter files in a directory.')
-parser.add_argument('directory', type=str, help='The directory containing the files to be processed')
-parser.add_argument('output_file', type=str, help='The output file path for the filtered results')
+parser.add_argument('-d', '--directory', type=str, required=True, help='The directory containing the files to be processed')
+parser.add_argument('-o', '--output_file', type=str, required=True, help='The output file path for the filtered results')
 args = parser.parse_args()
 
 # 获取目录路径和输出文件路径
