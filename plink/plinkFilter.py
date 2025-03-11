@@ -39,7 +39,6 @@ try:
     if not output_file:
         raise ValueError("Output file path is not provided.")
     filtered_df.to_csv(output_file, index=False)
-    print(f"Filtered data has been saved to {output_file}")
 except ValueError as ve:
     raise ValueError(f"Error while saving the filtered data: {ve}")
 
