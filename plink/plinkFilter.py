@@ -21,24 +21,32 @@ try:
     for filename in os.listdir(directory):
         if filename.endswith('.adjusted'):
             file_path = os.path.join(directory, filename)
-            df = pd.read_csv(file_path)
-            combined_df = pd.concat([combined_df, df], ignore_index=True)
+            df = pd.read_csv(file_path, sep='\t')
+            print(f"Processing file {filename} with {len(df)} rows")
+            print("Head of the file:")
+            print(df.head())
+            combined_df = pd.concat([combined_df, df], ignore_index=True, sort=False)
 except Exception as e:
-    print(f"Error while processing files: {e}")
-    sys.exit(1)
+    raise FileNotFoundError(f"Error while processing files: {e}")
 
 try:
     # 筛选出FDR_BY列小于5*10e-8的行
     filtered_df = combined_df[combined_df['FDR_BY'] <= 5*10e-8]
-except Exception as e:
-    print(f"Error while filtering data: {e}")
-    sys.exit(1)
+    print(f"Filtered data contains {len(filtered_df)} rows")
+except KeyError as ke:
+    raise KeyError("Please check the column names in the input files.")
 
 try:
-    # 输出到一个新的文件
+    # 输出到一个新的文件，确保输出文件名存在
+    if not output_file:
+        raise ValueError("Output file path is not provided.")
     filtered_df.to_csv(output_file, index=False)
-except Exception as e:
-    print(f"Error while saving the output file: {e}")
-    sys.exit(1)
+    print(f"Filtered data has been saved to {output_file}")
+except ValueError as ve:
+    raise ValueError(f"Error while saving the filtered data: {ve}")
 
-print(f"Filtered data has been saved to {output_file}")
+if not filtered_df.empty:
+    print(f"Filtered data has been saved to {output_file}")
+else:
+    print("Filtered data is empty; no file was created.")
+    raise FileNotFoundError("No data to save to file.")
