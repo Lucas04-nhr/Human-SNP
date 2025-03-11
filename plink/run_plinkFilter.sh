@@ -58,6 +58,6 @@ echo "The plink modified files will be located in $PLINK_MODIFIED_PATH."
 # Add prompts of more sub-folders of plink here...
 
 # Run the plinkFilter.py
-python plinkFilter.py --directory $PLINK_MODIFIED_PATH/bac_age --output_file $PLINK_MERGE_PATH/filtered_bac_age.csv || \
+python plinkFilter.py --directory $PLINK_MODIFIED_PATH/bac_age --output_file $PLINK_MERGE_PATH/filtered_bac_age.csv --item FDR_BY --threshold 0.01 || \
 { echo "The plinkFilter.py has failed." ; exit 1; }
 echo "The plinkFilter.py has been executed successfully."

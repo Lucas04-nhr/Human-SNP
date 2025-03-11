@@ -8,11 +8,13 @@ parser = argparse.ArgumentParser(description='Merge and filter files in a direct
 parser.add_argument('-d', '--directory', type=str, required=True, help='The directory containing the files to be processed')
 parser.add_argument('-o', '--output_file', type=str, required=True, help='The output file path for the filtered results')
 parser.add_argument('-i', '--item', type=str, required=True, help='The item to filter on')
+parser.add_argument('-t', '--threshold', type=float, required=True, help='The threshold value for filtering')
 args = parser.parse_args()
 
 # 获取目录路径和输出文件路径
 directory = args.directory
 output_file = args.output_file
+threshold = args.threshold
 
 # 设置可排序的列名
 sortable_columns = ['UNADJ', 'GC', 'BONF', 'HOLM', 'SIDAK_SS', 'SIDAK_SD', 'FDR_BH', 'FDR_BY']
@@ -38,7 +40,7 @@ except FileNotFoundError as fnfe:
 
 try:
     # 筛选出FDR_BY列小于5 * 10e-8的行
-    filtered_df = combined_df[combined_df[sort_columns] <= 5 * 10e-8]
+    filtered_df = combined_df[combined_df[sort_columns] <= threshold]
     print(f"Filtered data contains {len(filtered_df)} rows")
 except KeyError as ke:
     raise KeyError("Please check the column names in the input files.")
