@@ -22,16 +22,14 @@ try:
         if filename.endswith('.adjusted'):
             file_path = os.path.join(directory, filename)
             df = pd.read_csv(file_path, sep='\t')
-            print(f"Processing file {filename} with {len(df)} rows")
-            print("Head of the file:")
-            print(df.head())
+            print(f"Processing file {filename} with {len(df)} rows and {len(df.columns)} columns.")
             combined_df = pd.concat([combined_df, df], ignore_index=True, sort=False)
-except Exception as e:
-    raise FileNotFoundError(f"Error while processing files: {e}")
+except FileNotFoundError as fnfe:
+    raise FileNotFoundError(f"Error while processing files: {fnfe}")
 
 try:
-    # 筛选出FDR_BY列小于5*10e-8的行
-    filtered_df = combined_df[combined_df['FDR_BY'] <= 5*10e-8]
+    # 筛选出FDR_BY列小于5 * 10e-8的行
+    filtered_df = combined_df[combined_df['FDR_BY'] <= 5 * 10e-8]
     print(f"Filtered data contains {len(filtered_df)} rows")
 except KeyError as ke:
     raise KeyError("Please check the column names in the input files.")
