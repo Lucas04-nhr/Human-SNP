@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=plink_filter_job  # 作业名称
-#SBATCH --output=plink_filter_output.log  # 标准输出和错误日志文件
-#SBATCH --error=plink_filter_error.log
+#SBATCH --output=plink_filter.out  # 标准输出和错误日志文件
+#SBATCH --error=plink_filter.err
 #SBATCH --mem=128G  # 内存需求
 
 # Initialize the environment
