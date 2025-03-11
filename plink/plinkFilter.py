@@ -21,7 +21,7 @@ try:
     for filename in os.listdir(directory):
         if filename.endswith('.adjusted'):
             file_path = os.path.join(directory, filename)
-            df = pd.read_csv(file_path, sep=' ')
+            df = pd.read_csv(file_path, delim_whitespace=True)
             print(f"Processing file {filename} with {len(df)} rows and {len(df.columns)} columns.")
             combined_df = pd.concat([combined_df, df], ignore_index=True, sort=False)
 except FileNotFoundError as fnfe:
