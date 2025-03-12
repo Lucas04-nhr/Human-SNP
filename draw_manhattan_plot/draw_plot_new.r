@@ -134,7 +134,7 @@ if (file.exists(df_file) && opt$use_saved_data) {
 
   sorted_df_all <- df_all %>%
     arrange(CHR, BP)
-  sorted_df <- sorted_df_all[, c("CHR", "BP", "SNP", "BONF", "Bacteria")]
+  sorted_df <- sorted_df_all[, c("CHR", "BP", "SNP", "BONF", "Cov")]
 
   name <- unique(sorted_df_all$CHR)
 
@@ -143,12 +143,12 @@ if (file.exists(df_file) && opt$use_saved_data) {
 
   print("Calculating rank...")
 
-  df$Bacteria <- as.character(df$Bacteria)
+  df$Cov <- as.character(df$Cov)
 
   df <- df %>%
-    group_by(Bacteria) %>%
+    group_by(Cov) %>%
     mutate(rank_p = rank(BONF, ties.method = "first")) %>% # 对P进行排名
-    mutate(Bacteria_new = if_else(rank_p == 1, Bacteria, NA_character_)) %>% # 保留P最小的行的Bacteria值，其他变成NA # nolint
+    mutate(Cov_new = if_else(rank_p == 1, Cov, NA_character_)) %>% # 保留P最小的行的Cov值，其他变成NA # nolint
     ungroup() %>%
     select(-rank_p)
 
@@ -164,8 +164,8 @@ chromosome_colors <- c(
   rep(c('#1F77B4','#FF7F0C','#2BA099','#D62628','#9467BD','#8C564B','#7F7F7F','#E477C2','#BDBD21', '#17BECF'),3)) # nolint
 
 significant_snps <- df %>%
-  filter(!is.na(Bacteria_new)) %>%
-  select(CHR, SNP ,BP, BONF,Bacteria_new)
+  filter(!is.na(Cov_new)) %>%
+  select(CHR, SNP ,BP, BONF,Cov_new)
 
 #Saving csv
 csv_path <- output_significant_csv
