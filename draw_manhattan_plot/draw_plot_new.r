@@ -98,9 +98,9 @@ if (file.exists(df_file) && opt$use_saved_data) {
 } else {
   df_list <- lapply(input_files, function(file) {
     print(paste("Processing file", file))
-    df <- read.table(file, header = TRUE, row.names = NULL, sep = "\s+")
+    df <- read.table(file, header = TRUE, row.names = NULL)
     df <- df[, known_columns[known_columns %in% colnames(df)]]
-    # df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
+    df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
     print(paste(file, "has", nrow(df), "rows and", ncol(df), "columns"))
     print(paste("The", file, "has been processed."))
     print(" ")
