@@ -110,6 +110,9 @@ if (file.exists(df_file) && opt$use_saved_data) {
   print("Head of the processed data:")
   print(head(df_list[[1]]))
 
+  print("Number of files processed:") 
+  print(length(df_list))
+
   print("Processing data...")
 
   df_all <- bind_rows(df_list)
