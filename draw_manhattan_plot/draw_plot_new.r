@@ -92,7 +92,7 @@ known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SID
 
 df_file <- file.path(output_directory, "df.RData")
 
-if (file.exists(df_file) && opt$use_saved_data) {
+if (file.exists(df_file) && isTRUE(opt$use_saved_data)) {
   print("Loading existing df.RData...")
   load(df_file)
 } else {
