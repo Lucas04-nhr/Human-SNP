@@ -100,7 +100,7 @@ if (file.exists(df_file) && opt$use_saved_data) {
     print(paste("Processing file", file))
     df <- read.table(file, header = TRUE, row.names = NULL, sep = "\t")
     df <- df[, known_columns[known_columns %in% colnames(df)]]
-    df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
+    # df$SNP <- as.character(df$SNP)  # Ensure SNP column is character
     print(paste(file, "has", nrow(df), "rows and", ncol(df), "columns"))
     print(paste("The", file, "has been processed."))
     print(" ")
