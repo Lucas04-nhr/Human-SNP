@@ -159,6 +159,13 @@ if (file.exists(df_file) && isTRUE(opt$use_saved_data)) {
 
   print("Saving data...")
   save(df, file = df_file)
+  print(paste("There are a total of", nrow(df), "rows and", ncol(df), "columns."))
+  
+  if (file.exists(df_file)) {
+    print("Data saved successfully.")
+  } else {
+    print("Error: Data not saved.")
+  }
 }
 
 print("Drawing plot...")
