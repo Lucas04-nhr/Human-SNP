@@ -88,7 +88,7 @@ print(input_files)
 print("Output file:")
 print(output_file)
 
-known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Bacteria") # nolint
+known_columns <- c("CHR", "SNP", "UNADJ", "GC", "BONF", "HOLM", "SIDAK_SS", "SIDAK_SD", "FDR_BH", "FDR_BY", "Cov") # nolint
 
 df_file <- file.path(output_directory, "df.RData")
 
