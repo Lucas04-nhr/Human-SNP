@@ -1,7 +1,7 @@
 #! /bin/bash
-#SBATCH --job-name=BJ_draw
-#SBATCH --output=./BJ_log.%j.out
-#SBATCH --error=./BJ_log.%j.err
+#SBATCH --job-name=FULL_draw
+#SBATCH --output=./FULL_log.%j.out
+#SBATCH --error=./FULL_log.%j.err
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 
