@@ -117,7 +117,7 @@ if (file.exists(df_file) && isTRUE(opt$use_saved_data)) {
 
   df_all <- bind_rows(df_list)
 
-  print("There are a total of", nrow(df_all), "rows and", ncol(df_all), "columns.")
+  print(paste("There are a total of", nrow(df_all), "rows and", ncol(df_all), "columns."))
 
   df_all$BP <- sapply(df_all$SNP, function(x) {
     parts <- strsplit(x, ":")
