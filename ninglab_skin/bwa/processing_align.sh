@@ -41,7 +41,7 @@ echo "=============================="
 
 # Analysing the data
 echo "Analysing the genome data..."
-infile=($( cat bj_sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
+infile=($( cat sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(basename "${infile}" | awk -F'_' '{print $1}')
 echo "Processing ${sample_name}..."
 file_fq1="$GENOME_PATH/${sample_name}_R1.fq.gz"
