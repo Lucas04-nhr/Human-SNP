@@ -49,5 +49,5 @@ file_fq2="${GENOME_PATH}/${sample_name}_R2.fq.gz"
 echo -e "Files for ${sample_name} are:\n ${file_fq1} and\n ${file_fq2}."
 touch $ANALYSIS_PATH/${sample_name}.sam
 mkdir -p $ANALYSIS_PATH/log
-bwa mem -t 4 $INDEXING_PATH $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/log/${sample_name}.log 2>&1  > $ANALYSIS_PATH/${sample_name}.sam || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
+bwa mem -t 4 $INDEXING_FILE $file_fq1 $file_fq2 -a > $ANALYSIS_PATH/log/${sample_name}.log 2>&1  > $ANALYSIS_PATH/${sample_name}.sam || { echo "Error: bwa mem failed in processing $sample_name."; exit 1; }
 echo "The analysis of $sample_name has been completed."
