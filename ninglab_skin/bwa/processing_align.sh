@@ -1,9 +1,9 @@
 #! /bin/bash
 #SBATCH --job-name=ninglab_data_align
-#SBATCH --output=./ninglab_data_align.%j.out
-#SBATCH --error=./ninglab_data_align.%j.err
+#SBATCH --output=./log/ninglab_data_align.%j.out
+#SBATCH --error=./log/ninglab_data_align.%j.err
 #SBATCH --cpus-per-task=4
-#SBATCH --array=1-201%4
+#SBATCH --array=2-248%4
 #SBATCH --mem=64G
 
 # Initialize the environment
