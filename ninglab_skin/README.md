@@ -91,6 +91,9 @@
 
     </details>
 
+</details>
+
+<details>
 <summary>Performing GWAS analysis using plink</summary>
 
   - [ ] Convert VCF to PLINK format
@@ -129,6 +132,9 @@
 
     </details>
 
+</details>
+
+<details>
 <summary>Using ANNOVAR to annotate variants</summary>
 
   - [ ] Annotate variants using `ANNOVAR`
