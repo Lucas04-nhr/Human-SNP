@@ -2,35 +2,93 @@
 
 ## To-do
 
-- [x] Align the data with reference genome GRCh38
-    - [x] Code
-    - [x] Run
-- [ ] Pre-process the data using `samtools` and `picard`
+<details>
+<summary>- [ ] Pre-process the data using `samtools` and `picard`</summary>
+
   - [ ] Create BAM files from SAM files
-    - [x] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [x] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Add read groups to BAM files
-    - [x] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [x] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Sort BAM files
-    - [x] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [x] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Index sorted BAM files
-    - [x] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [x] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Mark and remove duplicates in BAM files
-    - [ ] Code
-    - [ ] Run
-- [ ] Call variants using `GATK`
+    <details>
+    <summary>Details</summary>
+
+    - [ ] Code  
+    - [ ] Run  
+
+    </details>
+
+</details>
+
+<details>
+<summary>- [ ] Call variants using `GATK`</summary>
+
   - [ ] BQSR using `GATK BaseRecalibrator`
-    - [ ] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [ ] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Apply BQSR using `GATK ApplyBQSR`
-    - [ ] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [ ] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Call variants using `GATK HaplotypeCaller`
-    - [ ] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [ ] Code  
+    - [ ] Run  
+
+    </details>
+
   - [ ] Filter variants using `GATK VariantFiltration`
-    - [ ] Code
-    - [ ] Run
+    <details>
+    <summary>Details</summary>
+
+    - [ ] Code  
+    - [ ] Run  
+
+    </details>
+
+</details>
