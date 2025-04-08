@@ -2,157 +2,38 @@
 
 ## To-do
 
-<details>
-<summary>Pre-process the data using samtools and picard</summary>
-
+- [x] Align the data with reference genome GRCh38
+    - [x] Code
+    - [x] Run
+- [ ] Pre-process the data using `samtools` and `picard`
   - [ ] Create BAM files from SAM files
-    <details>
-    <summary>Details</summary>
-
-    - [x] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [x] Code
+    - [ ] Run
   - [ ] Add read groups to BAM files
-    <details>
-    <summary>Details</summary>
-
-    - [x] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [x] Code
+    - [ ] Run
   - [ ] Sort BAM files
-    <details>
-    <summary>Details</summary>
-
-    - [x] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [x] Code
+    - [ ] Run
   - [ ] Index sorted BAM files
-    <details>
-    <summary>Details</summary>
-
-    - [x] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [x] Code
+    - [ ] Run
   - [ ] Mark and remove duplicates in BAM files
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-</details>
-
-<details>
-<summary>Call variants using GATK</summary>
-
+    - [ ] Code
+    - [ ] Run
+- [ ] Call variants using `GATK`
   - [ ] BQSR using `GATK BaseRecalibrator`
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [ ] Code
+    - [ ] Run
   - [ ] Apply BQSR using `GATK ApplyBQSR`
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [ ] Code
+    - [ ] Run
   - [ ] Call variants using `GATK HaplotypeCaller`
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
+    - [ ] Code
+    - [ ] Run
   - [ ] Filter variants using `GATK VariantFiltration`
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-</details>
-
-<details>
-<summary>Performing GWAS analysis using plink</summary>
-
-  - [ ] Convert VCF to PLINK format
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-  - [ ] Perform quality control on PLINK data
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-  - [ ] Perform GWAS analysis using PLINK
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-  - [ ] PCA analysis using PLINK
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-</details>
-
-<details>
-<summary>Using ANNOVAR to annotate variants</summary>
-
-  - [ ] Annotate variants using `ANNOVAR`
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-  - [ ] Filter annotated variants
-    <details>
-    <summary>Details</summary>
-
-    - [ ] Code  
-    - [ ] Run  
-
-    </details>
-
-</details>
+    - [ ] Code
+    - [ ] Run
+- [ ] Annotate variants using `ANNOVAR`
+    - [ ] Code
+    - [ ] Run
