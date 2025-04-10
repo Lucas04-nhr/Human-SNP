@@ -47,7 +47,7 @@ echo "=============================="
 # Analysing the data
 echo "Using samtools to analyse the data..."
 infile=($( cat sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(basename "${infile}")
+sample_name=$(basename "${infile}" .sam)
 
 echo "Processing ${sample_name}..."
 echo "The path to the SAM file is $ANALYSIS_PATH/${sample_name}.sam."
