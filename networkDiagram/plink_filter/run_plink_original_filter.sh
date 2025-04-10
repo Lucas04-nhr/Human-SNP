@@ -24,4 +24,4 @@ echo "The input directory is $INPUT_DIR."
 echo "The output file is $OUTPUT_FILE."
 
 # Run the Python script
-python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/networkDiagram/plink_original_filter.py -d $INPUT_DIR -o $OUTPUT_FILE
+python /mnt/raid6/bacphagenetwork/niehaoran/Human-SNP/networkDiagram/plink_filter/plink_original_filter.py -d $INPUT_DIR -o $OUTPUT_FILE
