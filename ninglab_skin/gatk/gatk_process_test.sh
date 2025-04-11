@@ -80,7 +80,7 @@ echo "=============================="
 
 # Get the list of all *.bam files
 infile=($( cat sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
-sample_name=$(basename "$infile" .bam)
+sample_name=$(basename "$infile" .sorted.bam)
 echo "Processing ${sample_name}..."
 
 # Check if the sorted BAM file exists
