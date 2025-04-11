@@ -6,30 +6,30 @@
     - [x] Code
     - [x] Run
 - [ ] Pre-process the data using `samtools` and `picard`
-  - [ ] Create BAM files from SAM files
+  - [x] Create BAM files from SAM files
     - [x] Code
-    - [ ] Run
-  - [ ] Add read groups to BAM files
+    - [x] Run
+  - [x] Add read groups to BAM files
     - [x] Code
-    - [ ] Run
-  - [ ] Sort BAM files
+    - [x] Run
+  - [x] Sort BAM files
     - [x] Code
-    - [ ] Run
-  - [ ] Index sorted BAM files
+    - [x] Run
+  - [x] Index sorted BAM files
     - [x] Code
-    - [ ] Run
-  - [ ] Mark and remove duplicates in BAM files
-    - [ ] Code
+    - [x] Run
+  - [x] Mark and remove duplicates in BAM files
+    - [x] Code
     - [ ] Run
 - [ ] Call variants using `GATK`
   - [ ] BQSR using `GATK BaseRecalibrator`
-    - [ ] Code
+    - [x] Code
     - [ ] Run
   - [ ] Apply BQSR using `GATK ApplyBQSR`
-    - [ ] Code
+    - [x] Code
     - [ ] Run
   - [ ] Call variants using `GATK HaplotypeCaller`
-    - [ ] Code
+    - [x] Code
     - [ ] Run
   - [ ] Filter variants using `GATK VariantFiltration`
     - [ ] Code
