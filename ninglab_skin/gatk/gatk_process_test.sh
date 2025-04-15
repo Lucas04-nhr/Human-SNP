@@ -24,14 +24,14 @@ echo "=============================="
 GENOME_PATH='/mnt/raid6/bacphagenetwork/data/ninglab_skin'
 BASE_PATH='/mnt/raid6/bacphagenetwork/data/ninglab'
 INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38'
-INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/.original/Homo_sapiens.GRCh38.dna.toplevel.fa'
+INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa'
 ANALYSIS_PATH="${BASE_PATH}/01_bwa_analysis"
 SAMTOOLS_PATH="${BASE_PATH}/02_samtools"
 GATK_PATH="${BASE_PATH}/03_gatk"
 
 # Set other environment variables
 KNOWN_SITES_PATH="$BASE_PATH/../00_bwa_index/GRCh38/known-sites/dbsnp138"
-KNOWN_SITES_FILE="$KNOWN_SITES_PATH/hg38_v0_Homo_sapiens_assembly38.dbsnp138.vcf"
+KNOWN_SITES_FILE="$KNOWN_SITES_PATH/.original/hg38_v0_Homo_sapiens_assembly38.dbsnp138.vcf"
 SORTED_DATA_PATH="$SAMTOOLS_PATH/03_sort"
 MARKED_DATA_PATH="$GATK_PATH/01_marked"
 RECALIBRATED_DATA_PATH="$GATK_PATH/02_BaseRecalibrator"
