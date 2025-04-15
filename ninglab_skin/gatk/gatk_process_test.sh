@@ -31,7 +31,7 @@ GATK_PATH="${BASE_PATH}/03_gatk"
 
 # Set other environment variables
 KNOWN_SITES_PATH="$BASE_PATH/../00_bwa_index/GRCh38/known-sites/dbsnp138"
-KNOWN_SITES_FILE="$KNOWN_SITES_PATH/hg38_v0_Homo_sapiens_assembly38.dbsnp138.vcf"
+KNOWN_SITES_FILE="$KNOWN_SITES_PATH/hg38_v0_Homo_sapiens_assembly38.dbsnp138.modified.vcf"
 SORTED_DATA_PATH="$SAMTOOLS_PATH/03_sort"
 MARKED_DATA_PATH="$GATK_PATH/01_marked"
 RECALIBRATED_DATA_PATH="$GATK_PATH/02_BaseRecalibrator"
