@@ -194,10 +194,29 @@ fi
 
 # Perform VariantRecalibrator
 if $perform_variant_recalibrator; then
-  echo "Performing VariantRecalibrator..."
+  echo "Checking if annotated variants file exists..."
+  ANNOTATED_VCF="$VARIANTRECALIBRATOR_DATA_PATH/joint_genotyped.annotated.vcf.gz"
+  
+  if [ -f "$ANNOTATED_VCF" ]; then
+    echo "Annotated variants file already exists. Using existing file."
+    echo "=============================="
+  else
+    echo "Annotated variants file not found. Performing annotation..."
+    $GATK_BIN VariantAnnotator \
+      -R $INDEXING_FILE \
+      -V $GVCF_DATA_PATH/joint_genotyped.vcf.gz \
+      -O $ANNOTATED_VCF \
+      -A QD -A FS -A SOR -A MQRankSum -A ReadPosRankSum \
+    || { echo "VariantAnnotator failed"; exit 1; }
+    
+    echo "Annotation completed." 
+    echo "=============================="
+  fi
+
+  echo "Now performing VariantRecalibrator..."
   $GATK_BIN VariantRecalibrator \
     -R $INDEXING_FILE \
-    -V $GVCF_DATA_PATH/joint_genotyped.vcf.gz \
+    -V $ANNOTATED_VCF \
     --resource:hapmap,known=false,training=true,truth=true,prior=15.0 $KNOWN_SITES_HAPMAP \
     --resource:omni,known=false,training=true,truth=true,prior=12.0 $KNOWN_SITES_OMNI \
     --resource:1000G,known=false,training=true,truth=false,prior=10.0 $KNOWN_SITES_1000G \
