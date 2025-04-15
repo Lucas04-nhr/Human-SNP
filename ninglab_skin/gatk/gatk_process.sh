@@ -3,7 +3,7 @@
 #SBATCH --output=./log/ninglab_data_gatk.%j.out
 #SBATCH --error=./log/ninglab_data_gatk.%j.err
 #SBATCH --cpus-per-task=4
-#SBATCH --array=2-248%5
+#SBATCH --array=1-248%5
 #SBATCH --mem=32G
 
 # Initialize the environment
@@ -76,6 +76,33 @@ fi
 echo "GATK and Picard tools are available."
 echo "=============================="
 
+# Phase command line arguments
+perform_mark_dulpicate=true
+perform_index=true
+perform_base_recalibrator=true
+perform_apply_bqsr=true
+perform_haplotype_caller=true
+
+while getopts "m:i:b:a:h:" opt; do
+    case $opt in
+        m) perform_mark_dulpicate=$OPTARG ;;
+        i) perform_index=$OPTARG ;;
+        b) perform_base_recalibrator=$OPTARG ;;
+        a) perform_apply_bqsr=$OPTARG ;;
+        h) perform_haplotype_caller=$OPTARG ;;
+        *) echo "Invalid option"; exit 1 ;;
+    esac
+done
+
+# If no options were provided, set all to true
+if [ $OPTIND -eq 1 ]; then
+    perform_mark_dulpicate=true
+    perform_index=true
+    perform_base_recalibrator=true
+    perform_apply_bqsr=true
+    perform_haplotype_caller=true
+fi
+
 # Get the list of all *.bam files
 infile=($( cat sbatch.list | awk -v line=${SLURM_ARRAY_TASK_ID} '{if (NR==line) print $0}' ))
 sample_name=$(basename "$infile" .sorted.bam)
@@ -90,59 +117,79 @@ else
 fi
 
 # Step 1: Use Picard to mark duplicates
-echo "Marking duplicates for ${sample_name}..."
-java -jar $PICARD_BIN MarkDuplicates \
-    INPUT="$SORTED_DATA_PATH/${sample_name}.sorted.bam" \
-    OUTPUT="$MARKED_DATA_PATH/${sample_name}.marked.bam" \
-    METRICS_FILE="$MARKED_DATA_PATH/${sample_name}.marked.metrics.txt" \
-    ASSUME_SORTED=true \
-    REMOVE_DUPLICATES=false \
-    VALIDATION_STRINGENCY=SILENT \
-|| { echo "Error: Marking duplicates for $SORTED_DATA_PATH/${sample_name}.sorted.bam failed."; exit 1; }
-echo "Marking duplicates for ${sample_name} completed."
-echo "================================="
+if [ "$perform_mark_dulpicate" = true ]; then
+    echo "Marking duplicates for ${sample_name}..."
+    java -jar $PICARD_BIN MarkDuplicates \
+        INPUT="$SORTED_DATA_PATH/${sample_name}.sorted.bam" \
+        OUTPUT="$MARKED_DATA_PATH/${sample_name}.marked.bam" \
+        METRICS_FILE="$MARKED_DATA_PATH/${sample_name}.marked.metrics.txt" \
+        ASSUME_SORTED=true \
+        REMOVE_DUPLICATES=false \
+        VALIDATION_STRINGENCY=SILENT \
+    || { echo "Error: Marking duplicates for $SORTED_DATA_PATH/${sample_name}.sorted.bam failed."; exit 1; }
+    echo "Marking duplicates for ${sample_name} completed."
+    echo "================================="
+else
+    echo "Skipping MarkDuplicates step for ${sample_name}."
+fi
 
 # Step 2: Index the marked BAM file
-echo "Indexing the marked BAM file for ${sample_name}..."
-samtools index -@ 4 -b "$MARKED_DATA_PATH/${sample_name}.marked.bam" "$MARKED_DATA_PATH/${sample_name}.marked.bai" \
-|| { echo "Error: Indexing the marked BAM file for ${sample_name} failed."; exit 1; }
-echo "Indexing the marked BAM file for ${sample_name} completed."
-echo "================================="
+if [ "$perform_index" = true ]; then
+    echo "Indexing the marked BAM file for ${sample_name}..."
+    samtools index -@ 4 -b "$MARKED_DATA_PATH/${sample_name}.marked.bam" "$MARKED_DATA_PATH/${sample_name}.marked.bai" \
+    || { echo "Error: Indexing the marked BAM file for ${sample_name} failed."; exit 1; }
+    echo "Indexing the marked BAM file for ${sample_name} completed."
+    echo "================================="
+else
+    echo "Skipping indexing step for ${sample_name}."
+fi
 
 # Step 3: Perform BaseRecalibrator
-echo "Performing BaseRecalibrator for ${sample_name}..."
-$GATK_BIN BaseRecalibrator \
-    -I "$MARKED_DATA_PATH/${sample_name}.marked.bam" \
-    -R "$INDEXING_FILE" \
-    --known-sites "$KNOWN_SITES_FILE" \
-    -O "$RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table" \
-    --use-original-qualities \
-|| { echo "Error: BaseRecalibrator for ${sample_name} failed"; exit 1; }
-echo "BaseRecalibrator for ${sample_name} completed."
-echo "================================="
+if [ "$perform_base_recalibrator" = true ]; then
+    echo "Performing BaseRecalibrator for ${sample_name}..."
+    $GATK_BIN BaseRecalibrator \
+        -I "$MARKED_DATA_PATH/${sample_name}.marked.bam" \
+        -R "$INDEXING_FILE" \
+        --known-sites "$KNOWN_SITES_FILE" \
+        -O "$RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table" \
+        --use-original-qualities \
+    || { echo "Error: BaseRecalibrator for ${sample_name} failed"; exit 1; }
+    echo "BaseRecalibrator for ${sample_name} completed."
+    echo "================================="
+else
+    echo "Skipping BaseRecalibrator step for ${sample_name}."
+fi
 
 # Step 4: Apply BQSR
-echo "Applying BQSR for ${sample_name}..."
-$GATK_BIN ApplyBQSR \
-    -I "$MARKED_DATA_PATH/${sample_name}.marked.bam" \
-    -R "$INDEXING_FILE" \
-    --bqsr-recal-file "$RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table" \
-    -O "$APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam" \
-|| { echo "Error: ApplyBQSR for ${sample_name} failed"; exit 1; }
-echo "ApplyBQSR for ${sample_name} completed."
-echo "================================="
+if [ "$perform_apply_bqsr" = true ]; then
+    echo "Applying BQSR for ${sample_name}..."
+    $GATK_BIN ApplyBQSR \
+        -I "$MARKED_DATA_PATH/${sample_name}.marked.bam" \
+        -R "$INDEXING_FILE" \
+        --bqsr-recal-file "$RECALIBRATED_DATA_PATH/${sample_name}.recal_data.table" \
+        -O "$APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam" \
+    || { echo "Error: ApplyBQSR for ${sample_name} failed"; exit 1; }
+    echo "ApplyBQSR for ${sample_name} completed."
+    echo "================================="
+else
+    echo "Skipping ApplyBQSR step for ${sample_name}."
+fi
 
 # Step 5: Perform HaplotypeCaller
-echo "Performing HaplotypeCaller for ${sample_name}..."
-$GATK_BIN HaplotypeCaller \
-    -I "$APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam" \
-    -R "$INDEXING_FILE" \
-    -O "$HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz" \
-    -ERC GVCF \
-    --native-pair-hmm-threads 2 \
-|| { echo "Error: HaplotypeCaller for ${sample_name} failed"; exit 1; }
-echo "HaplotypeCaller for ${sample_name} completed."
-echo "================================="
+if [ "$perform_haplotype_caller" = true ]; then
+    echo "Performing HaplotypeCaller for ${sample_name}..."
+    $GATK_BIN HaplotypeCaller \
+        -I "$APPLYBQSR_DATA_PATH/${sample_name}.recalibrated.bam" \
+        -R "$INDEXING_FILE" \
+        -O "$HAPLOTYPECALLER_DATA_PATH/${sample_name}.g.vcf.gz" \
+        -ERC GVCF \
+        --native-pair-hmm-threads 2 \
+    || { echo "Error: HaplotypeCaller for ${sample_name} failed"; exit 1; }
+    echo "HaplotypeCaller for ${sample_name} completed."
+    echo "================================="
+else
+    echo "Skipping HaplotypeCaller step for ${sample_name}."
+fi
 
 echo "All steps for ${sample_name} completed successfully."
 echo "The output files are saved in the following directories:"
