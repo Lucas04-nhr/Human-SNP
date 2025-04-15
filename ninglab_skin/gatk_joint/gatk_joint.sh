@@ -2,6 +2,8 @@
 #SBATCH --job-name=ninglab_data_gatk_joint
 #SBATCH --output=./ninglab_data_gatk_joint.%j.out
 #SBATCH --error=./ninglab_data_gatk_joint.%j.err
+#SBATCH --mail-user=lucas04@hust.edu.cn
+#SBATCH --mail-type=ALL
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=256G
 
