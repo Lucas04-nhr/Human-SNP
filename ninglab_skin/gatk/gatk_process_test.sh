@@ -85,14 +85,14 @@ perform_base_recalibrator=true
 perform_apply_bqsr=true
 perform_haplotype_caller=true
 
-while getopts "m:i:b:a:h:" opt; do
+while getopts "mibah" opt; do
     case $opt in
-        m) perform_mark_dulpicate=$OPTARG ;;
-        i) perform_index=$OPTARG ;;
-        b) perform_base_recalibrator=$OPTARG ;;
-        a) perform_apply_bqsr=$OPTARG ;;
-        h) perform_haplotype_caller=$OPTARG ;;
-        *) echo "Invalid option"; exit 1 ;;
+        m) perform_mark_dulpicate=true ;;
+        i) perform_index=true ;;
+        b) perform_base_recalibrator=true ;;
+        a) perform_apply_bqsr=true ;;
+        h) perform_haplotype_caller=true ;;
+        *) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
     esac
 done
 
