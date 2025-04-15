@@ -30,10 +30,10 @@ GATK_PATH="${BASE_PATH}/03_gatk"
 
 # Set known-sites path
 KNOWN_SITES_BASE_PATH="$BASE_PATH/../00_bwa_index/GRCh38/known-sites"
-KNOWN_SITES_1000G="$KNOWN_SITES_BASE_PATH/1000g/hg38_v0_1000G_phase1.snps.high_confidence.hg38.modified.vcf"
-KNOWN_SITES_DBSNP="$KNOWN_SITES_BASE_PATH/dbsnp138/hg38_v0_Homo_sapiens_assembly38.dbsnp138.modified.vcf"
-KNOWN_SITES_HAPMAP="$KNOWN_SITES_BASE_PATH/hapmap/hg38_v0_hapmap_3.3.hg38.modified.vcf"
-KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/hg38_v0_1000G_omni2.5.hg38.modified.vcf"
+KNOWN_SITES_1000G="$KNOWN_SITES_BASE_PATH/1000g/.original/hg38_v0_1000G_phase1.snps.high_confidence.hg38.modified.vcf"
+KNOWN_SITES_DBSNP="$KNOWN_SITES_BASE_PATH/dbsnp138/.original/hg38_v0_Homo_sapiens_assembly38.dbsnp138.modified.vcf"
+KNOWN_SITES_HAPMAP="$KNOWN_SITES_BASE_PATH/hapmap/.original/hg38_v0_hapmap_3.3.hg38.modified.vcf"
+KNOWN_SITES_OMNI="$KNOWN_SITES_BASE_PATH/omni/.original/hg38_v0_1000G_omni2.5.hg38.modified.vcf"
 
 # Set other environment variables
 KNOWN_SITES_PATH="$BASE_PATH/../00_bwa_index/GRCh38/known-sites/dbsnp138"

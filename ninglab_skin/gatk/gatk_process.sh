@@ -22,7 +22,7 @@ echo "=============================="
 GENOME_PATH='/mnt/raid6/bacphagenetwork/data/ninglab_skin'
 BASE_PATH='/mnt/raid6/bacphagenetwork/data/ninglab'
 INDEXING_PATH='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38'
-INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/Homo_sapiens.GRCh38.dna.toplevel.fa'
+INDEXING_FILE='/mnt/raid6/bacphagenetwork/data/00_bwa_index/GRCh38/.original/Homo_sapiens.GRCh38.dna.toplevel.fa'
 ANALYSIS_PATH="${BASE_PATH}/01_bwa_analysis"
 SAMTOOLS_PATH="${BASE_PATH}/02_samtools"
 GATK_PATH="${BASE_PATH}/03_gatk"
