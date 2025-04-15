@@ -206,8 +206,7 @@ if $perform_variant_recalibrator; then
       -R $INDEXING_FILE \
       -V $GVCF_DATA_PATH/joint_genotyped.vcf.gz \
       -O $ANNOTATED_VCF \
-      # -A QualByDepth \
-      -A FisherStrand -A StrandOddsRatio -A MappingQualityRankSumTest -A ReadPosRankSumTest \
+      -A QualByDepth -A FisherStrand -A StrandOddsRatio -A MappingQualityRankSumTest -A ReadPosRankSumTest \
     || { echo "VariantAnnotator failed"; exit 1; }
     
     echo "Annotation completed." 
@@ -223,8 +222,7 @@ if $perform_variant_recalibrator; then
     --resource:1000G,known=false,training=true,truth=false,prior=10.0 $KNOWN_SITES_1000G \
     --resource:dbsnp,known=true,training=false,truth=false,prior=6.0 $KNOWN_SITES_DBSNP \
     -mode SNP \
-    # -an QualByDepth \
-    -an FisherStrand -an StrandOddsRatio -an MappingQualityRankSumTest -an ReadPosRankSumTest \
+    -an QualByDepth -an FisherStrand -an StrandOddsRatio -an MappingQualityRankSumTest -an ReadPosRankSumTest \
     -O $VARIANTRECALIBRATOR_DATA_PATH/joint_genotyped.vcf \
     --tranches-file $VARIANTRECALIBRATOR_DATA_PATH/joint_genotyped.tranches \
     --rscript-file $VARIANTRECALIBRATOR_DATA_PATH/joint_genotyped.plots.R \
