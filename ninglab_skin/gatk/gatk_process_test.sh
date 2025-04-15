@@ -79,11 +79,11 @@ echo "GATK and Picard tools are available."
 echo "=============================="
 
 # Phase command line arguments
-perform_mark_dulpicate=true
-perform_index=true
-perform_base_recalibrator=true
-perform_apply_bqsr=true
-perform_haplotype_caller=true
+perform_mark_dulpicate=false
+perform_index=false
+perform_base_recalibrator=false
+perform_apply_bqsr=false
+perform_haplotype_caller=false
 
 while getopts "mibah" opt; do
     case $opt in
