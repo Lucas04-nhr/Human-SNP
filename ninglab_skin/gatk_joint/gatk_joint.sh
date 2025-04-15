@@ -206,7 +206,7 @@ if $perform_variant_recalibrator; then
       -R $INDEXING_FILE \
       -V $GVCF_DATA_PATH/joint_genotyped.vcf.gz \
       -O $ANNOTATED_VCF \
-      -A QD -A FS -A SOR -A MQRankSum -A ReadPosRankSum \
+      -A QualByDepth -A FisherStrand -A StrandOddsRatio -A MappingQualityRankSumTest -A ReadPosRankSumTest \
     || { echo "VariantAnnotator failed"; exit 1; }
     
     echo "Annotation completed." 
