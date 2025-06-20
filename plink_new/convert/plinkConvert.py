@@ -32,7 +32,7 @@ for filename in os.listdir(input_directory):
         count += 1
         pheno_number = filename.split('.')[1][1:]  # 提取文件名中的数字部分
         file_path = os.path.join(input_directory, filename)
-        df = pd.read_csv(file_path, sep='\s+')
+        df = pd.read_csv(file_path, sep='\s+', low_memory=False)
         print(f"Processing file {filename} with {len(df)} rows and {len(df.columns)} columns.")
         # 增加"Bacterium"列
         df['Bacterium'] = pheno_df.columns[int(pheno_number) + 1] # index begins from 0
