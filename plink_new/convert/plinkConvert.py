@@ -26,10 +26,10 @@ except FileNotFoundError as fnfe:
     raise FileNotFoundError(f"Error while reading the phenotype file: {fnfe}")
 
 count = 0
-# 遍历输入目录下的所有 *.adjusted 文件
+# 遍历输入目录下的所有 *.linear 文件
 for filename in os.listdir(input_directory):
-    count += 1
-    if filename.endswith('.adjusted'):
+    if filename.endswith('.linear'):
+        count += 1
         pheno_number = filename.split('.')[1][1:]  # 提取文件名中的数字部分
         file_path = os.path.join(input_directory, filename)
         df = pd.read_csv(file_path, sep='\s+')
