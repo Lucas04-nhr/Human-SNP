@@ -29,7 +29,7 @@ pheno_number = input_filename.split('.')[1][1:].zfill(2)
 pheno_name = df['Bacterium'][0]
 output_filename = f"{pheno_number}_VolcanoPlot_{pheno_name}.png"
 output_file = os.path.join(output_directory, output_filename)
-top_csv_file = os.path.join(output_directory, f"00_top_snps.csv")
+top_csv_file = os.path.join(output_directory, f"01_top_snps.csv")
 
 # 确认是否已存在 top_csv_file
 if os.path.exists(top_csv_file):
@@ -38,22 +38,35 @@ if os.path.exists(top_csv_file):
 else:
   print(f"Top SNPs file does not exist, creating new one: {top_csv_file}")
   # CHR,SNP,BP,A1,TEST,NMISS,BETA,STAT,P,Bacterium
-  top_output = pd.DataFrame(columns=['CHR', 'SNP', 'BP', 'A1', 'TEST', 'NMISS', 'BETA', 'STAT', 'P', 'Bacterium', 'neg_log_p'])
+  top_output = pd.DataFrame(columns=['CHR', 'SNP', 'BP', 'A1', 'TEST', 'NMISS', 'BETA', 'STAT', 'P', 'Bacterium'])
+
+# 确认是否已存在 significant_csv_file
+significant_csv_file = os.path.join(output_directory, f"02_significant_snps.csv")
+if os.path.exists(significant_csv_file):
+  print(f"Significant SNPs file already exists: {significant_csv_file}")
+  significant_output = pd.read_csv(significant_csv_file)
+else:
+  print(f"Significant SNPs file does not exist, creating new one: {significant_csv_file}")
+  # CHR,SNP,BP,A1,TEST,NMISS,BETA,STAT,P,Bacterium
+  significant_output = pd.DataFrame(columns=['CHR', 'SNP', 'BP', 'A1', 'TEST', 'NMISS', 'BETA', 'STAT', 'P', 'Bacterium'])
 
 # 数据预处理
 # sortable_columns = ['BP', 'NMISS', 'BETA', 'SE', 'R2', 'SIDAK_SD', 'T', 'P']
-effective_column = 'BETA'
 top_snps = df.nsmallest(int(len(df) * 0.01), 'P')
-
-### TO_DO ###
-# 需要考虑此处的top取出来的SNP是否显著
-# 暂时就这么输出吧。。。
+significant_threshold = 0.05
+significant_snps = df[df['P'] < significant_threshold]
 
 # 将top_snps添加到top_output中
 print(f"Top SNPs selected: {len(top_snps)}")
 top_output = pd.concat([top_output, top_snps], ignore_index=True)
 top_output.to_csv(top_csv_file, index=False)
 print(f"Top SNPs saved to {top_csv_file}")
+
+# 将显著SNPs添加到significant_output中
+print(f"Significant SNPs selected: {len(significant_snps)}")
+significant_output = pd.concat([significant_output, significant_snps], ignore_index=True)
+significant_output.to_csv(significant_csv_file, index=False)
+print(f"Significant SNPs saved to {significant_csv_file}")
 
 # # 绘制火山图
 # plt.figure(figsize=(10, 6), dpi=100)

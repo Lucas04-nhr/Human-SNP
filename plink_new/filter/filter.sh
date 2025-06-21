@@ -42,7 +42,7 @@ export PLINK_FILTER_RESULT="$PLINK_PATH/filtered"
 echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
 echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCF_PATH."
 echo "The plink result files with bacteria added are located in $PLINK_CONVERT_PATH."
-echo "The volcano plot files will be located in $PLINK_FILTER_RESULT."
+echo "The filtered will be located in $PLINK_FILTER_RESULT."
 
 mkdir -p $PLINK_FILTER_RESULT
 
@@ -62,5 +62,4 @@ for file in $PLINK_CONVERT_PATH/*.assoc.linear; do
     exit 1
   }
   echo "=============================="
-  echo ""
 done
