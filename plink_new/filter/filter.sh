@@ -61,7 +61,6 @@ for file in $PLINK_CONVERT_PATH/*.assoc.linear; do
     echo "An error occurred while running the script on $(basename $file)."
     exit 1
   }
-  echo "Volcano plot for $(basename $file) has been created."
   echo "=============================="
   echo ""
 done
