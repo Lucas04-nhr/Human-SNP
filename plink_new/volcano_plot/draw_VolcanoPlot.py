@@ -38,7 +38,7 @@ if os.path.exists(top_csv_file):
 else:
   print(f"Top SNPs file does not exist, creating new one: {top_csv_file}")
   # CHR,SNP,BP,A1,TEST,NMISS,BETA,STAT,P,Bacterium
-  top_output = pd.DataFrame(columns=['CHR', 'SNP', 'BP', 'A1', 'TEST', 'NMISS', 'BETA', 'STAT', 'P', 'Bacterium'])
+  top_output = pd.DataFrame(columns=['CHR', 'SNP', 'BP', 'A1', 'TEST', 'NMISS', 'BETA', 'STAT', 'P', 'Bacterium', 'neg_log_p'])
 
 # 数据预处理
 # sortable_columns = ['BP', 'NMISS', 'BETA', 'SE', 'R2', 'SIDAK_SD', 'T', 'P']
@@ -51,7 +51,6 @@ top_snps = df.nlargest(10, 'neg_log_p')
 # 暂时就这么输出吧。。。
 
 # 将top_snps添加到top_output中
-top_snps = top_snps[['CHR', 'SNP', 'BP', 'A1', 'TEST', 'NMISS', 'BETA', 'STAT', 'P', 'Bacterium']] # 仅保存需要的列
 top_output = pd.concat([top_output, top_snps], ignore_index=True)
 top_output.to_csv(top_csv_file, index=False)
 
