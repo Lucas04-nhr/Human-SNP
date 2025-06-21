@@ -27,7 +27,7 @@ except FileNotFoundError as fnfe:
 input_filename = os.path.basename(input_file)
 pheno_number = input_filename.split('.')[1][1:].zfill(2)
 pheno_name = df['Bacterium'][0]
-output_filename = f"{pheno_number}_VolcanoPlot_{pheno_name}.pdf"
+output_filename = f"{pheno_number}_VolcanoPlot_{pheno_name}.png"
 output_file = os.path.join(output_directory, output_filename)
 top_csv_file = os.path.join(output_directory, f"00_top_snps.csv")
 
@@ -56,7 +56,7 @@ top_output = pd.concat([top_output, top_snps], ignore_index=True)
 top_output.to_csv(top_csv_file, index=False)
 
 # 绘制火山图
-plt.figure(figsize=(10, 6), dpi=300)
+plt.figure(figsize=(10, 6), dpi=100)
 plt.scatter(df[effective_column], df['neg_log_p'], alpha=0.5)
 # 标识显著SNP
 for _, row in top_snps.iterrows():
