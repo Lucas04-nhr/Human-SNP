@@ -43,27 +43,28 @@ else:
 # 数据预处理
 # sortable_columns = ['BP', 'NMISS', 'BETA', 'SE', 'R2', 'SIDAK_SD', 'T', 'P']
 effective_column = 'BETA'
-df['neg_log_p'] = -np.log10(df['P'])
-top_snps = df.nlargest(10, 'neg_log_p')
+top_snps = df.nsmallest(int(len(df) * 0.01), 'P')
 
 ### TO_DO ###
 # 需要考虑此处的top取出来的SNP是否显著
 # 暂时就这么输出吧。。。
 
 # 将top_snps添加到top_output中
+print(f"Top SNPs selected: {len(top_snps)}")
 top_output = pd.concat([top_output, top_snps], ignore_index=True)
 top_output.to_csv(top_csv_file, index=False)
+print(f"Top SNPs saved to {top_csv_file}")
 
-# 绘制火山图
-plt.figure(figsize=(10, 6), dpi=100)
-plt.scatter(df[effective_column], df['neg_log_p'], alpha=0.5)
-# 标识显著SNP
-for _, row in top_snps.iterrows():
-  plt.text(row[effective_column], row['neg_log_p'], row['SNP'], fontsize=9)
-plt.axhline(y=-np.log10(0.05), color='r', linestyle='--')
-plt.title(f'Volcano Plot for {pheno_name}')
-plt.xlabel(effective_column)
-plt.ylabel('-log10(P-value)')
-plt.grid()
-plt.savefig(output_file)
-print(f"Volcano plot saved to {output_file}")
+# # 绘制火山图
+# plt.figure(figsize=(10, 6), dpi=100)
+# plt.scatter(df[effective_column], df['neg_log_p'], alpha=0.5)
+# # 标识显著SNP
+# for _, row in top_snps.iterrows():
+#   plt.text(row[effective_column], row['neg_log_p'], row['SNP'], fontsize=9)
+# plt.axhline(y=-np.log10(0.05), color='r', linestyle='--')
+# plt.title(f'Volcano Plot for {pheno_name}')
+# plt.xlabel(effective_column)
+# plt.ylabel('-log10(P-value)')
+# plt.grid()
+# plt.savefig(output_file)
+# print(f"Volcano plot saved to {output_file}")

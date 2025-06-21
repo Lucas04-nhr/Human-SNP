@@ -37,14 +37,14 @@ export UNFILTERED_GVCF_PATH="$BASE_PATH/08_GenotypeGVCF/Full"
 export FILTERED_GVCF_PATH="$BASE_PATH/10_ApplyVQSR/Full"
 export PLINK_PATH="$BASE_PATH/12_plink_Full"
 export PLINK_CONVERT_PATH="$PLINK_PATH/converted"
-export VOLCANO_PLOT_PATH="$PLINK_PATH/volcano_plot"
+export PLINK_FILTER_RESULT="$PLINK_PATH/filtered"
 
 echo "The UNFILTERED GenotypeGVCF results is located in $UNFILTERED_GVCF_PATH."
 echo "The FILTERED GenotypeGVCF result is located in $FILTERED_GVCF_PATH."
 echo "The plink result files with bacteria added are located in $PLINK_CONVERT_PATH."
-echo "The volcano plot files will be located in $VOLCANO_PLOT_PATH."
+echo "The volcano plot files will be located in $PLINK_FILTER_RESULT."
 
-mkdir -p $VOLCANO_PLOT_PATH
+mkdir -p $PLINK_FILTER_RESULT
 
 echo "Setting completed."
 
@@ -57,7 +57,7 @@ echo "=============================="
 
 for file in $PLINK_CONVERT_PATH/*.assoc.linear; do
   echo "Processing file: $(basename $file)"
-  python draw_VolcanoPlot.py --input-file $file --output-directory $VOLCANO_PLOT_PATH || {
+  python plink_result_filter.py --input-file $file --output-directory $PLINK_FILTER_RESULT || {
     echo "An error occurred while running the script on $(basename $file)."
     exit 1
   }
